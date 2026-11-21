@@ -219,3 +219,32 @@ body::after {
 
 /* Decorative glows bleed past the edges; clip them (clip, unlike hidden, keeps sticky working). */
 #root { overflow-x: clip; }
+
+/* Pulse: rings of signal spreading out behind the phone. */
+.pulse-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 1.5px solid color-mix(in srgb, var(--color-pulse) 55%, transparent);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--color-pulse) 25%, transparent) inset;
+  opacity: 0;
+  animation: ring 3.3s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+}
+@keyframes ring {
+  0% { transform: scale(0.35); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 0; }
+}
+
+/* Project cards tilt toward the pointer. */
+@media (hover: hover) and (pointer: fine) {
+  .tilt {
+    transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition: transform 400ms var(--ease-out-quint), border-color 200ms;
+  }
+  .tilt:hover { transition: transform 120ms linear, border-color 200ms; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-ring { animation: none; }
+  .tilt { transform: none !important; }
+}

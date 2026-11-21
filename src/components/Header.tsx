@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { motion, useScroll, useSpring } from 'motion/react'
 import { useI18n } from '../i18n'
 import { profile } from '../data'
 
@@ -24,6 +25,8 @@ export function Header() {
   const { t, lang, setLang } = useI18n()
   const link = 'rounded-md px-2.5 py-1.5 text-sm text-muted transition-colors duration-150 hover:text-fg'
   const [scrolled, setScrolled] = useState(false)
+  const { scrollYProgress } = useScroll()
+  const progress = useSpring(scrollYProgress, { stiffness: 260, damping: 40, restDelta: 0.001 })
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 24)
     on()
@@ -59,6 +62,8 @@ export function Header() {
           <GithubIcon className="size-[18px]" />
         </a>
       </div>
+      {/* How far down the page you are, as a thin line along the bottom edge. */}
+      <motion.div aria-hidden className="absolute inset-x-0 -bottom-px h-[2px] origin-[var(--o)] bg-ember [--o:left] rtl:[--o:right]" style={{ scaleX: progress }} />
     </header>
     </>
   )

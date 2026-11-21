@@ -1,10 +1,10 @@
 import { useRef, useState } from 'react'
-import { AnimatePresence, motion, useInView, useReducedMotion } from 'motion/react'
+import { AnimatePresence, motion, useInView, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { useI18n, useFormat, type L10n } from '../i18n'
 import { bySlug, type Repo } from '../data'
 import { PhoneFrame, TvFrame, WatchFrame } from './Devices'
 import { GithubIcon } from './Header'
-import { CountUp, EASE, slide, TuneIn, useDirection } from './Motion'
+import { CountUp, EASE, slide, Sweep, TuneIn, useDirection } from './Motion'
 
 type Copy = {
   lead: L10n
@@ -74,7 +74,8 @@ const PULSE_SCREENS: [number, L10n][] = [
 export function Flagships() {
   const { t } = useI18n()
   return (
-    <section id="flagships" aria-labelledby="flagships-title" className="border-t border-line">
+    <section id="flagships" aria-labelledby="flagships-title" className="relative isolate border-t border-line">
+      <Sweep color="var(--color-tv)" />
       <div className="mx-auto max-w-[1200px] px-5 pt-20 sm:px-8 md:pt-28">
         <TuneIn ch={2} id="flagships-title" className="text-[clamp(2rem,4vw,3rem)] font-bold leading-tight tracking-[-0.03em]">{t('flagshipsTitle')}</TuneIn>
         <p className="mt-3 max-w-[56ch] text-lg text-muted">{t('flagshipsLead')}</p>
@@ -86,7 +87,8 @@ export function Flagships() {
 }
 
 function Facts({ repo, copy, accent }: { repo: Repo; copy: Copy; accent: string }) {
-  const { t, pick } = useI18n()
+  const { t, pick, lang } = useI18n()
+  const rtl = lang === 'he'
   const f = useFormat()
   return (
     <>
@@ -104,10 +106,14 @@ function Facts({ repo, copy, accent }: { repo: Repo; copy: Copy; accent: string 
       </dl>
       <ul className="mt-7 space-y-3">
         {copy.features.map((x, i) => (
-          <li key={i} className="flex gap-3 text-[15px] leading-relaxed">
-            <span aria-hidden className="mt-[0.6em] h-px w-3 shrink-0" style={{ background: accent }} />
+          <motion.li key={i} className="flex gap-3 text-[15px] leading-relaxed"
+            initial={{ opacity: 0, x: rtl ? 18 : -18 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.8 }}
+            transition={{ duration: 0.5, ease: EASE, delay: i * 0.08 }}>
+            <motion.span aria-hidden className="mt-[0.6em] h-px w-3 shrink-0 origin-[var(--o)] [--o:left] rtl:[--o:right]" style={{ background: accent }}
+              initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true, amount: 0.8 }}
+              transition={{ duration: 0.4, ease: EASE, delay: 0.15 + i * 0.08 }} />
             {pick(x)}
-          </li>
+          </motion.li>
         ))}
       </ul>
       <h4 className="mt-9 text-sm font-semibold">{t('platforms')}</h4>
@@ -170,6 +176,11 @@ function TvPlus({ repo }: { repo: Repo }) {
   const stage = useRef<HTMLDivElement>(null)
   const on = useInView(stage, { once: true, amount: 0.45 })
   const side = rtl ? -1 : 1
+  // Phone and watch drift at different speeds than the TV as the page scrolls past.
+  const { scrollYProgress } = useScroll({ target: stage, offset: ['start end', 'end start'] })
+  const phoneY = useTransform(scrollYProgress, [0, 1], reduce ? ['0%', '0%'] : ['14%', '-14%'])
+  const watchY = useTransform(scrollYProgress, [0, 1], reduce ? ['0%', '0%'] : ['40%', '-40%'])
+  const tvY = useTransform(scrollYProgress, [0, 1], reduce ? ['0%', '0%'] : ['3%', '-3%'])
   const [tvVideo, phoneVideo] = repo.videos
   const tvShots = repo.images.slice(0, 6)
   const phonePoster = repo.images[6]
@@ -186,6 +197,7 @@ function TvPlus({ repo }: { repo: Repo }) {
       <div className="min-w-0 lg:col-span-7">
         <div ref={stage} className="relative pb-[9%] pe-[7%] lg:sticky lg:top-24">
           <div aria-hidden className="pointer-events-none absolute inset-[-8%] -z-10 bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--color-tv)_16%,transparent),transparent)]" />
+          <motion.div style={{ y: tvY }}>
           <TvFrame>
             {/* Power-on: the picture opens from a bright line, like an old tube set warming up. */}
             <motion.div
@@ -217,15 +229,16 @@ function TvPlus({ repo }: { repo: Repo }) {
               initial={{ opacity: 0 }} animate={on ? { opacity: [0, 0, 0.55, 0] } : undefined}
               transition={{ duration: 1.1, times: [0, 0.35, 0.55, 1] }} />
           </TvFrame>
-          <motion.div className="absolute bottom-0 end-0 w-[23%]"
+          </motion.div>
+          <motion.div className="absolute bottom-0 end-0 z-10 w-[23%]" style={{ y: phoneY }}
             initial={{ opacity: 0, x: `${side * 30}%` }} animate={on ? { opacity: 1, x: '0%' } : undefined}
             transition={{ duration: 0.6, ease: EASE, delay: 0.75 }}>
           <PhoneFrame>
             <video className="absolute inset-0 size-full object-cover" src={phoneVideo} poster={phonePoster.src} autoPlay={!reduce} muted loop playsInline aria-label={pick({ en: 'Israel TV+ on a phone, demo', he: 'ישראל TV+ בטלפון, הדגמה' })} />
           </PhoneFrame>
           </motion.div>
-          <motion.div className="absolute bottom-[1%] start-[5%] w-[13%]"
-            initial={{ opacity: 0, y: '40%' }} animate={on ? { opacity: 1, y: '0%' } : undefined}
+          <motion.div className="absolute bottom-[1%] start-[5%] z-10 w-[13%]" style={{ y: watchY }}
+            initial={{ opacity: 0, scale: 0.6, rotate: -20 }} animate={on ? { opacity: 1, scale: 1, rotate: 0 } : undefined}
             transition={{ duration: 0.6, ease: EASE, delay: 0.9 }}>
           <WatchFrame>
             <img src={watch.src} alt={pick({ en: 'Israel TV+ on Wear OS', he: 'ישראל TV+ ב-Wear OS' })} className="size-full object-cover" />
@@ -267,7 +280,7 @@ function Pulse({ repo }: { repo: Repo }) {
       </div>
 
       <div className="min-w-0 lg:order-1 lg:col-span-7">
-        <div className="relative grid items-center gap-8 rounded-3xl border border-line bg-s1 p-6 sm:grid-cols-[1fr_auto] sm:p-10 lg:sticky lg:top-24">
+        <div className="relative grid items-center gap-8 overflow-hidden rounded-3xl border border-line bg-s1 p-6 sm:grid-cols-[1fr_auto] sm:p-10 lg:sticky lg:top-24">
           <div aria-hidden className="pointer-events-none absolute inset-0 rounded-3xl bg-[radial-gradient(60%_60%_at_70%_40%,color-mix(in_srgb,var(--color-pulse)_14%,transparent),transparent)]" />
           <div role="group" aria-label={pick({ en: 'Pulse screens', he: 'מסכי Pulse' })} className="no-scrollbar relative -mx-6 flex gap-2 overflow-x-auto px-6 sm:mx-0 sm:flex-col sm:overflow-visible sm:px-0">
             {PULSE_SCREENS.map(([, l], i) => {
@@ -283,7 +296,14 @@ function Pulse({ repo }: { repo: Repo }) {
               )
             })}
           </div>
-          <PhoneFrame className="relative mx-auto w-[min(270px,70vw)]">
+          <motion.div className="relative isolate mx-auto w-[min(270px,70vw)] [perspective:1200px]"
+            initial={{ opacity: 0, y: 60, rotateX: 28, rotateY: -14 }} whileInView={{ opacity: 1, y: 0, rotateX: 0, rotateY: 0 }}
+            viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.9, ease: EASE }}>
+          {/* Signal rings pulsing out from behind the phone. */}
+          <div aria-hidden className="pointer-events-none absolute left-1/2 top-[42%] -z-10 size-[150%] -translate-x-1/2 -translate-y-1/2">
+            {[0, 1, 2].map((k) => <span key={k} className="pulse-ring" style={{ animationDelay: `${k * 1.1}s` }} />)}
+          </div>
+          <PhoneFrame className="relative">
             <AnimatePresence initial={false} custom={dir}>
               <motion.img
                 key={shot} custom={dir} variants={slide} initial="enter" animate="center" exit="exit"
@@ -293,6 +313,7 @@ function Pulse({ repo }: { repo: Repo }) {
               />
             </AnimatePresence>
           </PhoneFrame>
+          </motion.div>
         </div>
       </div>
     </article>

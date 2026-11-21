@@ -2,7 +2,7 @@ import { useI18n, useFormat } from '../i18n'
 import { frameworks, generatedAt, languageShare, LANG_COLOR, profile } from '../data'
 import { motion } from 'motion/react'
 import { GithubIcon, SignalMark } from './Header'
-import { CountUp, EASE, TuneIn } from './Motion'
+import { CountUp, EASE, Sweep, TuneIn } from './Motion'
 
 export function Stack() {
   const { t } = useI18n()
@@ -11,7 +11,8 @@ export function Stack() {
   const bars = rest > 0 ? [...top, { lang: 'Other', share: rest, repos: 0 }] : top
 
   return (
-    <section id="stack" aria-labelledby="stack-title" className="border-t border-line">
+    <section id="stack" aria-labelledby="stack-title" className="relative isolate border-t border-line">
+      <Sweep color="var(--color-ember)" />
       <div className="mx-auto grid max-w-[1200px] gap-14 px-5 py-20 sm:px-8 md:py-28 lg:grid-cols-12 lg:gap-8">
         <div className="lg:col-span-4">
           <TuneIn ch={4} id="stack-title" className="text-[clamp(2rem,4vw,3rem)] font-bold leading-tight tracking-[-0.03em]">{t('stackTitle')}</TuneIn>
@@ -30,23 +31,27 @@ export function Stack() {
             ))}
           </div>
           <ul className="mt-8 grid gap-x-10 sm:grid-cols-2">
-            {top.map((l) => (
-              <li key={l.lang} className="flex items-center gap-3 border-b border-line py-3">
+            {top.map((l, i) => (
+              <motion.li key={l.lang} className="flex items-center gap-3 border-b border-line py-3"
+                initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 1 }}
+                transition={{ duration: 0.45, ease: EASE, delay: (i % 2) * 0.06 + Math.floor(i / 2) * 0.05 }}>
                 <span aria-hidden className="size-2.5 rounded-full" style={{ background: LANG_COLOR[l.lang] ?? '#888' }} />
                 <span className="font-medium">{l.lang}</span>
                 <span className="text-sm text-muted">{t('usedIn', { n: l.repos })}</span>
                 <CountUp value={+(l.share * 100).toFixed(1)} decimals={1} suffix="%" className="num ms-auto text-sm" />
-              </li>
+              </motion.li>
             ))}
           </ul>
 
           <h3 className="mt-14 text-base font-semibold">{t('frameworks')}</h3>
           <ul className="mt-4 flex flex-wrap gap-2">
-            {frameworks.map(([name, n]) => (
-              <li key={name} className="flex items-center gap-2 rounded-md border border-line bg-s1 px-2.5 py-1.5 text-sm">
+            {frameworks.map(([name, n], i) => (
+              <motion.li key={name} className="flex items-center gap-2 rounded-md border border-line bg-s1 px-2.5 py-1.5 text-sm transition-colors hover:border-ember/60 hover:text-ember-2"
+                initial={{ opacity: 0, scale: 0.7 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
+                transition={{ type: 'spring', duration: 0.5, bounce: 0.35, delay: i * 0.025 }}>
                 {name}
                 {n > 1 && <span className="num text-muted">{n}</span>}
-              </li>
+              </motion.li>
             ))}
           </ul>
         </div>
@@ -55,11 +60,24 @@ export function Stack() {
   )
 }
 
+const BARS = ['#bdbdbd', '#bdbd2e', '#2ebdbd', '#2ebd2e', '#bd2ebd', '#bd2e2e', '#2e2ebd']
+
 export function Footer() {
   const { t } = useI18n()
   const f = useFormat()
   return (
-    <footer className="border-t border-line">
+    <footer className="relative border-t border-line">
+      {/* Sign-off: the color bars a channel shows when the broadcast day ends. */}
+      <div aria-hidden className="flex h-16 sm:h-24" dir="ltr">
+        {BARS.map((c, i) => (
+          <motion.span key={c} className="flex-1 origin-top" style={{ background: c }}
+            initial={{ scaleY: 0 }} whileInView={{ scaleY: 1 }} viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: EASE, delay: i * 0.06 }} />
+        ))}
+      </div>
+      <div aria-hidden className="flex h-3 sm:h-4" dir="ltr">
+        {BARS.map((c, i) => <span key={c} className="flex-1 opacity-60" style={{ background: BARS[BARS.length - 1 - i] }} />)}
+      </div>
       <div className="mx-auto flex max-w-[1200px] flex-col gap-10 px-5 py-16 sm:px-8 md:flex-row md:items-end md:justify-between">
         <div className="max-w-[46ch]">
           <SignalMark className="size-7" />

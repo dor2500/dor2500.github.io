@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef } from 'react'
-import { animate, useInView, useReducedMotion } from 'motion/react'
+import { animate, motion, useInView, useReducedMotion } from 'motion/react'
 
 export const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -64,5 +64,24 @@ export function TuneIn({ ch, id, className, children }: { ch: number; id: string
         CH {String(ch).padStart(2, '0')}
       </span>
     </h2>
+  )
+}
+
+/** A CRT refresh line that travels down a section once, the first time it comes into view. */
+export function Sweep({ color = 'var(--color-cyan)' }: { color?: string }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const on = useInView(ref, { once: true, amount: 0.12 })
+  return (
+    <div ref={ref} aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+      {on && (
+        <motion.div
+          className="absolute inset-0"
+          style={{ background: `linear-gradient(to bottom, transparent calc(100% - 10rem), color-mix(in srgb, ${color} 9%, transparent) calc(100% - 1px), color-mix(in srgb, ${color} 55%, transparent) 100%)` }}
+          initial={{ y: '-100%', opacity: 1 }}
+          animate={{ y: '0%', opacity: [1, 1, 0] }}
+          transition={{ y: { duration: 1.6, ease: [0.45, 0, 0.55, 1] }, opacity: { duration: 1.9, times: [0, 0.8, 1] } }}
+        />
+      )}
+    </div>
   )
 }

@@ -4,7 +4,7 @@ import { useI18n, useFormat } from '../i18n'
 import { others, LANG_COLOR, type Repo } from '../data'
 import { CATEGORIES, PLATFORM_LABEL, type Category, type Platform } from '../data/curated'
 import { Mockup } from './Mockups'
-import { EASE, TuneIn } from './Motion'
+import { EASE, Sweep, TuneIn } from './Motion'
 
 export function Explorer({ platform, setPlatform, onOpen }: { platform: Platform | null; setPlatform: (p: Platform | null) => void; onOpen: (r: Repo) => void }) {
   const { t, pick } = useI18n()
@@ -26,7 +26,8 @@ export function Explorer({ platform, setPlatform, onOpen }: { platform: Platform
   }, [])
 
   return (
-    <section id="projects" aria-labelledby="projects-title" className="border-t border-line">
+    <section id="projects" aria-labelledby="projects-title" className="relative isolate border-t border-line">
+      <Sweep />
       <div className="mx-auto max-w-[1200px] px-5 py-20 sm:px-8 md:py-28">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
@@ -68,14 +69,19 @@ export function Explorer({ platform, setPlatform, onOpen }: { platform: Platform
 
         <motion.ul layout className="mt-8 grid grid-flow-dense grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout" initial={false}>
-            {list.map((r) => (
+            {list.map((r, n) => (
               <motion.li
                 key={r.name} layout
                 initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.97 }}
                 transition={{ duration: 0.25, ease: EASE }}
                 className={r.wide ? 'sm:col-span-2' : ''}
               >
-                <Card repo={r} onOpen={() => onOpen(r)} />
+                {/* First time a card scrolls in it flickers on, like a channel finding its picture. */}
+                <motion.div className="h-full"
+                  initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: [0, 1, 0.35, 1], y: 0 }} viewport={{ once: true, amount: 0.25 }}
+                  transition={{ y: { duration: 0.6, ease: EASE, delay: (n % 3) * 0.09 }, opacity: { duration: 0.55, times: [0, 0.3, 0.5, 1], delay: (n % 3) * 0.09 } }}>
+                  <Card repo={r} onOpen={() => onOpen(r)} />
+                </motion.div>
               </motion.li>
             ))}
           </AnimatePresence>
@@ -123,9 +129,17 @@ function Card({ repo, onOpen }: { repo: Repo; onOpen: () => void }) {
     const r = e.currentTarget.getBoundingClientRect()
     e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`)
     e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`)
+    const px = (e.clientX - r.left) / r.width - 0.5
+    const py = (e.clientY - r.top) / r.height - 0.5
+    e.currentTarget.style.setProperty('--ry', `${px * 7}deg`)
+    e.currentTarget.style.setProperty('--rx', `${py * -7}deg`)
+  }
+  const reset = (e: React.PointerEvent<HTMLElement>) => {
+    e.currentTarget.style.setProperty('--rx', '0deg')
+    e.currentTarget.style.setProperty('--ry', '0deg')
   }
   return (
-    <article onPointerMove={track} className="spot group relative flex h-full flex-col overflow-hidden rounded-xl border border-line bg-s1 transition-colors duration-200 hover:border-line-2">
+    <article onPointerMove={track} onPointerLeave={reset} className="tilt spot group relative flex h-full flex-col overflow-hidden rounded-xl border border-line bg-s1 transition-colors duration-200 hover:border-line-2">
       <motion.div layoutId={`media-${repo.name}`} transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
         className={`tv-static relative grow overflow-hidden border-b border-line bg-s2 ${repo.wide ? 'aspect-[16/7]' : 'aspect-[16/10]'}`}>
         <Preview repo={repo} />
