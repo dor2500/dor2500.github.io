@@ -1,0 +1,87 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-ink: #0a0c0f;
+  --color-s1: #111419;
+  --color-s2: #181c22;
+  --color-s3: #20252d;
+  --color-line: #252a31;
+  --color-line-2: #333a44;
+  --color-fg: #eceef1;
+  --color-muted: #9ba3ae;
+  --color-ember: #ff6b35;
+  --color-ember-2: #ff8a5c;
+  --color-cyan: #6ccbff;
+  --color-tv: #4fb3ff;
+  --color-pulse: #6fd6b5;
+
+  --font-sans: 'Schibsted Grotesk', 'IBM Plex Sans Hebrew', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  background: var(--color-ink);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+html[dir='rtl'] {
+  /* Hebrew reads better a touch looser and without negative tracking. */
+  --tracking-tight: 0;
+  --tracking-tighter: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-ember) 40%, transparent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-cyan);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Faint scan-line texture: the broadcast motif, used only behind device screens. */
+.scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(to bottom, rgb(255 255 255 / 0.025) 0 1px, transparent 1px 3px);
+  mix-blend-mode: overlay;
+}
+
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+.num { font-variant-numeric: tabular-nums; }
+
+/* Card preview: a slow, small zoom on hover, only on devices that can hover. */
+.preview-img {
+  transition: transform 500ms var(--ease-out-quint);
+}
+@media (hover: hover) and (pointer: fine) {
+  .group:hover .preview-img { transform: scale(1.03); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .preview-img { transition: none; }
+  .group:hover .preview-img { transform: none; }
+}

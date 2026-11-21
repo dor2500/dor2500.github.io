@@ -1,0 +1,1796 @@
+{
+ "generatedAt": "2026-11-21T14:03:46.148Z",
+ "profile": {
+  "login": "dor2500",
+  "url": "https://github.com/dor2500",
+  "avatar": "https://avatars.githubusercontent.com/u/50528935?v=4",
+  "followers": 5,
+  "since": "2019-05-11T19:08:34Z"
+ },
+ "repos": [
+  {
+   "name": "AdBlockVPN",
+   "description": "AdBlockVPN",
+   "url": "https://github.com/dor2500/AdBlockVPN",
+   "homepage": null,
+   "language": "Kotlin",
+   "stars": 0,
+   "topics": [],
+   "pushedAt": "2026-09-22T09:14:52Z",
+   "createdAt": "2026-09-04T12:39:37Z",
+   "languages": {
+    "Kotlin": 239340,
+    "HTML": 134105,
+    "Java": 38750,
+    "Python": 1676,
+    "Assembly": 1394
+   },
+   "release": {
+    "tag": "v7.4.9",
+    "name": "v7.4.9: 📡 Active Radar Sweep",
+    "date": "2026-09-13T08:40:49Z",
+    "url": "https://github.com/dor2500/AdBlockVPN/releases/tag/v7.4.9",
+    "assets": 1
+   },
+   "readme": {
+    "summary": "A system-wide, DNS-filtering ad blocker built on Android's local VpnService. This app provides premium protection against ads, trackers, malware, and zero-day threats by filtering DNS requests locally on your device, without sending your browsing history to an external server.",
+    "bullets": [
+     "🛡️ Comprehensive Ad Blocking: Uses top-tier DNS blocklists (AdGuard, HaGeZi, OISD, StevenBlack) to block ads and trackers at the system level.",
+     "🌍 Global VPN Locations (200+ Countries): Choose from over 200 realistic VPN server locations around the world with latency tracking.",
+     "📡 Live Traffic Monitor: View all DNS queries in real-time. Instantly block (Blacklist) or allow (Whitelist) any domain directly from the monitor screen.",
+     "⚡ Zero-Day Threat Protection: Advanced heuristic scanning to block newly registered domains that are often used for malware and phishing.",
+     "🔒 DNS over HTTPS (DoH): Encrypts your DNS requests using Cloudflare, Google, or Quad9 to prevent your ISP from snooping on your traffic.",
+     "🔀 Smart Pass-Through Mode: Exclude specific Wi-Fi networks (e.g., your home router if you have Pi-Hole) or mobile carriers from filtering.",
+     "✨ Modern Glassmorphism UI: Beautiful, OLED-friendly dark mode with fluid animations and premium design elements."
+    ]
+   },
+   "images": [
+    {
+     "src": "/shots/AdBlockVPN/00.webp",
+     "w": 460,
+     "h": 1024
+    },
+    {
+     "src": "/shots/AdBlockVPN/01.webp",
+     "w": 1024,
+     "h": 1024
+    },
+    {
+     "src": "/shots/AdBlockVPN/02.webp",
+     "w": 460,
+     "h": 1024
+    }
+   ],
+   "videos": []
+  },
+  {
+   "name": "botwave",
+   "description": "🌊 BotWave – בוט וואטסאפ בעברית עם מצבי אישיות, דמויות מקבצי טקסט, תזכורות, רשימה שחורה, כמה חשבונות במקביל, תוכנת ניהול ומתקין ל-Windows",
+   "url": "https://github.com/dor2500/botwave",
+   "homepage": null,
+   "language": "JavaScript",
+   "stars": 0,
+   "topics": [],
+   "pushedAt": "2026-11-06T20:45:35Z",
+   "createdAt": "2026-11-06T16:11:41Z",
+   "languages": {
+    "JavaScript": 387710,
+    "HTML": 54305,
+    "Python": 42271,
+    "Inno Setup": 3749,
+    "Batchfile": 1278
+   },
+   "release": {
+    "tag": "v1.0.1",
+    "name": "BotWave 1.0.1",
+    "date": "2026-11-06T20:45:36Z",
+    "url": "https://github.com/dor2500/botwave/releases/tag/v1.0.1",
+    "assets": 1
+   },
+   "readme": {
+    "summary": "בוט וואטסאפ בעברית (Node.js + Baileys) עם מצבי אישיות, דמויות מותאמות מקבצי טקסט, תזכורות, הגרלות, רשימה שחורה, ותמיכה בכמה חשבונות וואטסאפ במקביל. מגיע עם BotWave Manager – תוכנת Windows לניהול מלא של הבוט.",
+    "bullets": [
+     "עונה על שאלות (טכנולוגיה, אקטואליה, ידע כללי) עם חיפוש ברשת, מבין תמונות, סטיקרים, סרטונים (כולל קישורי יוטיוב/טיקטוק/אינסטגרם) והודעות קוליות.",
+     "עונה בהקלטה קולית לפי בקשה (\"פיקסי תקליט...\"), הופך תמונה לסטיקר, שולח סרטונים.",
+     "גיוון אוטומטי: זוכר את התשובות האחרונות שלו ולא חוזר על אותן פתיחות וביטויים.",
+     "כששואלים \"מה אתה עושה?\" הוא מפרט על עצמו, ו-/עזרה מציג את כל הפקודות.",
+     "🚫 התעלמות מלאה – \"פיקסי תתעלם ממני\"",
+     "🔕 רק כשמתייגים – \"פיקסי אל תתייג אותי\": הבוט לא מתייג את האדם ועונה לו רק כשהוא מתייג את הבוט.",
+     "חזרה: \"פיקסי אפשר לתייג אותי\". מנהלים יכולים גם על אחרים: \"פיקסי אל תתייג את @מישהו\"."
+    ]
+   },
+   "images": [],
+   "videos": []
+  },
+  {
+   "name": "ci3-hebrew-4k",
+   "description": null,
+   "url": "https://github.com/dor2500/ci3-hebrew-4k",
+   "homepage": null,
+   "language": "Go",
+   "stars": 0,
+   "topics": [],
+   "pushedAt": "2026-11-01T20:08:27Z",
+   "createdAt": "2026-11-01T18:29:26Z",
+   "languages": {
+    "Go": 92021,
+    "PowerShell": 1089
+   },
+   "release": {
+    "tag": "v1.1.0",
+    "name": "v1.1.0: שדרוג AI לגרפיקה",
+    "date": "2026-11-01T20:08:27Z",
+    "url": "https://github.com/dor2500/ci3-hebrew-4k/releases/tag/v1.1.0",
+    "assets": 1
+   },
+   "readme": {
+    "summary": "משגר עברי ל-Chicken Invaders: Revenge of the Yolk, Christmas Edition (גרסה 3.20). המשחק שרץ הוא המשחק המקורי עצמו: אותו מנוע, אותם גלים, בוסים, נשקים, גרפיקה ומוזיקה. המשגר מוסיף עליו את האפשרויות שלמטה.",
+    "bullets": [
+     "אין שלבים או בוסים חדשים. הם קבועים בתוך קובץ ה-exe של המקור.",
+     "המצב ההפוך הוא שינוי מראה. החוקים נשארים של המקור, ובוסים נשארים תרנגולות ענק.",
+     "חבילות מיינקראפט ומורטל קומבט הן צלילים מקוריים בסגנון דומה, לא הקבצים של המשחקים האלה. אפשר להוסיף קבצים משלך, ראו למטה.",
+     "הקריינות מחליפה צלילים קיימים ואין לה כתוביות, כי המנוע לא מאפשר להוסיף אירועים. היא נוצרה בקול Microsoft Asaf."
+    ]
+   },
+   "images": [
+    {
+     "src": "/shots/ci3-hebrew-4k/00.webp",
+     "w": 1400,
+     "h": 788
+    },
+    {
+     "src": "/shots/ci3-hebrew-4k/01.webp",
+     "w": 1400,
+     "h": 788
+    },
+    {
+     "src": "/shots/ci3-hebrew-4k/02.webp",
+     "w": 1400,
+     "h": 788
+    },
+    {
+     "src": "/shots/ci3-hebrew-4k/03.webp",
+     "w": 1400,
+     "h": 788
+    }
+   ],
+   "videos": []
+  },
+  {
+   "name": "Command-Library-CMD-Terminal-",
+   "description": "Command Library (CMD & Terminal)",
+   "url": "https://github.com/dor2500/Command-Library-CMD-Terminal-",
+   "homepage": null,
+   "language": "JavaScript",
+   "stars": 0,
+   "topics": [],
+   "pushedAt": "2026-09-01T18:31:29Z",
+   "createdAt": "2026-08-25T18:37:25Z",
+   "languages": {
+    "JavaScript": 1750352,
+    "HTML": 1378195,
+    "CSS": 17668,
+    "PowerShell": 14762
+   },
+   "release": null,
+   "readme": {
+    "summary": "",
+    "bullets": [
+     "Frontend: Vanilla HTML5, CSS3 (Glassmorphism UI), Vanilla ES6 JavaScript",
+     "Data: Massive JS array holding 5,200+ curated commands",
+     "AI Backend: Google Generative AI (Gemini Flash REST API)"
+    ]
+   },
+   "images": [
+    {
+     "src": "/shots/Command-Library-CMD-Terminal-/00.webp",
+     "w": 1024,
+     "h": 601
+    }
+   ],
+   "videos": []
+  },
+  {
+   "name": "cs-remastered",
+   "description": null,
+   "url": "https://github.com/dor2500/cs-remastered",
+   "homepage": null,
+   "language": "GDScript",
+   "stars": 0,
+   "topics": [],
+   "pushedAt": "2026-11-09T22:06:36Z",
+   "createdAt": "2026-11-09T22:06:16Z",
+   "languages": {
+    "GDScript": 34273,
+    "Python": 19445,
+    "GDShader": 4368,
+    "GLSL": 3370
+   },
+   "release": null,
+   "readme": {
+    "summary": "",
+    "bullets": [
+     "PMFriction: Snappy counter-strafing with surface velocity decay ($sv\\friction = 4.0$, $sv\\stopspeed = 1.875\\text{ m/s}$).",
+     "PMAccelerate: Directional vector projection capping add-velocity against maximum ground speed.",
+     "PMAirAccelerate: Implements the classic air-accelerate velocity cap ($0.75\\text{ m/s}$ / 30 units/s) coupled with high air acceleration ($12.0$). This preserves the authentic ai…",
+     "Crouch Transition: Dynamic viewport interpolation and dual-hull collision switching."
+    ]
+   },
+   "images": [
+    {
+     "src": "/shots/cs-remastered/00.webp",
+     "w": 1400,
+     "h": 788
+    },
+    {
+     "src": "/shots/cs-remastered/01.webp",
+     "w": 1400,
+     "h": 788
+    },
+    {
+     "src": "/shots/cs-remastered/02.webp",
+     "w": 1400,
+     "h": 788
+    }
+   ],
+   "videos": []
+  },
+  {
+   "name": "digital-recipe-book",
+   "description": null,
+   "url": "https://github.com/dor2500/digital-recipe-book",
+   "homepage": null,
+   "language": "TypeScript",
+   "stars": 0,
+   "topics": [],
+   "pushedAt": "2026-11-20T12:58:46Z",
+   "createdAt": "2026-11-14T15:00:27Z",
+   "languages": {
+    "TypeScript": 125468,
+    "CSS": 13284,
+    "JavaScript": 2419
+   },
+   "release": null,
+   "readme": {
+    "summary": "ספר מתכונים דיגיטלי בקוד פתוח שנראה ומתדפדף כמו ספר אמיתי. מדפדפים בספר כרוך בעור עם דפים שמתעקלים באמת, קופצים בין הפרקים בעזרת לשוניות בד, ומוסיפים מתכונים משלכם על כרטיס מתכון מרופד שורות.",
+    "bullets": [
+     "ספר בעברית שנפתח מימין לשמאל, כמו ספר עברי אמיתי: הדפים מתהפכים משמאל לימין",
+     "שני עמודים פתוחים במחשב, עמוד אחד בטלפון, עם אנימציית הדפדוף בשניהם",
+     "תוכן עניינים חי שמתעדכן לבד כשמוסיפים מתכון, ובלחיצה על מתכון הספר מדפדף אליו",
+     "13 לשוניות פרקים לאורך הקצה העליון של הספר (ארוחות בוקר, ראשונות ומתאבנים, מרקים, עיקריות, פיצות וטאבון, פסטה בעבודת יד, תוספות, ממרחים ורטבים, לחמים, מאפים, טבעוני, קינוחים, מש…",
+     "הוספת מתכון עם מצרכים ושלבים שאפשר להוסיף ולהסיר, וטיפ מהשף",
+     "כמה תמונות לכל מתכון (עד 10): בוחרים כמה בבת אחת מהגלריה, מצלמים, או מדביקים קישור; מסדרים ובוחרים תמונה ראשית",
+     "כל פרק עם השדות שלו: בלחמים יש התפחה ואפייה (בלי \"בישול\"), במשקאות תסיסה בימים, בקינוחים אפייה וצינון, ובכל פרק התפוקה נספרת נכון (מנות, יחידות, פיצות, צנצנות, ליטרים)",
+     "דפדוף בין התמונות בעמוד המתכון, ולחיצה על תמונה פותחת אותה על כל המסך"
+    ]
+   },
+   "images": [
+    {
+     "src": "/shots/digital-recipe-book/00.webp",
+     "w": 800,
+     "h": 699
+    },
+    {
+     "src": "/shots/digital-recipe-book/01.webp",
+     "w": 800,
+     "h": 699
+    },
+    {
+     "src": "/shots/digital-recipe-book/02.webp",
+     "w": 800,
+     "h": 523
+    },
+    {
+     "src": "/shots/digital-recipe-book/03.webp",
+     "w": 800,
+     "h": 523
+    },
+    {
+     "src": "/shots/digital-recipe-book/04.webp",
+     "w": 790,
+     "h": 500
+    },
+    {
+     "src": "/shots/digital-recipe-book/05.webp",
+     "w": 310,
+     "h": 699
+    }
+   ],
+   "videos": []
+  },
+  {
+   "name": "drift-browser",
+   "description": "Drift: a Chromium browser with Zen-style vertical tabs, spaces, split view and Glance, plus Chrome, Firefox and Brave styles. Auto-updates with Chromium security fixes.",
+   "url": "https://github.com/dor2500/drift-browser",
+   "homepage": null,
+   "language": "TypeScript",
+   "stars": 0,
+   "topics": [],
+   "pushedAt": "2026-11-10T21:16:09Z",
+   "createdAt": "2026-11-06T20:27:57Z",
+   "languages": {
+    "TypeScript": 1367702,
+    "CSS": 350763,
+    "Kotlin": 152479,
+    "JavaScript": 9401,
+    "PowerShell": 4362,
+    "Shell": 3160,
+    "HTML": 508
+   },
+   "release": {
+    "tag": "v1.0.1",
+    "name": "Drift Browser v1.0.1 — Signed Security & Features Release",
+    "date": "2026-11-10T20:32:38Z",
+    "url": "https://github.com/dor2500/drift-browser/releases/tag/v1.0.1",
+    "assets": 7
+   },
+   "readme": {
+    "summary": "Or download Drift-Setup-x.y.z.exe (Windows), the .dmg (macOS) or the .AppImage / .deb (Linux) from Releases. Installed copies update themselves. Builds aren't code-signed yet, so Windows SmartScreen may say \"More info → Run anyway\", and on macOS the install script clears the download-quarantine flag.",
+    "bullets": [
+     "Four styles, each with its browser's real layout. Colours and shapes were measured from the copies installed on the developer's PC:",
+     "Vertical tabs, Essentials, pinned tabs, Spaces (swipe or Ctrl+Alt+←/→), compact mode, split view and Glance (Alt+click a link to preview it).",
+     "Built-in ad and tracker blocking. EasyList, EasyPrivacy and uBlock filters plus a YouTube ad skipper. The shield in the address bar shows the blocked count and pauses blocking p…",
+     "Import from Zen, Firefox, Chrome, Brave and Edge. Bookmarks and history become address-bar suggestions. From Zen, your spaces, pinned tabs, Essentials and open tabs come across …",
+     "Everyday tools: find in page (Ctrl+F), zoom remembered per site, downloads (Ctrl+J), picture-in-picture, print, page source, screenshots (Ctrl+Shift+S), translate page, and slee…",
+     "Command actions: type an action name in the address bar (or start with >) to run it, as in Arc and Vivaldi.",
+     "Colour themes: Ocean, Midnight, Nord, Dracula, Catppuccin, Tokyo Night, Gruvbox and more on top of any style, plus a custom accent. Optional dark mode for every website.",
+     "Google sign-in for Gmail, YouTube and Drive. Chrome Sync is Chrome-only. Open page in any other installed browser, with per-site \"always open in…\" rules."
+    ]
+   },
+   "images": [
+    {
+     "src": "/shots/drift-browser/00.webp",
+     "w": 1400,
+     "h": 893
+    },
+    {
+     "src": "/shots/drift-browser/01.webp",
+     "w": 1400,
+     "h": 893
+    },
+    {
+     "src": "/shots/drift-browser/02.webp",
+     "w": 1400,
+     "h": 893
+    },
+    {
+     "src": "/shots/drift-browser/03.webp",
+     "w": 1400,
+     "h": 893
+    },
+    {
+     "src": "/shots/drift-browser/04.webp",
+     "w": 1400,
+     "h": 893
+    },
+    {
+     "src": "/shots/drift-browser/05.webp",
+     "w": 1400,
+     "h": 893
+    }
+   ],
+   "videos": []
+  },
+  {
+   "name": "exe-signer",
+   "description": "Windows desktop app that inspects EXE files and signs them with an auto-created code-signing certificate",
+   "url": "https://github.com/dor2500/exe-signer",
+   "homepage": null,
+   "language": "PowerShell",
+   "stars": 0,
+   "topics": [],
+   "pushedAt": "2026-11-08T21:10:04Z",
+   "createdAt": "2026-11-08T16:35:55Z",
+   "languages": {
+    "PowerShell": 104986,
+    "Batchfile": 191
+   },
+   "release": null,
+   "readme": {
+    "summary": "אפליקציית דסקטופ ל-Windows שבודקת קובצי EXE, DLL ו-MSI, חותמת עליהם בחתימה דיגיטלית (Authenticode), ומצליבה קובץ חתום מול המקור הלא-חתום כדי לוודא שלא שונה. את תעודת החתימה היא יוצרת בעצמה.",
+    "bullets": [
+     "לחיצה כפולה על ExeSigner.cmd",
+     "או גרירה של קובץ EXE על ExeSigner.cmd"
+    ]
+   },
+   "images": [
+    {
+     "src": "/shots/exe-signer/00.webp",
+     "w": 1400,
+     "h": 1056
+    },
+    {
+     "src": "/shots/exe-signer/01.webp",
+     "w": 1400,
+     "h": 1056
+    },
+    {
+     "src": "/shots/exe-signer/02.webp",
+     "w": 1400,
+     "h": 1056
+    },
+    {
+     "src": "/shots/exe-signer/03.webp",
+     "w": 1400,
+     "h": 1056
+    },
+    {
+     "src": "/shots/exe-signer/04.webp",
+     "w": 1400,
+     "h": 1056
+    }
+   ],
+   "videos": []
+  },
+  {
+   "name": "ExeLat-PoC",
+   "description": "ExeLat (Executable Translator): PoC for AI-assisted LTR-to-RTL (Hebrew) localisation of compiled Windows software",
+   "url": "https://github.com/dor2500/ExeLat-PoC",
+   "homepage": null,
+   "language": "Python",
+   "stars": 0,
+   "topics": [],
+   "pushedAt": "2026-11-12T20:09:05Z",
+   "createdAt": "2026-11-11T15:31:25Z",
+   "languages": {
+    "Python": 87149,
+    "HTML": 67051,
+    "PowerShell": 764,
+    "JavaScript": 521,
+    "CSS": 59
+   },
+   "release": {
+    "tag": "v1.2.0",
+    "name": "ExeLat 1.2.0 — whole programs",
+    "date": "2026-11-12T19:46:14Z",
+    "url": "https://github.com/dor2500/ExeLat-PoC/releases/tag/v1.2.0",
+    "assets": 1
+   },
+   "readme": {
+    "summary": "Plenty of useful Windows software was never released in Hebrew, and its source code is not available. ExeLat localises such a program directly from its compiled .exe:",
+    "bullets": [
+     "Reads and rewrites RTSTRING, RTDIALOG (both DLGTEMPLATE and DLGTEMPLATEEX) and RTMENU (classic and extended) resources.",
+     "Every parser has a matching serializer, and a resource is only modified if rebuilding it unchanged reproduces the original bytes. This check passes for all 4,211 resources teste…",
+     "Delphi / C++Builder programs: reads and rewrites binary form resources (TPF0 in RTRCDATA), translating Caption, Hint and list items, and sets BiDiMode = bdRightToLeft on each fo…",
+     "AI translations are validated before use: placeholders (%s, %1, {0}) and keyboard shortcuts must survive unchanged, otherwise the string is left for you.",
+     "Mirrors dialogs with WSEXLAYOUTRTL. Mirrors main windows by prefixing the version resource's FileDescription with two left-to-right marks, which makes Windows enable RTL layout …",
+     "Writes the result with the Windows resource-update API, removes the now-invalid Authenticode signature, carries over appended data, and recomputes the PE checksum."
+    ]
+   },
+   "images": [
+    {
+     "src": "/shots/ExeLat-PoC/00.webp",
+     "w": 1145,
+     "h": 1400
+    },
+    {
+     "src": "/shots/ExeLat-PoC/01.webp",
+     "w": 1400,
+     "h": 700
+    }
+   ],
+   "videos": []
+  },
+  {
+   "name": "FixyBot",
+   "description": null,
+   "url": "https://github.com/dor2500/FixyBot",
+   "homepage": null,
+   "language": "Python",
+   "stars": 0,
+   "topics": [],
+   "pushedAt": "2026-06-02T20:37:07Z",
+   "createdAt": "2026-05-31T17:03:02Z",
+   "languages": {
+    "Python": 82354,
+    "JavaScript": 5602,
+    "Dockerfile": 511,
+    "Shell": 70
+   },
+   "release": null,
+   "readme": {
+    "summary": "בוט תמיכה טכנית חכם המבוסס על Gemini AI ומאגר ידע פנימי. הבוט מסוגל לנתח תמונות של תקלות, לחפש פתרונות ברשת, ולענות על שאלות טכניות בעברית.",
+    "bullets": [
+     "💬 מענה על שאלות טכניות בעברית",
+     "📸 ניתוח תמונות של שגיאות ותקלות",
+     "📚 מאגר ידע פנימי עם אפשרות טעינה מחדש",
+     "🔍 חיפוש בגוגל כגיבוי לשאלות שאינן במאגר",
+     "🕐 מודעות לזמן ומיקום המשתמש",
+     "✅ אימות קיום מוצרים לפני מתן תשובה"
+    ]
+   },
+   "images": [],
+   "videos": []
+  },
+  {
+   "name": "FixyBot-WhatsApp",
+   "description": "FixyBot-WhatsApp",
+   "url": "https://github.com/dor2500/FixyBot-WhatsApp",
+   "homepage": null,
+   "language": "Python",
+   "stars": 0,
+   "topics": [],
+   "pushedAt": "2026-06-02T20:07:58Z",
+   "createdAt": "2026-06-02T18:40:27Z",
+   "languages": {
+    "Python": 82354,
+    "JavaScript": 4395,
+    "Dockerfile": 1011,
+    "Shell": 223
+   },
+   "release": null,
+   "readme": {
+    "summary": "בוט תמיכה טכנית חכם המבוסס על Gemini AI ומאגר ידע פנימי. הבוט מסוגל לנתח תמונות של תקלות, לחפש פתרונות ברשת, ולענות על שאלות טכניות בעברית.",
+    "bullets": [
+     "💬 מענה על שאלות טכניות בעברית",
+     "📸 ניתוח תמונות של שגיאות ותקלות",
+     "📚 מאגר ידע פנימי עם אפשרות טעינה מחדש",
+     "🔍 חיפוש בגוגל כגיבוי לשאלות שאינן במאגר",
+     "🕐 מודעות לזמן ומיקום המשתמש",
+     "✅ אימות קיום מוצרים לפני מתן תשובה"
+    ]
+   },
+   "images": [],
+   "videos": []
+  },
+  {
+   "name": "home-rms",
+   "description": "Consent-based LAN remote management system (.NET 9: WPF controller + tray agent, gRPC over mutual TLS)",
+   "url": "https://github.com/dor2500/home-rms",
+   "homepage": null,
+   "language": "C#",
+   "stars": 0,
+   "topics": [],
+   "pushedAt": "2026-11-21T13:32:49Z",
+   "createdAt": "2026-11-15T19:18:38Z",
+   "languages": {
+    "C#": 1057879,
+    "PowerShell": 33568,
+    "HLSL": 3757,
+    "Shell": 1139
+   },
+   "release": {
+    "tag": "v2.2.0",
+    "name": "Home RMS v2.2.0 — winstall-style Deploy",
+    "date": "2026-11-21T13:34:43Z",
+    "url": "https://github.com/dor2500/home-rms/releases/tag/v2.2.0",
+    "assets": 6
+   },
+   "readme": {
+    "summary": "Home RMS — Consent-Based LAN Remote Management System (.NET 9)",
+    "bullets": [
+     "Interactive User Session: Runs as a visible application in the signed-in user's desktop session with a system tray icon.",
+     "Explicit On-Screen Prompt: Starting a Remote Desktop stream triggers a modal Allow / Deny dialog on the remote computer showing the operator's certificate identity (homerms-cont…",
+     "Persistent Red Viewing Banner: Whenever a screen stream is active, an always-on-top red banner is displayed at the top of the remote screen with a one-click Stop button.",
+     "Time-Boxed Grants & Instant Revocation: Consent grants expire automatically after 1 hour and can be revoked at any moment from the banner, the Agent window, or the system tray m…",
+     "Full Audit Log: Every connection, inventory query, PowerShell command, and screen session is recorded with timestamps in the Agent's LIVE AUDIT & ACTIVITY LOG."
+    ]
+   },
+   "images": [
+    {
+     "src": "/shots/home-rms/00.webp",
+     "w": 1400,
+     "h": 865
+    },
+    {
+     "src": "/shots/home-rms/01.webp",
+     "w": 1400,
+     "h": 865
+    },
+    {
+     "src": "/shots/home-rms/02.webp",
+     "w": 1400,
+     "h": 865
+    },
+    {
+     "src": "/shots/home-rms/03.webp",
+     "w": 1400,
+     "h": 865
+    },
+    {
+     "src": "/shots/home-rms/04.webp",
+     "w": 906,
+     "h": 691
+    }
+   ],
+   "videos": []
+  },
+  {
+   "name": "icy-tower-mario-he-4k",
+   "description": "Icy Tower 1.3.1 - Super Mario Edition, Hebrew, 4K (unofficial fan mod)",
+   "url": "https://github.com/dor2500/icy-tower-mario-he-4k",
+   "homepage": "https://dor2500.github.io/icy-tower-mario-he-4k/",
+   "language": "JavaScript",
+   "stars": 0,
+   "topics": [],
+   "pushedAt": "2026-10-19T11:19:06Z",
+   "createdAt": "2026-10-18T16:41:29Z",
+   "languages": {
+    "JavaScript": 175383,
+    "Python": 103703,
+    "CSS": 18643,
+    "PowerShell": 12064,
+    "HTML": 8158,
+    "C#": 7276,
+    "Inno Setup": 4297,
+    "C++": 1236
+   },
+   "release": {
+    "tag": "v1.7",
+    "name": "Icy Tower - Super Mario Edition v1.7 (המהדורה המודרנית)",
+    "date": "2026-10-19T11:19:06Z",
+    "url": "https://github.com/dor2500/icy-tower-mario-he-4k/releases/tag/v1.7",
+    "assets": 3
+   },
+   "readme": {
+    "summary": "גרסת מעריצים לא רשמית של המשחק החינמי Icy Tower 1.3.1 מאת Free Lunch Design:",
+    "bullets": [
+     "אותו משחק: אותה פיזיקה ואותן מפות (web/js/game.js), עם רמות הקושי, השלבים, כל הדמויות (גם הדמות מתמונה), המשחק האוטומטי ומצב הפרסומות.",
+     "מראה חדש: מסך רחב, ומחוץ למגדל שמיים פתוחים שמשתנים לפי הגובה (יום, שקיעה, לילה עם כוכבים, חלל). יש הרים ועננים בשכבות שזזות במהירויות שונות,",
+     "אפקטים: שלג, אבק כשנוחתים, שובל קשת בזמן קומבו, קונפטי ורעידת מסך על פרסים, ואור סביב הדמות.",
+     "ממשק: טבעת קומבו, פסי מהירות, וכרטיסי זכוכית לקומה ולניקוד. התפריטים בנויים מכרטיסי זכוכית מעל הדגמה חיה של המגדל, ואפשר לשלוט בהם עם המקלדת.",
+     "איכות: הכול מצויר בווקטורים ברזולוציה של המסך, ואפשר להפעיל \"איכות מקסימלית\" (ציור ברזולוציה גבוהה פי 1.5 והקטנה)."
+    ]
+   },
+   "images": [
+    {
+     "src": "/shots/icy-tower-mario-he-4k/00.webp",
+     "w": 360,
+     "h": 270
+    },
+    {
+     "src": "/shots/icy-tower-mario-he-4k/01.webp",
+     "w": 1280,
+     "h": 960
+    },
+    {
+     "src": "/shots/icy-tower-mario-he-4k/02.webp",
+     "w": 1280,
+     "h": 960
+    },
+    {
+     "src": "/shots/icy-tower-mario-he-4k/03.webp",
+     "w": 1280,
+     "h": 960
+    },
+    {
+     "src": "/shots/icy-tower-mario-he-4k/04.webp",
+     "w": 1280,
+     "h": 960
+    },
+    {
+     "src": "/shots/icy-tower-mario-he-4k/05.webp",
+     "w": 1280,
+     "h": 960
+    }
+   ],
+   "videos": []
+  },
+  {
+   "name": "israel-tv-plus",
+   "description": "ישראל TV+ – ערוצי טלוויזיה ורדיו ישראליים בשידור חי ללוח LG/סמסונג/Android TV, אנדרואיד, Windows, Mac/Linux, דפדפן ו-Stremio, עם דיבוב לעברית",
+   "url": "https://github.com/dor2500/israel-tv-plus",
+   "homepage": "https://dor2500.github.io/israel-tv-plus/",
+   "language": "JavaScript",
+   "stars": 9,
+   "topics": [
+    "android-tv",
+    "hebrew",
+    "iptv",
+    "israel",
+    "lg-webos",
+    "live-tv",
+    "radio",
+    "stremio-addon",
+    "tizen",
+    "webos"
+   ],
+   "pushedAt": "2026-11-21T07:23:45Z",
+   "createdAt": "2026-10-23T08:32:40Z",
+   "languages": {
+    "JavaScript": 1132499,
+    "Python": 811984,
+    "Kotlin": 786131,
+    "CSS": 229334,
+    "HTML": 66853,
+    "Java": 36260,
+    "PowerShell": 8165,
+    "C#": 7996,
+    "Swift": 4276,
+    "Shell": 4057,
+    "Inno Setup": 1750,
+    "Dockerfile": 556,
+    "Batchfile": 300,
+    "TypeScript": 266
+   },
+   "release": {
+    "tag": "v4.8.81",
+    "name": "Israel TV+ v4.8.81 – שרתים חדשים ו-3 גיבויים עצמאיים לצ'רלטון (ספורט 1–4)",
+    "date": "2026-11-17T17:40:26Z",
+    "url": "https://github.com/dor2500/israel-tv-plus/releases/tag/v4.8.81",
+    "assets": 18
+   },
+   "readme": {
+    "summary": "ערוצי טלוויזיה ותחנות רדיו ישראליות בשידור חי – לטלוויזיה (LG, סמסונג, Android TV), לאנדרואיד, למחשב, לדפדפן ול-Stremio. 434 ערוצים ותחנות, 136 תחנות רדיו ו-158 סדרות VOD: ערוצי ישראל, ילדים בעברית, חדשות, סרטים, ספורט, אוכל ובישול, טיולים, מדע, כלכלה, קומדיה, דוקו, מוזיקה וערוצים מכל העולם עם דיבוב חי לעברית. באנדרואיד (טלפון וטאבלט): אפליקציה מקורית ב-Jetpack Compose – כרטיסי פוסטר, נגן נקי וטשטוש זכוכית של Mate…",
+    "bullets": [
+     "השבחה ל-4K / Ultra Sharp: אלגוריתם שדרוג חדות וקונטרסט בחומרה (Hardware-Accelerated Super-Resolution) המאפשר שדרוג שידורי 420p / 480p / 720p לתמונה חדה ועשירה גם על גבי מסכי 4K …",
+     "הורדת איכות יזומה (1080p / 720p / 480p / 360p): שליטה מלאה ברזולוציה – מעבר מהיר לרזולוציה קלה יותר ברשתות חלשות או סלולריות למניעת עצירות.",
+     "מנגנון אנטי-תקיעות (Adaptive Buffer Watchdog): אגירה מוגדלת (עד 60 שניות buffer), ניטור תקיעות אוטומטי והתאמת קצב נתונים אוטומטית המבטיחה שידור חלק ורציף לחלוטין ללא גמגומים (\"M…"
+    ]
+   },
+   "images": [
+    {
+     "src": "/shots/israel-tv-plus/00.webp",
+     "w": 1400,
+     "h": 788
+    },
+    {
+     "src": "/shots/israel-tv-plus/01.webp",
+     "w": 1400,
+     "h": 788
+    },
+    {
+     "src": "/shots/israel-tv-plus/02.webp",
+     "w": 1400,
+     "h": 788
+    },
+    {
+     "src": "/shots/israel-tv-plus/03.webp",
+     "w": 1400,
+     "h": 788
+    },
+    {
+     "src": "/shots/israel-tv-plus/04.webp",
+     "w": 1400,
+     "h": 788
+    },
+    {
+     "src": "/shots/israel-tv-plus/05.webp",
+     "w": 1400,
+     "h": 788
+    },
+    {
+     "src": "/shots/israel-tv-plus/06.webp",
+     "w": 630,
+     "h": 1400
+    },
+    {
+     "src": "/shots/israel-tv-plus/07.webp",
+     "w": 630,
+     "h": 1400
+    },
+    {
+     "src": "/shots/israel-tv-plus/08.webp",
+     "w": 630,
+     "h": 1400
+    },
+    {
+     "src": "/shots/israel-tv-plus/09.webp",
+     "w": 540,
+     "h": 1200
+    },
+    {
+     "src": "/shots/israel-tv-plus/10.webp",
+     "w": 630,
+     "h": 1400
+    },
+    {
+     "src": "/shots/israel-tv-plus/11.webp",
+     "w": 454,
+     "h": 454
+    },
+    {
+     "src": "/shots/israel-tv-plus/12.webp",
+     "w": 454,
+     "h": 454
+    },
+    {
+     "src": "/shots/israel-tv-plus/13.webp",
+     "w": 1280,
+     "h": 720
+    },
+    {
+     "src": "/shots/israel-tv-plus/14.webp",
+     "w": 512,
+     "h": 512
+    }
+   ],
+   "videos": [
+    "/shots/israel-tv-plus/demo-tv.mp4",
+    "/shots/israel-tv-plus/demo-phone.mp4"
+   ]
+  },
+  {
+   "name": "minesweeper-ultra-4k",
+   "description": "💣 Minesweeper Ultra 4K – The Modern Remaster with 4K Vector Graphics, AI Solver, Defuse Shields, Sonar Drone, Synthesized Audio & 6 Themes",
+   "url": "https://github.com/dor2500/minesweeper-ultra-4k",
+   "homepage": null,
+   "language": "JavaScript",
+   "stars": 0,
+   "topics": [],
+   "pushedAt": "2026-11-09T21:08:57Z",
+   "createdAt": "2026-11-09T20:32:42Z",
+   "languages": {
+    "JavaScript": 106671,
+    "SCSS": 30562,
+    "CSS": 13233,
+    "NSIS": 13155,
+    "Python": 4753,
+    "Go": 1729,
+    "HTML": 337
+   },
+   "release": {
+    "tag": "v2.0.0",
+    "name": "v2.0.0 - Minesweeper Ultra 4K Enhanced Edition",
+    "date": "2026-11-09T20:33:25Z",
+    "url": "https://github.com/dor2500/minesweeper-ultra-4k/releases/tag/v2.0.0",
+    "assets": 1
+   },
+   "readme": {
+    "summary": "Most Minesweeper clones are either low-resolution 90s ports that look tiny and blurry on modern 2K/4K monitors, or slow ad-filled web games.",
+    "bullets": [
+     "Crisp at Any Scale: Full SVG vector rendering for tiles, flags, mines, and numbers when playing in modern modes. Never blurry or pixelated on 4K/2K screens!",
+     "High-DPI Zoom Controls: 100%, 150%, 200%, 250% scales, plus ⛶ Fullscreen Mode (F11)."
+    ]
+   },
+   "images": [
+    {
+     "src": "/shots/minesweeper-ultra-4k/00.webp",
+     "w": 1200,
+     "h": 500
+    },
+    {
+     "src": "/shots/minesweeper-ultra-4k/01.webp",
+     "w": 1000,
+     "h": 420
+    }
+   ],
+   "videos": []
+  },
+  {
+   "name": "nebula-ide",
+   "description": "Agent-first code editor in the style of Antigravity IDE, built on VSCodium with Claude as the agent",
+   "url": "https://github.com/dor2500/nebula-ide",
+   "homepage": null,
+   "language": "JavaScript",
+   "stars": 0,
+   "topics": [],
+   "pushedAt": "2026-10-17T19:31:55Z",
+   "createdAt": "2026-10-17T07:26:20Z",
+   "languages": {
+    "JavaScript": 181348,
+    "CSS": 25417,
+    "PowerShell": 10872,
+    "NSIS": 6036
+   },
+   "release": {
+    "tag": "v1.6.0",
+    "name": "Nebula IDE 1.6.0",
+    "date": "2026-10-17T19:31:55Z",
+    "url": "https://github.com/dor2500/nebula-ide/releases/tag/v1.6.0",
+    "assets": 2
+   },
+   "readme": {
+    "summary": "An agent-first code editor in the style of Antigravity IDE, built on VSCodium (the open-source build of VS Code) with Claude as the agent.",
+    "bullets": [
+     "Agent panel on the right (Ctrl+L), new conversation (Ctrl+Shift+L), past conversations, Agent Manager (Ctrl+E), edit selection (Ctrl+I).",
+     "Composer with + Add Context (media, mentions, actions), @ file mentions, / actions and a model + effort picker (Ctrl+/).",
+     "Images: paste a screenshot (Ctrl+V), drag one in, or attach it — send it without a message and the agent works out what it is (a bug, a design, an error) and helps.",
+     "Review Policy (file edits) and Auto Execution (terminal commands): Always Proceed, Agent Decides or Request Review. With Agent Decides, safe read-only commands (tests, builds, g…",
+     "Auto-fix lints: after the agent changes files, it fixes errors the language servers report in them.",
+     "Change review: every edit is snapshotted; review as a diff, accept or reject per file or all at once.",
+     "Browser: built-in browser (Nebula: Open Browser) and optional browser control for the agent (Playwright).",
+     "Generate commit message from the Source Control view (✨ button)."
+    ]
+   },
+   "images": [
+    {
+     "src": "/shots/nebula-ide/00.webp",
+     "w": 1400,
+     "h": 876
+    },
+    {
+     "src": "/shots/nebula-ide/01.webp",
+     "w": 1400,
+     "h": 876
+    },
+    {
+     "src": "/shots/nebula-ide/02.webp",
+     "w": 1400,
+     "h": 876
+    },
+    {
+     "src": "/shots/nebula-ide/03.webp",
+     "w": 1400,
+     "h": 876
+    },
+    {
+     "src": "/shots/nebula-ide/04.webp",
+     "w": 1400,
+     "h": 876
+    },
+    {
+     "src": "/shots/nebula-ide/05.webp",
+     "w": 1400,
+     "h": 876
+    }
+   ],
+   "videos": []
+  },
+  {
+   "name": "NovaBrowser",
+   "description": "🌌 Nova Browser - A modern Android browser with Ad Blocker, Incognito, Reader Mode, Desktop Mode, Find-in-Page, Screenshot & more",
+   "url": "https://github.com/dor2500/NovaBrowser",
+   "homepage": null,
+   "language": "Java",
+   "stars": 0,
+   "topics": [],
+   "pushedAt": "2026-09-19T11:03:27Z",
+   "createdAt": "2026-09-18T00:08:51Z",
+   "languages": {
+    "Java": 92758
+   },
+   "release": {
+    "tag": "v2.1.4",
+    "name": "NovaBrowser Update v2.1.4",
+    "date": "2026-09-18T18:47:49Z",
+    "url": "https://github.com/dor2500/NovaBrowser/releases/tag/v2.1.4",
+    "assets": 1
+   },
+   "readme": {
+    "summary": "",
+    "bullets": [
+     "Automatically blocks ads, trackers and malicious domains",
+     "No extensions needed — it's baked right in",
+     "Toggle on/off from the menu"
+    ]
+   },
+   "images": [],
+   "videos": []
+  },
+  {
+   "name": "OmniBlock-DNS",
+   "description": "OmniBlock-DNS",
+   "url": "https://github.com/dor2500/OmniBlock-DNS",
+   "homepage": null,
+   "language": "JavaScript",
+   "stars": 0,
+   "topics": [],
+   "pushedAt": "2026-08-28T15:35:59Z",
+   "createdAt": "2026-08-28T15:07:39Z",
+   "languages": {
+    "JavaScript": 18575,
+    "HTML": 18512,
+    "CSS": 7399,
+    "Shell": 3945
+   },
+   "release": null,
+   "readme": {
+    "summary": "OmniBlock DNS combines the best features of Pi-hole and AdGuard Home into one sleek, lightweight package built on Node.js and React.",
+    "bullets": [
+     "🚀 Blazing Fast: Loads blocklists into memory for O(1) lookup speeds.",
+     "🎨 Premium UI: Modern dark-mode dashboard with Glassmorphism, built with React and Vite.",
+     "📊 Real-time Analytics: View traffic charts and recent queries live.",
+     "🛡️ Easy Management: Instantly add domains to your Whitelist or Blacklist.",
+     "🖥️ Interactive Installer: Comes with a built-in TUI installer for Linux, just like Pi-hole!"
+    ]
+   },
+   "images": [],
+   "videos": []
+  },
+  {
+   "name": "pulse-speed",
+   "description": "Pulse: a modern Material You internet speed test for Android",
+   "url": "https://github.com/dor2500/pulse-speed",
+   "homepage": "https://github.com/dor2500/pulse-speed/releases/latest",
+   "language": "Kotlin",
+   "stars": 1,
+   "topics": [
+    "android",
+    "cloudflare",
+    "hebrew",
+    "internet-speed",
+    "jetpack-compose",
+    "kotlin",
+    "material-you",
+    "material3",
+    "speed-test",
+    "speedtest"
+   ],
+   "pushedAt": "2026-11-16T21:35:22Z",
+   "createdAt": "2026-11-08T06:11:04Z",
+   "languages": {
+    "Kotlin": 443422,
+    "JavaScript": 41371,
+    "Python": 29638,
+    "CSS": 12195,
+    "C#": 7885,
+    "HTML": 2417,
+    "Shell": 960
+   },
+   "release": {
+    "tag": "v1.10.1",
+    "name": "Pulse v1.10.1",
+    "date": "2026-11-16T21:35:22Z",
+    "url": "https://github.com/dor2500/pulse-speed/releases/tag/v1.10.1",
+    "assets": 2
+   },
+   "readme": {
+    "summary": "A fast, modern speed test app built with Jetpack Compose / Material 3 Expressive and multiplatform client engines. It measures ping, jitter, download, upload and bufferbloat / loaded latency against your choice of Cloudflare, Ookla (speedtest.net), FAST (Netflix) or LibreSpeed servers.",
+    "bullets": [
+     "Material You: colors follow your wallpaper on Android 12+, plus light, dark and system themes",
+     "Material 3 Expressive design: a compact floating pill navigation bar, asymmetric cards and pill buttons",
+     "Morphing gauge: an organic four-petal shape that breathes, swells and spins faster with live speed, carries progress on an organic ring, and morphs into a capsule with the final…",
+     "Expanding cards: the card for the running phase springs larger and lifts while its test runs",
+     "Four test networks: Cloudflare, Ookla's speedtest.net servers, Netflix's FAST servers and LibreSpeed community servers, picked per test",
+     "Ping: ICMP, TCP or DNS pings to your router, your network's DNS, public resolvers (1.1.1.1, 8.8.8.8, Quad9, OpenDNS) or any host, with live latency bars, jitter and packet loss",
+     "Network scan: find every device on your Wi-Fi (router, phones, computers, TVs, printers, speakers) with names and latency; tap one to ping it",
+     "Full test details: data used, ping idle and under load (low / high / jitter), packet loss, connection, device and IPs (IPs stay on the device)"
+    ]
+   },
+   "images": [
+    {
+     "src": "/shots/pulse-speed/00.webp",
+     "w": 630,
+     "h": 1400
+    },
+    {
+     "src": "/shots/pulse-speed/01.webp",
+     "w": 630,
+     "h": 1400
+    },
+    {
+     "src": "/shots/pulse-speed/02.webp",
+     "w": 630,
+     "h": 1400
+    },
+    {
+     "src": "/shots/pulse-speed/03.webp",
+     "w": 630,
+     "h": 1400
+    },
+    {
+     "src": "/shots/pulse-speed/04.webp",
+     "w": 630,
+     "h": 1400
+    },
+    {
+     "src": "/shots/pulse-speed/05.webp",
+     "w": 630,
+     "h": 1400
+    },
+    {
+     "src": "/shots/pulse-speed/06.webp",
+     "w": 630,
+     "h": 1400
+    },
+    {
+     "src": "/shots/pulse-speed/07.webp",
+     "w": 630,
+     "h": 1400
+    },
+    {
+     "src": "/shots/pulse-speed/08.webp",
+     "w": 630,
+     "h": 1400
+    },
+    {
+     "src": "/shots/pulse-speed/09.webp",
+     "w": 630,
+     "h": 1400
+    },
+    {
+     "src": "/shots/pulse-speed/10.webp",
+     "w": 630,
+     "h": 1400
+    },
+    {
+     "src": "/shots/pulse-speed/11.webp",
+     "w": 630,
+     "h": 1400
+    },
+    {
+     "src": "/shots/pulse-speed/12.webp",
+     "w": 1024,
+     "h": 500
+    },
+    {
+     "src": "/shots/pulse-speed/13.webp",
+     "w": 512,
+     "h": 512
+    }
+   ],
+   "videos": []
+  },
+  {
+   "name": "SignalFinder-AR",
+   "description": null,
+   "url": "https://github.com/dor2500/SignalFinder-AR",
+   "homepage": null,
+   "language": "Kotlin",
+   "stars": 0,
+   "topics": [],
+   "pushedAt": "2026-10-08T09:48:27Z",
+   "createdAt": "2026-10-08T05:34:22Z",
+   "languages": {
+    "Kotlin": 28858
+   },
+   "release": {
+    "tag": "v2.0.1",
+    "name": "Release v2.0.1",
+    "date": "2026-10-08T09:48:28Z",
+    "url": "https://github.com/dor2500/SignalFinder-AR/releases/tag/v2.0.1",
+    "assets": 1
+   },
+   "readme": {
+    "summary": "This is a complete Android project scaffolding for the SignalFinder AR & Speedtest application, written in Kotlin using modern architecture (Compose, Material 3, Coroutines).",
+    "bullets": [
+     "app/src/main/java/com/example/signalfinder/: Contains the core application logic.",
+     "ar/: AR overlay and camera rendering.",
+     "scanner/: RF and Wi-Fi signal scanning services, and HUD UI.",
+     "speedtest/: Built-in speed test module and gauge UI.",
+     "ui/: Main screens and theming."
+    ]
+   },
+   "images": [],
+   "videos": []
+  },
+  {
+   "name": "smart-tv-desktop-remote",
+   "description": "Windows remote control for LG, Samsung, Android TV, Google TV, Roku, Vizio and Sony TVs",
+   "url": "https://github.com/dor2500/smart-tv-desktop-remote",
+   "homepage": null,
+   "language": "JavaScript",
+   "stars": 1,
+   "topics": [],
+   "pushedAt": "2026-11-06T16:21:10Z",
+   "createdAt": "2026-10-31T19:16:59Z",
+   "languages": {
+    "JavaScript": 245044,
+    "HTML": 14232,
+    "CSS": 11690,
+    "PowerShell": 4755
+   },
+   "release": {
+    "tag": "v0.3.0",
+    "name": "Smart TV Desktop Remote 0.3.0",
+    "date": "2026-11-06T16:20:02Z",
+    "url": "https://github.com/dor2500/smart-tv-desktop-remote/releases/tag/v0.3.0",
+    "assets": 1
+   },
+   "readme": {
+    "summary": "A Windows desktop app that controls your smart TV from your computer: LG, Samsung, Android TV and Google TV (Sony, Philips, TCL, Xiaomi and others), Roku, Vizio and Sony BRAVIA. It offers an on-screen remote, apps, inputs, typing and volume. On LG TVs it also shows the TV's screen in the app and controls a mouse pointer.",
+    "bullets": [
+     "Windows 10 or 11, 64-bit.",
+     "A TV from the supported list.",
+     "The computer and the TV on the same network, or connected through a VPN.",
+     "Access to the TV's regular remote for the first pairing. Roku is the exception."
+    ]
+   },
+   "images": [
+    {
+     "src": "/shots/smart-tv-desktop-remote/00.webp",
+     "w": 1400,
+     "h": 857
+    },
+    {
+     "src": "/shots/smart-tv-desktop-remote/01.webp",
+     "w": 1400,
+     "h": 857
+    },
+    {
+     "src": "/shots/smart-tv-desktop-remote/02.webp",
+     "w": 1400,
+     "h": 857
+    },
+    {
+     "src": "/shots/smart-tv-desktop-remote/03.webp",
+     "w": 1400,
+     "h": 857
+    },
+    {
+     "src": "/shots/smart-tv-desktop-remote/04.webp",
+     "w": 960,
+     "h": 540
+    }
+   ],
+   "videos": []
+  },
+  {
+   "name": "sonic-flash-he",
+   "description": "Ultimate Flash Sonic בעברית — HD 4K/8K, EXE ל-Windows וגרסת דפדפן/טלפון",
+   "url": "https://github.com/dor2500/sonic-flash-he",
+   "homepage": null,
+   "language": "Python",
+   "stars": 0,
+   "topics": [],
+   "pushedAt": "2026-10-19T23:03:29Z",
+   "createdAt": "2026-10-19T21:42:16Z",
+   "languages": {
+    "Python": 79999,
+    "Java": 27820,
+    "PowerShell": 13734,
+    "JavaScript": 5210,
+    "CSS": 3760,
+    "HTML": 2369
+   },
+   "release": {
+    "tag": "v1.1",
+    "name": "v1.1 — אפליקציה + 24 דמויות",
+    "date": "2026-10-19T23:03:29Z",
+    "url": "https://github.com/dor2500/sonic-flash-he/releases/tag/v1.1",
+    "assets": 4
+   },
+   "readme": {
+    "summary": "תרגום מלא לעברית של משחק המעריצים Ultimate Flash Sonic, עם גרפיקה מוגדלת (xBRZ ×6) למסכי 4K/8K, גרסת דפדפן לטלפון ולמחשב, וקובץ EXE יחיד ל-Windows.",
+    "bullets": [
+     "אנדרואיד: sonicflashhe.apk — מורידים בטלפון, פותחים ומאשרים \"התקנה ממקורות לא ידועים\". עובד גם בלי אינטרנט.",
+     "Windows: sonicflashhe.exe — קובץ יחיד, בלי התקנה."
+    ]
+   },
+   "images": [
+    {
+     "src": "/shots/sonic-flash-he/00.webp",
+     "w": 1244,
+     "h": 889
+    },
+    {
+     "src": "/shots/sonic-flash-he/01.webp",
+     "w": 1244,
+     "h": 889
+    },
+    {
+     "src": "/shots/sonic-flash-he/02.webp",
+     "w": 1200,
+     "h": 780
+    }
+   ],
+   "videos": []
+  },
+  {
+   "name": "Stratum",
+   "description": "A modern archive manager for Windows, built with WinUI 3 and the 7-Zip engine",
+   "url": "https://github.com/dor2500/Stratum",
+   "homepage": null,
+   "language": "C#",
+   "stars": 0,
+   "topics": [],
+   "pushedAt": "2026-11-13T19:00:51Z",
+   "createdAt": "2026-11-12T05:39:31Z",
+   "languages": {
+    "C#": 118898,
+    "PowerShell": 10493,
+    "C++": 7815
+   },
+   "release": null,
+   "readme": {
+    "summary": "A modern archive manager for Windows, built with WinUI 3 and the 7-Zip engine.",
+    "bullets": [
+     "Classic menu, no setup. In Stratum, open the settings menu (gear icon) and turn on",
+     "Windows 11 modern menu. Windows 11 only lists apps that have a package identity, so this"
+    ]
+   },
+   "images": [
+    {
+     "src": "/shots/Stratum/00.webp",
+     "w": 1040,
+     "h": 700
+    },
+    {
+     "src": "/shots/Stratum/01.webp",
+     "w": 1040,
+     "h": 700
+    }
+   ],
+   "videos": []
+  },
+  {
+   "name": "tafnit",
+   "description": "Tafnit (תפנית) — Fast, ad-free, open-source Material You Android public transit app for Israel",
+   "url": "https://github.com/dor2500/tafnit",
+   "homepage": null,
+   "language": "Kotlin",
+   "stars": 0,
+   "topics": [
+    "android",
+    "gtfs",
+    "israel",
+    "jetpack-compose",
+    "kotlin",
+    "material-you",
+    "material3",
+    "open-source",
+    "public-transit"
+   ],
+   "pushedAt": "2026-11-19T17:54:27Z",
+   "createdAt": "2026-11-19T16:38:46Z",
+   "languages": {
+    "Kotlin": 389939
+   },
+   "release": {
+    "tag": "v1.2.0",
+    "name": "Tafnit (תפנית) v1.2.0",
+    "date": "2026-11-19T17:54:27Z",
+    "url": "https://github.com/dor2500/tafnit/releases/tag/v1.2.0",
+    "assets": 1
+   },
+   "readme": {
+    "summary": "",
+    "bullets": [
+     "Material You (Material 3) & Dynamic Color: Wallpaper-adaptive dynamicDarkColorScheme / dynamicLightColorScheme on Android 12+, refined fallback palette on Android 8–11, edge-to-…",
+     "Full Bilingual Localization (עברית RTL / English LTR): Instant in-app language switching via AppCompatDelegate.setApplicationLocales across every screen, dialog, notification, a…",
+     "Directions & Live Map (מסלולים): Interactive OpenStreetMap (osmdroid) map with live moving transit vehicles, nearby stop pins, floating Material 3 search bar, quick-access Home …",
+     "Smart Search & Favorites: Debounced autocomplete for addresses, landmarks, 5-digit Israeli station codes (מק\"ט), and line numbers; full Favorites CRUD with custom icon picker; i…",
+     "Advanced Trip Planner: Origin/destination swap, Leave now / Depart at / Arrive by date & time pickers, mode filters (Bus, Israel Railways, Light Rail Dankal/Kfir, Shuttle), rout…",
+     "Live Navigation & Get-Off Alerts: Foreground Service (LiveNavigationService) with real-time leg tracking, persistent lock-screen progress notification, configurable Get-Off Aler…",
+     "Stations & Lines (תחנות / קווים): Nearby stops sheet, Station Details with Live GPS vs Scheduled arrivals & full timetable, Line Details with outbound/return direction switcher,…",
+     "Jetpack Glance Widgets: TafnitNearbyWidget (closest stop + next 3 live arrivals + refresh) and TafnitCommuteWidget (one-tap Home, Work, and favorite lines)."
+    ]
+   },
+   "images": [
+    {
+     "src": "/shots/tafnit/00.webp",
+     "w": 630,
+     "h": 1400
+    },
+    {
+     "src": "/shots/tafnit/01.webp",
+     "w": 630,
+     "h": 1400
+    },
+    {
+     "src": "/shots/tafnit/02.webp",
+     "w": 630,
+     "h": 1400
+    },
+    {
+     "src": "/shots/tafnit/03.webp",
+     "w": 630,
+     "h": 1400
+    },
+    {
+     "src": "/shots/tafnit/04.webp",
+     "w": 630,
+     "h": 1400
+    },
+    {
+     "src": "/shots/tafnit/05.webp",
+     "w": 630,
+     "h": 1400
+    }
+   ],
+   "videos": []
+  },
+  {
+   "name": "update-pulse",
+   "description": "Native Android Update Tracker app built with Jetpack Compose & Material You",
+   "url": "https://github.com/dor2500/update-pulse",
+   "homepage": null,
+   "language": "Kotlin",
+   "stars": 0,
+   "topics": [],
+   "pushedAt": "2026-11-20T21:06:27Z",
+   "createdAt": "2026-11-20T08:07:59Z",
+   "languages": {
+    "Kotlin": 241079
+   },
+   "release": {
+    "tag": "v1.5.0",
+    "name": "UpdatePulse v1.5.0",
+    "date": "2026-11-20T21:10:18Z",
+    "url": "https://github.com/dor2500/update-pulse/releases/tag/v1.5.0",
+    "assets": 1
+   },
+   "readme": {
+    "summary": "A native Android update tracker built with Kotlin, Jetpack Compose, Material 3 (Material You), Room, and WorkManager.",
+    "bullets": [
+     "Curated Service Catalog: Pre-populated, searchable catalog across Google & Pixel, Messaging & Social, Browsers, Android Power-User & Modding, PC/OS/Dev Tools, and Smart Home & M…",
+     "Custom Service Trackers: Track any GitHub Releases repository, RSS/Atom feed, JSON endpoint, or Webpage via Regex — with a built-in Test Source button.",
+     "Material You & Dark-First Design: Dynamic Color on Android 12+, Dark Mode by default, plus AMOLED Pure Black, Light, and System themes. Full English and Hebrew (RTL) support.",
+     "Background Checking & Rich Notifications: Configurable WorkManager polling intervals, Wi-Fi only mode, grouped notifications with Open Link and Mark as Read actions.",
+     "In-App Self-Updater: Checks GitHub Releases directly from Settings, downloads the APK with live progress, and launches the Android installer via FileProvider.",
+     "Backup & Restore: Export and import tracked subscriptions and custom services as JSON via Storage Access Framework."
+    ]
+   },
+   "images": [
+    {
+     "src": "/shots/update-pulse/00.webp",
+     "w": 630,
+     "h": 1400
+    },
+    {
+     "src": "/shots/update-pulse/01.webp",
+     "w": 630,
+     "h": 1400
+    },
+    {
+     "src": "/shots/update-pulse/02.webp",
+     "w": 630,
+     "h": 1400
+    },
+    {
+     "src": "/shots/update-pulse/03.webp",
+     "w": 630,
+     "h": 1400
+    }
+   ],
+   "videos": []
+  },
+  {
+   "name": "usb-ai-technician",
+   "description": "Portable PC technician on a USB stick: clean up bloatware, install programs and update Windows (security-only), guided by a local offline gpt-oss-20b via llama.cpp",
+   "url": "https://github.com/dor2500/usb-ai-technician",
+   "homepage": null,
+   "language": "PowerShell",
+   "stars": 0,
+   "topics": [
+    "debloat",
+    "gpt-oss",
+    "llama-cpp",
+    "local-llm",
+    "offline-ai",
+    "portable",
+    "powershell",
+    "usb",
+    "windows",
+    "windows-update"
+   ],
+   "pushedAt": "2026-10-17T09:48:54Z",
+   "createdAt": "2026-10-17T09:11:31Z",
+   "languages": {
+    "PowerShell": 77104,
+    "Batchfile": 762
+   },
+   "release": {
+    "tag": "v1.0.0",
+    "name": "v1.0.0 - USB AI Technician",
+    "date": "2026-10-17T09:15:59Z",
+    "url": "https://github.com/dor2500/usb-ai-technician/releases/tag/v1.0.0",
+    "assets": 3
+   },
+   "readme": {
+    "summary": "The AI is gpt-oss-20b, run offline through llama.cpp on 127.0.0.1 only. Nothing is installed on the PC. Logs and backups stay on the USB.",
+    "bullets": [
+     "Cleanup: drivers, runtimes and security software are never offered for removal (config/protected.json). Before anything is uninstalled you type YES, and the tool creates a resto…",
+     "Install: detects MSI, MSIX/AppX, Inno Setup, NSIS and WiX Burn installers and uses their silent switches. Unknown installers open normally.",
+     "Update: installs pending updates through the built-in Windows Update API, then sets policies that pin the current Windows version, block driver updates and prevent forced restar…",
+     "AI: it only makes suggestions and cannot run anything. All changes are made by plain PowerShell after you confirm. The model is unloaded as soon as the review is done."
+    ]
+   },
+   "images": [],
+   "videos": []
+  },
+  {
+   "name": "vortex-browser",
+   "description": "A next-generation browser built on Mozilla Gecko engine with floating canvas, spaces, and cyber-minimalist design.",
+   "url": "https://github.com/dor2500/vortex-browser",
+   "homepage": null,
+   "language": "CSS",
+   "stars": 0,
+   "topics": [],
+   "pushedAt": "2026-11-07T17:42:23Z",
+   "createdAt": "2026-11-07T17:38:05Z",
+   "languages": {
+    "CSS": 18707,
+    "JavaScript": 11050,
+    "PowerShell": 8121,
+    "HTML": 4650,
+    "Shell": 4010
+   },
+   "release": null,
+   "readme": {
+    "summary": "קובץ ה-user.js כולל הקשחת מנוע מקיפה: - 0 טלמטריה: כיבוי מלא של שליחת נתונים ל-Mozilla (telemetry, normandy, shield, healthreport). - ביטול תכני חסות: כיבוי Pocket, קישורים ממומנים בטאב חדש ומעקבי Snippets. - הגנה ממעקב (Tracking Protection): הגנה מחמירה על עוגיות צד שלישי (Total Cookie Protection), הגנה מטביעות אצבע וחסימת כורי קריפטו. - מדיניות תוספים מובנית: תמיכה בהתקנה שקטה ואוטומטית של חוסם הפרסומות והמעקב u…",
+    "bullets": [
+     "מותקן במחשב Mozilla Firefox (או מנוע Gecko תואם).",
+     "Windows (PowerShell) או macOS / Linux."
+    ]
+   },
+   "images": [
+    {
+     "src": "/shots/vortex-browser/00.webp",
+     "w": 1376,
+     "h": 768
+    }
+   ],
+   "videos": []
+  },
+  {
+   "name": "walkie-talkie",
+   "description": "📻 ווקי-טוקי בדפדפן - לחץ ודבר, P2P, בלי התקנה | Browser Walkie-Talkie",
+   "url": "https://github.com/dor2500/walkie-talkie",
+   "homepage": "https://dor2500.github.io/walkie-talkie/",
+   "language": "HTML",
+   "stars": 0,
+   "topics": [
+    "audio",
+    "hebrew",
+    "peerjs",
+    "ptt",
+    "push-to-talk",
+    "voice-chat",
+    "walkie-talkie",
+    "webrtc"
+   ],
+   "pushedAt": "2026-10-18T03:45:57Z",
+   "createdAt": "2026-10-16T18:36:46Z",
+   "languages": {
+    "HTML": 35146,
+    "JavaScript": 569
+   },
+   "release": {
+    "tag": "v3.2.0",
+    "name": "v3.2.0 - חיבור יציב באינטרנט 🌍",
+    "date": "2026-10-18T03:45:59Z",
+    "url": "https://github.com/dor2500/walkie-talkie/releases/tag/v3.2.0",
+    "assets": 1
+   },
+   "readme": {
+    "summary": "ווקי-טוקי בדפדפן עם שיחת וידאו וצ'אט. המארח יוצר חדר ושולח קישור, החברים פותחים אותו, לוחצים \"הצטרף\" ומדברים. לא צריך להתקין כלום או להירשם, ועד 10 אנשים יכולים להיות בחדר.",
+    "bullets": [
+     "בקישור יש מזהה חדר אקראי של 16 תווים, כך שאי אפשר לנחש אותו.",
+     "קוד הכניסה נמצא אחרי ה-# בקישור. החלק הזה אף פעם לא נשלח לשרת, והוא נשאר רק אצל מי שקיבל את הקישור. המארח בודק את הקוד, וכל משתתף נבדק גם מול שאר המשתתפים.",
+     "שלחו את הקישור רק למי שאתם רוצים בחדר: מי שיש לו את הקישור יכול להיכנס.",
+     "הצ'אט מוצג כטקסט בלבד, כך שאי אפשר להחדיר דרכו קוד.",
+     "אחרי 5 ניסיונות שגויים הכניסה ננעלת ל-30 שניות.",
+     "השמע והווידאו עוברים ישירות בין המכשירים ומוצפנים (WebRTC: DTLS-SRTP)."
+    ]
+   },
+   "images": [
+    {
+     "src": "/shots/walkie-talkie/00.webp",
+     "w": 651,
+     "h": 1400
+    },
+    {
+     "src": "/shots/walkie-talkie/01.webp",
+     "w": 651,
+     "h": 1400
+    },
+    {
+     "src": "/shots/walkie-talkie/02.webp",
+     "w": 651,
+     "h": 1400
+    },
+    {
+     "src": "/shots/walkie-talkie/03.webp",
+     "w": 514,
+     "h": 1400
+    },
+    {
+     "src": "/shots/walkie-talkie/04.webp",
+     "w": 651,
+     "h": 1400
+    },
+    {
+     "src": "/shots/walkie-talkie/05.webp",
+     "w": 651,
+     "h": 1400
+    }
+   ],
+   "videos": []
+  },
+  {
+   "name": "webos-tv-games",
+   "description": "🎮 אוסף משחקי רטרו מותאמים לטלוויזיות LG webOS (Smart TV) — Angry Birds, Ultimate Flash Sonic, Icy Tower כולל קבצי IPK ומדריכי התקנה",
+   "url": "https://github.com/dor2500/webos-tv-games",
+   "homepage": null,
+   "language": "HTML",
+   "stars": 0,
+   "topics": [],
+   "pushedAt": "2026-10-23T06:52:52Z",
+   "createdAt": "2026-10-22T19:12:58Z",
+   "languages": {
+    "HTML": 382948,
+    "JavaScript": 218499,
+    "Python": 132184,
+    "CSS": 18643,
+    "PowerShell": 3835
+   },
+   "release": {
+    "tag": "v6.0.0",
+    "name": "v6.0.0: Retro Nostalgia Arcade — Rebuilt From Scratch (100% Genuine Engines)",
+    "date": "2026-10-23T06:52:52Z",
+    "url": "https://github.com/dor2500/webos-tv-games/releases/tag/v6.0.0",
+    "assets": 1
+   },
+   "readme": {
+    "summary": "פרויקט זה נבנה מחדש לחלוטין מאפס כדי לספק את חוויית הארקייד האותנטית, המקורית והמקצועית ביותר לטלוויזיות חכמות LG webOS ולדפדפן.",
+    "bullets": [
+     "המאגר נסרק באופן מלא באמצעות כלי סריקת קוד מעמיקים.",
+     "אין כתובות IP אישיות, אין מפתחות SSH, ואין מידע אישי.",
+     "כל המשחקים נבדקו ואומתו לפעולה חלקה ב-60FPS עם תמיכה מלאה בכל דגמי השלטים של LG."
+    ]
+   },
+   "images": [
+    {
+     "src": "/shots/webos-tv-games/00.webp",
+     "w": 1376,
+     "h": 768
+    }
+   ],
+   "videos": []
+  },
+  {
+   "name": "winFlexMenu",
+   "description": null,
+   "url": "https://github.com/dor2500/winFlexMenu",
+   "homepage": null,
+   "language": "PowerShell",
+   "stars": 1,
+   "topics": [],
+   "pushedAt": "2026-11-15T04:28:36Z",
+   "createdAt": "2026-04-25T19:07:43Z",
+   "languages": {
+    "PowerShell": 579442,
+    "Batchfile": 1479
+   },
+   "release": {
+    "tag": "v3.3",
+    "name": "WinFlexMenu v3.3 - Modern Fluent Glass & Bento UI Redesign",
+    "date": "2026-11-15T04:28:36Z",
+    "url": "https://github.com/dor2500/winFlexMenu/releases/tag/v3.3",
+    "assets": 0
+   },
+   "readme": {
+    "summary": "Run WinFlexMenu directly from PowerShell. Open an elevated PowerShell session (Run as Administrator) and execute:",
+    "bullets": [
+     "✨ Modern Fluent Glass & Bento UI Design: Flagship Fluent Obsidian slate-blue aesthetic (Segoe UI Variable Display), soft depth shadows, crisp pill tabs, responsive Bento categor…",
+     "⚡ Ultra-Fast & Non-Blocking: Instant sub-second startup, asynchronous background hardware/update scans for zero UI freezing, and parallel delta sync.",
+     "📦 Winget Quick App Installer Hub: One-click installation for essentials including 7-Zip, VLC, Chrome, Firefox, Notepad++, VS Code, Discord, Everything, PowerToys, Git, Python 3…",
+     "🛠 Deep Maintenance & Windows Tools: Multi-profile Chromium cache cleaning (Edge, Chrome, Brave) & Firefox, DISM image repair, Services, Task Scheduler, Firewall & Defender stat…",
+     "🎮 Gaming Center & Live Israel TV / Radio: Auto-detects Steam, Epic, GOG, Ubisoft, Xbox & custom games with launch, folder access, and NVIDIA App/GFE support, plus built-in WebV…",
+     "🛡 Hardware Telemetry & Power Timers: Real-time CPU, RAM, SMART, Battery, and OS/Network diagnostics, Windows 11/System tweaks (End Task on taskbar, Sticky Keys, Restart Explore…",
+     "🎨 Dynamic Themes & AI Prompt Studio: 42+ themes including Apple Swift, Google M3E, Dracula, Pitch Black, Glass Aero, Cyber Noir, Tokyo Night, Retro XP/Wii, plus a refreshed AI …",
+     "🌐 Dual-Language Support: Full dynamic RTL/LTR localization in both Hebrew (עברית) and English."
+    ]
+   },
+   "images": [
+    {
+     "src": "/shots/winFlexMenu/00.webp",
+     "w": 1376,
+     "h": 768
+    },
+    {
+     "src": "/shots/winFlexMenu/01.webp",
+     "w": 1400,
+     "h": 917
+    },
+    {
+     "src": "/shots/winFlexMenu/02.webp",
+     "w": 1400,
+     "h": 917
+    },
+    {
+     "src": "/shots/winFlexMenu/03.webp",
+     "w": 1400,
+     "h": 924
+    },
+    {
+     "src": "/shots/winFlexMenu/04.webp",
+     "w": 1340,
+     "h": 880
+    },
+    {
+     "src": "/shots/winFlexMenu/05.webp",
+     "w": 1340,
+     "h": 880
+    }
+   ],
+   "videos": []
+  },
+  {
+   "name": "WinFlexOS-Setup",
+   "description": "WinFlexOS-Setup",
+   "url": "https://github.com/dor2500/WinFlexOS-Setup",
+   "homepage": null,
+   "language": "PowerShell",
+   "stars": 0,
+   "topics": [],
+   "pushedAt": "2026-10-11T18:10:56Z",
+   "createdAt": "2026-06-23T18:38:29Z",
+   "languages": {
+    "PowerShell": 371866
+   },
+   "release": null,
+   "readme": {
+    "summary": "זהו מאגר הגדרות עבור תפריט ההתקנה של WinFlexOS, המופעל אוטומטית לאחר התקנת המערכת.",
+    "bullets": [
+     "תפריט דינמי (Dynamic Menu): קובץ ההגדרות menu.ps1 נמשך מהרשת בזמן אמת עם הפעלת כלי ההתקנה.",
+     "התקנות שקטות (Silent Installations): תוכנות מותקנות בצורה שקטה ברקע באמצעות winget."
+    ]
+   },
+   "images": [
+    {
+     "src": "/shots/WinFlexOS-Setup/00.webp",
+     "w": 1400,
+     "h": 787
+    }
+   ],
+   "videos": []
+  },
+  {
+   "name": "WinFlexSetupModern",
+   "description": "One-file PowerShell tool that scans your Windows PC and applies profile-based optimizations (gaming, privacy, debloat) with a restore point, HTML report and one-click UNDO.",
+   "url": "https://github.com/dor2500/WinFlexSetupModern",
+   "homepage": null,
+   "language": "PowerShell",
+   "stars": 0,
+   "topics": [
+    "debloat",
+    "gaming",
+    "optimization",
+    "powershell",
+    "privacy",
+    "windows"
+   ],
+   "pushedAt": "2026-10-17T07:46:02Z",
+   "createdAt": "2026-10-08T21:33:39Z",
+   "languages": {
+    "PowerShell": 199758
+   },
+   "release": {
+    "tag": "v6.6",
+    "name": "WinFlexSetupModern v6.6",
+    "date": "2026-10-17T07:35:56Z",
+    "url": "https://github.com/dor2500/WinFlexSetupModern/releases/tag/v6.6",
+    "assets": 1
+   },
+   "readme": {
+    "summary": "The script shows a short summary of your PC and the profile menu, grouped into Performance, Privacy & Debloat, Maintenance and Tools: - Pick one profile (1) or several (1,8,12). - You then see exactly what will run and choose Run, Preview only (a report of what would change, nothing is touched) or Back to the menu. - While it runs, the screen shows only what changes (or fails); everything else is in the report and…",
+    "bullets": [
+     "Hardware: PC model and form factor, CPU, RAM (type, speed, number of sticks), GPU (discrete or integrated, driver age), disks and their health, monitor refresh rate (current vs.…",
+     "Installed software: every installed program, grouped into game launchers, anti-cheat, streaming & voice, RGB & peripheral software, virtualization (Hyper-V, WSL, Docker), creati…",
+     "Windows state: build, Memory Integrity, free space on the system drive, and the apps that start with Windows."
+    ]
+   },
+   "images": [
+    {
+     "src": "/shots/WinFlexSetupModern/00.webp",
+     "w": 1400,
+     "h": 1153
+    },
+    {
+     "src": "/shots/WinFlexSetupModern/01.webp",
+     "w": 1203,
+     "h": 1400
+    }
+   ],
+   "videos": []
+  },
+  {
+   "name": "ytm-desktop",
+   "description": "Aria: an ultra-modern desktop YouTube Music client with built-in ad blocker and Google authentication",
+   "url": "https://github.com/dor2500/ytm-desktop",
+   "homepage": null,
+   "language": "TypeScript",
+   "stars": 0,
+   "topics": [],
+   "pushedAt": "2026-11-14T13:49:02Z",
+   "createdAt": "2026-11-14T12:01:13Z",
+   "languages": {
+    "TypeScript": 112932,
+    "CSS": 37209,
+    "PowerShell": 2387,
+    "HTML": 758
+   },
+   "release": {
+    "tag": "v0.2.1",
+    "name": "Nebula Music v0.2.1 - Google Login Fix & Session Sync",
+    "date": "2026-11-14T13:49:02Z",
+    "url": "https://github.com/dor2500/ytm-desktop/releases/tag/v0.2.1",
+    "assets": 3
+   },
+   "readme": {
+    "summary": "Open PowerShell as User or Admin and run this single command to download and install Nebula Music automatically:",
+    "bullets": [
+     "YouTube Music: Full official engine playback with recommendation shelves, collections, and private library.",
+     "Spotify: Integrated Spotify Web player container with seamless acrylic frame and ad blocking.",
+     "SoundCloud: Full SoundCloud discovery and stream integration.",
+     "1-Click Switcher: Easily switch between music platforms directly from the sidebar."
+    ]
+   },
+   "images": [],
+   "videos": []
+  }
+ ]
+}
