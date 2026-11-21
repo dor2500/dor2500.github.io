@@ -2,7 +2,7 @@ import { useI18n, useFormat } from '../i18n'
 import { frameworks, generatedAt, languageShare, LANG_COLOR, profile } from '../data'
 import { motion } from 'motion/react'
 import { GithubIcon, SignalMark } from './Header'
-import { CountUp, EASE } from './Motion'
+import { CountUp, EASE, TuneIn } from './Motion'
 
 export function Stack() {
   const { t } = useI18n()
@@ -14,7 +14,7 @@ export function Stack() {
     <section id="stack" aria-labelledby="stack-title" className="border-t border-line">
       <div className="mx-auto grid max-w-[1200px] gap-14 px-5 py-20 sm:px-8 md:py-28 lg:grid-cols-12 lg:gap-8">
         <div className="lg:col-span-4">
-          <h2 id="stack-title" className="text-[clamp(2rem,4vw,3rem)] font-bold leading-tight tracking-[-0.03em]">{t('stackTitle')}</h2>
+          <TuneIn ch={4} id="stack-title" className="text-[clamp(2rem,4vw,3rem)] font-bold leading-tight tracking-[-0.03em]">{t('stackTitle')}</TuneIn>
           <p className="mt-3 max-w-[40ch] text-lg text-muted">{t('stackLead')}</p>
         </div>
 

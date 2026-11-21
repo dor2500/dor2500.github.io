@@ -4,7 +4,7 @@ import { useI18n, useFormat, type L10n } from '../i18n'
 import { bySlug, type Repo } from '../data'
 import { PhoneFrame, TvFrame, WatchFrame } from './Devices'
 import { GithubIcon } from './Header'
-import { CountUp, EASE, slide, useDirection } from './Motion'
+import { CountUp, EASE, slide, TuneIn, useDirection } from './Motion'
 
 type Copy = {
   lead: L10n
@@ -76,7 +76,7 @@ export function Flagships() {
   return (
     <section id="flagships" aria-labelledby="flagships-title" className="border-t border-line">
       <div className="mx-auto max-w-[1200px] px-5 pt-20 sm:px-8 md:pt-28">
-        <h2 id="flagships-title" className="text-[clamp(2rem,4vw,3rem)] font-bold leading-tight tracking-[-0.03em]">{t('flagshipsTitle')}</h2>
+        <TuneIn ch={2} id="flagships-title" className="text-[clamp(2rem,4vw,3rem)] font-bold leading-tight tracking-[-0.03em]">{t('flagshipsTitle')}</TuneIn>
         <p className="mt-3 max-w-[56ch] text-lg text-muted">{t('flagshipsLead')}</p>
       </div>
       <TvPlus repo={bySlug['israel-tv-plus']} />
@@ -176,14 +176,14 @@ function TvPlus({ repo }: { repo: Repo }) {
   const watch = repo.images[11]
 
   return (
-    <article aria-labelledby="tvplus-title" className="mx-auto grid max-w-[1200px] gap-12 px-5 py-16 sm:px-8 md:py-24 lg:grid-cols-12 lg:gap-10">
-      <div className="lg:col-span-5">
+    <article aria-labelledby="tvplus-title" className="mx-auto grid max-w-[1200px] grid-cols-1 gap-12 px-5 py-16 sm:px-8 md:py-24 lg:grid-cols-12 lg:gap-10">
+      <div className="min-w-0 lg:col-span-5">
         <Title id="tvplus-title" repo={repo} accent="var(--color-tv)" />
         <Facts repo={repo} copy={TV} accent="var(--color-tv)" />
         <Ctas repo={repo} live={repo.homepage!} liveLabel={t('watchLive')} />
       </div>
 
-      <div className="lg:col-span-7">
+      <div className="min-w-0 lg:col-span-7">
         <div ref={stage} className="relative pb-[9%] pe-[7%] lg:sticky lg:top-24">
           <div aria-hidden className="pointer-events-none absolute inset-[-8%] -z-10 bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--color-tv)_16%,transparent),transparent)]" />
           <TvFrame>
@@ -259,14 +259,14 @@ function Pulse({ repo }: { repo: Repo }) {
   const [shot, label] = PULSE_SCREENS[idx]
 
   return (
-    <article aria-labelledby="pulse-title" className="mx-auto grid max-w-[1200px] gap-12 border-t border-line px-5 py-16 sm:px-8 md:py-24 lg:grid-cols-12 lg:gap-10">
-      <div className="lg:order-2 lg:col-span-5 lg:col-start-8">
+    <article aria-labelledby="pulse-title" className="mx-auto grid max-w-[1200px] grid-cols-1 gap-12 border-t border-line px-5 py-16 sm:px-8 md:py-24 lg:grid-cols-12 lg:gap-10">
+      <div className="min-w-0 lg:order-2 lg:col-span-5 lg:col-start-8">
         <Title id="pulse-title" repo={repo} accent="var(--color-pulse)" />
         <Facts repo={repo} copy={PULSE} accent="var(--color-pulse)" />
         <Ctas repo={repo} live="https://dor2500.github.io/pulse-speed/app/" liveLabel={t('tryWeb')} />
       </div>
 
-      <div className="lg:order-1 lg:col-span-7">
+      <div className="min-w-0 lg:order-1 lg:col-span-7">
         <div className="relative grid items-center gap-8 rounded-3xl border border-line bg-s1 p-6 sm:grid-cols-[1fr_auto] sm:p-10 lg:sticky lg:top-24">
           <div aria-hidden className="pointer-events-none absolute inset-0 rounded-3xl bg-[radial-gradient(60%_60%_at_70%_40%,color-mix(in_srgb,var(--color-pulse)_14%,transparent),transparent)]" />
           <div role="group" aria-label={pick({ en: 'Pulse screens', he: 'מסכי Pulse' })} className="no-scrollbar relative -mx-6 flex gap-2 overflow-x-auto px-6 sm:mx-0 sm:flex-col sm:overflow-visible sm:px-0">

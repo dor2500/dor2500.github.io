@@ -27,6 +27,17 @@ const strings = {
   receptionTitle: { en: 'Where my apps run', he: 'איפה האפליקציות רצות' },
   receptionHint: { en: 'Number of projects per platform. Pick one to filter the project list.', he: 'מספר הפרויקטים בכל פלטפורמה. בחרו אחת כדי לסנן את רשימת הפרויקטים.' },
 
+  tvLabel: { en: 'Project channels', he: 'ערוצי הפרויקטים' },
+  chUp: { en: 'Next channel', he: 'הערוץ הבא' },
+  chDown: { en: 'Previous channel', he: 'הערוץ הקודם' },
+  chN: { en: 'Channel {n}: {t}', he: 'ערוץ {n}: {t}' },
+  pause: { en: 'Stop changing channels', he: 'עצירת החלפת הערוצים' },
+  resume: { en: 'Change channels automatically', he: 'החלפת ערוצים אוטומטית' },
+  onAir: { en: 'LIVE', he: 'שידור חי' },
+  tvOpen: { en: 'Open {n}', he: 'פתיחת {n}' },
+  tvHint: { en: 'Keys 1 to 9 switch channels', he: 'המקשים 1 עד 9 מחליפים ערוץ' },
+  tickerLabel: { en: 'New releases', he: 'גרסאות חדשות' },
+
   flagshipsTitle: { en: 'Flagship projects', he: 'פרויקטי הדגל' },
   flagshipsLead: { en: 'The two apps I keep coming back to. Both ship to TVs, phones and desktops from one codebase each.', he: 'שתי האפליקציות שאני חוזר אליהן כל הזמן. כל אחת יוצאת לטלוויזיות, לטלפונים ולמחשבים מבסיס קוד אחד.' },
   latest: { en: 'Latest release', he: 'גרסה אחרונה' },

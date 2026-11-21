@@ -8,11 +8,11 @@ import { Mockup } from './Mockups'
 import { GithubIcon } from './Header'
 import { EASE, slide } from './Motion'
 
-export function ProjectModal({ repo, onClose }: { repo: Repo | null; onClose: () => void }) {
-  return <AnimatePresence>{repo && <Dialog key={repo.name} repo={repo} onClose={onClose} />}</AnimatePresence>
+export function ProjectModal({ repo, morph, onClose }: { repo: Repo | null; morph: boolean; onClose: () => void }) {
+  return <AnimatePresence>{repo && <Dialog key={repo.name} repo={repo} morph={morph} onClose={onClose} />}</AnimatePresence>
 }
 
-function Dialog({ repo, onClose }: { repo: Repo; onClose: () => void }) {
+function Dialog({ repo, morph, onClose }: { repo: Repo; morph: boolean; onClose: () => void }) {
   const { t, pick } = useI18n()
   const f = useFormat()
   const panel = useRef<HTMLDivElement>(null)
@@ -64,7 +64,7 @@ function Dialog({ repo, onClose }: { repo: Repo; onClose: () => void }) {
 
           <div className="overflow-y-auto overscroll-contain">
             {/* Shares a layoutId with the card's preview, so the picture grows out of the card. */}
-            <motion.div layoutId={`media-${repo.name}`} transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
+            <motion.div layoutId={morph ? `media-${repo.name}` : undefined} transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
               className="relative z-10 aspect-[16/9] overflow-hidden border-b border-line bg-s2">
               {repo.mockup || !shots.length ? (
                 repo.mockup && <><Mockup m={repo.mockup} large /><p className="absolute bottom-3 start-4 text-xs text-muted">{t('conceptPreview')}</p></>

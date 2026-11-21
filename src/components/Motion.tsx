@@ -52,3 +52,17 @@ export const slide = {
   center: { x: '0%', opacity: 1 },
   exit: (d: number) => ({ x: `${d * -14}%`, opacity: 0 }),
 }
+
+/** A section heading that tunes in with a short glitch, with its channel number beside it. */
+export function TuneIn({ ch, id, className, children }: { ch: number; id: string; className: string; children: React.ReactNode }) {
+  const ref = useRef<HTMLHeadingElement>(null)
+  const on = useInView(ref, { once: true, amount: 0.8 })
+  return (
+    <h2 ref={ref} id={id} className={className}>
+      <span className={`tune inline-block ${on ? 'on' : ''}`}>{children}</span>
+      <span aria-hidden dir="ltr" className="ms-3 inline-block align-middle font-osd text-[0.5em] font-normal tracking-normal text-phosphor [text-shadow:0_0_8px_rgb(141_255_164/0.6)]">
+        CH {String(ch).padStart(2, '0')}
+      </span>
+    </h2>
+  )
+}

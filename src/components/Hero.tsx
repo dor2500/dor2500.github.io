@@ -1,10 +1,12 @@
 import { Fragment } from 'react'
 import { motion } from 'motion/react'
 import { useI18n, useFormat } from '../i18n'
-import { platformCounts, profile, stats } from '../data'
+import { platformCounts, profile, stats, type Repo } from '../data'
 import { PLATFORM_LABEL, type Platform } from '../data/curated'
 import { GithubIcon } from './Header'
 import { EASE } from './Motion'
+import { ChannelTv } from './ChannelTv'
+import { Ticker } from './Ticker'
 
 export function SignalBars({ level, delay = 0, max = 5 }: { level: number; delay?: number; max?: number }) {
   return (
@@ -15,7 +17,8 @@ export function SignalBars({ level, delay = 0, max = 5 }: { level: number; delay
           className="relative w-[5px] overflow-hidden rounded-[1.5px] bg-s3"
           style={{ height: `${(i + 1) * 20}%`, transformOrigin: 'bottom' }}
           initial={{ scaleY: 0 }}
-          animate={{ scaleY: 1 }}
+          whileInView={{ scaleY: 1 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.35, ease: EASE, delay: delay + i * 0.05 }}
         >
           {/* Each lit bar flickers on in turn, like a phone finding signal. */}
@@ -23,7 +26,8 @@ export function SignalBars({ level, delay = 0, max = 5 }: { level: number; delay
             <motion.span
               className="absolute inset-0 bg-ember"
               initial={{ opacity: 0 }}
-              animate={{ opacity: [0, 1, 0.35, 1] }}
+              whileInView={{ opacity: [0, 1, 0.35, 1] }}
+              viewport={{ once: true }}
               transition={{ duration: 0.45, times: [0, 0.3, 0.55, 1], delay: delay + 0.35 + i * 0.09 }}
             />
           )}
@@ -33,19 +37,20 @@ export function SignalBars({ level, delay = 0, max = 5 }: { level: number; delay
   )
 }
 
-export function Hero({ onPlatform }: { onPlatform: (p: Platform) => void }) {
+export function Hero({ onPlatform, onOpen }: { onPlatform: (p: Platform) => void; onOpen: (r: Repo) => void }) {
   const { t, pick } = useI18n()
   const f = useFormat()
   const top = platformCounts.slice(0, 10)
   const max = top[0][1]
 
   return (
-    <section id="top" aria-labelledby="hero-title" className="mx-auto grid max-w-[1200px] gap-14 px-5 pb-24 pt-16 sm:px-8 md:pt-24 lg:grid-cols-12 lg:gap-8 lg:pb-32">
-      <div className="lg:col-span-7">
+    <section id="top" aria-labelledby="hero-title">
+    <div className="mx-auto grid max-w-[1280px] grid-cols-1 items-center gap-12 px-5 pb-16 pt-12 sm:px-8 md:pt-20 lg:grid-cols-12 lg:gap-10">
+      <div className="min-w-0 lg:col-span-5">
         <h1
           id="hero-title"
           key={t('heroTitle')}
-          className="max-w-[14ch] text-[clamp(2.6rem,6.4vw,5rem)] font-bold leading-[0.98] tracking-[-0.035em] text-balance"
+          className="max-w-[14ch] text-[clamp(2.5rem,5.6vw,4.4rem)] font-bold leading-[0.98] tracking-[-0.035em] text-balance"
         >
           {/* Words rise out of a mask one after another, so the line reads itself in. */}
           {t('heroTitle').split(' ').map((w, i, all) => (
@@ -83,22 +88,32 @@ export function Hero({ onPlatform }: { onPlatform: (p: Platform) => void }) {
         </motion.div>
       </div>
 
+      <div className="min-w-0 lg:col-span-7">
+        <ChannelTv onOpen={onOpen} />
+      </div>
+    </div>
+
+    <Ticker />
+
       <motion.aside
         aria-labelledby="reception-title"
-        className="self-end rounded-2xl border border-line bg-s1 p-6 lg:col-span-5 lg:ms-6"
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: EASE, delay: 0.25 }}
+        className="mx-auto max-w-[1280px] px-5 py-14 sm:px-8"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, ease: EASE }}
       >
-        <h2 id="reception-title" className="text-base font-semibold">{t('receptionTitle')}</h2>
-        <p className="mt-1 text-sm text-muted">{t('receptionHint')}</p>
-        <ul className="mt-5 divide-y divide-line">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+          <h2 id="reception-title" className="text-base font-semibold">{t('receptionTitle')}</h2>
+          <p className="text-sm text-muted">{t('receptionHint')}</p>
+        </div>
+        <ul className="mt-5 grid grid-cols-2 gap-x-6 sm:grid-cols-3 lg:grid-cols-5">
           {top.map(([p, n], i) => (
-            <li key={p}>
+            <li key={p} className="border-b border-line">
               <button
                 type="button"
                 onClick={() => onPlatform(p)}
-                className="group flex w-full items-center gap-3 py-2.5 text-start transition-colors duration-150 hover:text-ember-2"
+                className="group flex w-full items-center gap-3 py-3 text-start transition-colors duration-150 hover:text-ember-2"
               >
                 <span className="flex-1 text-[15px]">{pick(PLATFORM_LABEL[p])}</span>
                 <SignalBars level={Math.ceil(Math.sqrt(n / max) * 5)} delay={0.45 + i * 0.06} />

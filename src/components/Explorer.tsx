@@ -4,15 +4,13 @@ import { useI18n, useFormat } from '../i18n'
 import { others, LANG_COLOR, type Repo } from '../data'
 import { CATEGORIES, PLATFORM_LABEL, type Category, type Platform } from '../data/curated'
 import { Mockup } from './Mockups'
-import { ProjectModal } from './ProjectModal'
-import { EASE } from './Motion'
+import { EASE, TuneIn } from './Motion'
 
-export function Explorer({ platform, setPlatform }: { platform: Platform | null; setPlatform: (p: Platform | null) => void }) {
+export function Explorer({ platform, setPlatform, onOpen }: { platform: Platform | null; setPlatform: (p: Platform | null) => void; onOpen: (r: Repo) => void }) {
   const { t, pick } = useI18n()
   const [cat, setCat] = useState<Category | 'all'>('all')
   const [query, setQuery] = useState('')
   const q = useDeferredValue(query.trim().toLowerCase())
-  const [open, setOpen] = useState<Repo | null>(null)
 
   const list = useMemo(
     () => others.filter((r) =>
@@ -32,7 +30,7 @@ export function Explorer({ platform, setPlatform }: { platform: Platform | null;
       <div className="mx-auto max-w-[1200px] px-5 py-20 sm:px-8 md:py-28">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
-            <h2 id="projects-title" className="text-[clamp(2rem,4vw,3rem)] font-bold leading-tight tracking-[-0.03em]">{t('projectsTitle')}</h2>
+            <TuneIn ch={3} id="projects-title" className="text-[clamp(2rem,4vw,3rem)] font-bold leading-tight tracking-[-0.03em]">{t('projectsTitle')}</TuneIn>
             <p className="mt-3 max-w-[52ch] text-lg text-muted">{t('projectsLead')}</p>
           </div>
           <div className="relative w-full sm:w-80">
@@ -77,7 +75,7 @@ export function Explorer({ platform, setPlatform }: { platform: Platform | null;
                 transition={{ duration: 0.25, ease: EASE }}
                 className={r.wide ? 'sm:col-span-2' : ''}
               >
-                <Card repo={r} onOpen={() => setOpen(r)} />
+                <Card repo={r} onOpen={() => onOpen(r)} />
               </motion.li>
             ))}
           </AnimatePresence>
@@ -90,7 +88,6 @@ export function Explorer({ platform, setPlatform }: { platform: Platform | null;
           </div>
         )}
       </div>
-      <ProjectModal repo={open} onClose={() => setOpen(null)} />
     </section>
   )
 }
@@ -130,7 +127,7 @@ function Card({ repo, onOpen }: { repo: Repo; onOpen: () => void }) {
   return (
     <article onPointerMove={track} className="spot group relative flex h-full flex-col overflow-hidden rounded-xl border border-line bg-s1 transition-colors duration-200 hover:border-line-2">
       <motion.div layoutId={`media-${repo.name}`} transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
-        className={`relative grow overflow-hidden border-b border-line bg-s2 ${repo.wide ? 'aspect-[16/7]' : 'aspect-[16/10]'}`}>
+        className={`tv-static relative grow overflow-hidden border-b border-line bg-s2 ${repo.wide ? 'aspect-[16/7]' : 'aspect-[16/10]'}`}>
         <Preview repo={repo} />
       </motion.div>
       <div className="flex flex-1 flex-col p-5">
