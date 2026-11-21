@@ -6,8 +6,7 @@ import { LANG_COLOR, type Repo } from '../data'
 import { PLATFORM_LABEL } from '../data/curated'
 import { Mockup } from './Mockups'
 import { GithubIcon } from './Header'
-
-const EASE = [0.22, 1, 0.36, 1] as const
+import { EASE, slide } from './Motion'
 
 export function ProjectModal({ repo, onClose }: { repo: Repo | null; onClose: () => void }) {
   return <AnimatePresence>{repo && <Dialog key={repo.name} repo={repo} onClose={onClose} />}</AnimatePresence>
@@ -18,6 +17,7 @@ function Dialog({ repo, onClose }: { repo: Repo; onClose: () => void }) {
   const f = useFormat()
   const panel = useRef<HTMLDivElement>(null)
   const [i, setI] = useState(0)
+  const [d, setD] = useState(1)
   const shots = repo.shots
 
   useEffect(() => {
@@ -38,7 +38,7 @@ function Dialog({ repo, onClose }: { repo: Repo; onClose: () => void }) {
     }
   }, [onClose])
 
-  const step = (d: number) => setI((x) => (x + d + shots.length) % shots.length)
+  const step = (by: number) => { setD(by); setI((x) => (x + by + shots.length) % shots.length) }
 
   return (
     <Portal>
@@ -48,7 +48,7 @@ function Dialog({ repo, onClose }: { repo: Repo; onClose: () => void }) {
         <motion.div
           ref={panel} role="dialog" aria-modal="true" aria-labelledby="modal-title"
           className="pointer-events-auto flex max-h-[92dvh] w-full max-w-[980px] flex-col overflow-hidden rounded-t-2xl border border-line-2 bg-s1 shadow-2xl sm:rounded-2xl"
-          initial={{ opacity: 0, y: 24, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 12, scale: 0.98, transition: { duration: 0.15 } }}
+          initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8, transition: { duration: 0.2 } }}
           transition={{ duration: 0.3, ease: EASE }}
         >
           <header className="flex items-start gap-4 border-b border-line p-5 sm:p-6">
@@ -63,15 +63,17 @@ function Dialog({ repo, onClose }: { repo: Repo; onClose: () => void }) {
           </header>
 
           <div className="overflow-y-auto overscroll-contain">
-            <div className="relative aspect-[16/9] overflow-hidden border-b border-line bg-s2">
+            {/* Shares a layoutId with the card's preview, so the picture grows out of the card. */}
+            <motion.div layoutId={`media-${repo.name}`} transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
+              className="relative z-10 aspect-[16/9] overflow-hidden border-b border-line bg-s2">
               {repo.mockup || !shots.length ? (
                 repo.mockup && <><Mockup m={repo.mockup} large /><p className="absolute bottom-3 start-4 text-xs text-muted">{t('conceptPreview')}</p></>
               ) : (
                 <>
-                  <AnimatePresence initial={false}>
+                  <AnimatePresence initial={false} custom={d}>
                     <motion.img key={shots[i].src} src={shots[i].src} alt={`${repo.title}, ${t('screenshots').toLowerCase()} ${i + 1}/${shots.length}`}
                       className="absolute inset-0 size-full object-contain"
-                      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} />
+                      custom={d} variants={slide} initial="enter" animate="center" exit="exit" transition={{ duration: 0.35, ease: EASE }} />
                   </AnimatePresence>
                   {shots.length > 1 && (
                     <div className="absolute bottom-3 end-3 flex items-center gap-1 rounded-lg bg-ink/80 p-1 backdrop-blur" dir="ltr">
@@ -86,7 +88,7 @@ function Dialog({ repo, onClose }: { repo: Repo; onClose: () => void }) {
                   )}
                 </>
               )}
-            </div>
+            </motion.div>
 
             <div className="grid gap-10 p-5 sm:p-6 md:grid-cols-[1fr_260px]">
               <div className="min-w-0">

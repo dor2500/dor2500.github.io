@@ -1,10 +1,10 @@
+import { Fragment } from 'react'
 import { motion } from 'motion/react'
 import { useI18n, useFormat } from '../i18n'
 import { platformCounts, profile, stats } from '../data'
 import { PLATFORM_LABEL, type Platform } from '../data/curated'
 import { GithubIcon } from './Header'
-
-const EASE = [0.22, 1, 0.36, 1] as const
+import { EASE } from './Motion'
 
 export function SignalBars({ level, delay = 0, max = 5 }: { level: number; delay?: number; max?: number }) {
   return (
@@ -12,12 +12,22 @@ export function SignalBars({ level, delay = 0, max = 5 }: { level: number; delay
       {Array.from({ length: max }, (_, i) => (
         <motion.span
           key={i}
-          className={`w-[5px] rounded-[1.5px] ${i < level ? 'bg-ember' : 'bg-s3'}`}
+          className="relative w-[5px] overflow-hidden rounded-[1.5px] bg-s3"
           style={{ height: `${(i + 1) * 20}%`, transformOrigin: 'bottom' }}
           initial={{ scaleY: 0 }}
           animate={{ scaleY: 1 }}
           transition={{ duration: 0.35, ease: EASE, delay: delay + i * 0.05 }}
-        />
+        >
+          {/* Each lit bar flickers on in turn, like a phone finding signal. */}
+          {i < level && (
+            <motion.span
+              className="absolute inset-0 bg-ember"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0, 1, 0.35, 1] }}
+              transition={{ duration: 0.45, times: [0, 0.3, 0.55, 1], delay: delay + 0.35 + i * 0.09 }}
+            />
+          )}
+        </motion.span>
       ))}
     </span>
   )
@@ -32,16 +42,29 @@ export function Hero({ onPlatform }: { onPlatform: (p: Platform) => void }) {
   return (
     <section id="top" aria-labelledby="hero-title" className="mx-auto grid max-w-[1200px] gap-14 px-5 pb-24 pt-16 sm:px-8 md:pt-24 lg:grid-cols-12 lg:gap-8 lg:pb-32">
       <div className="lg:col-span-7">
-        <motion.h1
+        <h1
           id="hero-title"
+          key={t('heroTitle')}
           className="max-w-[14ch] text-[clamp(2.6rem,6.4vw,5rem)] font-bold leading-[0.98] tracking-[-0.035em] text-balance"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: EASE }}
         >
-          {t('heroTitle')}
-        </motion.h1>
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.15 }}>
+          {/* Words rise out of a mask one after another, so the line reads itself in. */}
+          {t('heroTitle').split(' ').map((w, i, all) => (
+            <Fragment key={i}>
+            <span className="-mb-[0.12em] inline-block overflow-hidden pb-[0.12em] align-top">
+              <motion.span
+                className="inline-block"
+                initial={{ y: '105%' }}
+                animate={{ y: '0%' }}
+                transition={{ duration: 0.7, ease: EASE, delay: 0.05 + i * 0.055 }}
+              >
+                {w}
+              </motion.span>
+            </span>
+            {i < all.length - 1 && ' '}
+            </Fragment>
+          ))}
+        </h1>
+        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: EASE, delay: 0.45 }}>
           <p className="mt-7 max-w-[60ch] text-lg leading-relaxed text-muted text-pretty">{t('heroBio')}</p>
           <div className="mt-9 flex flex-wrap gap-3">
             <a href="#flagships" className="rounded-lg bg-ember px-5 py-3 font-semibold text-ink transition-[background-color,transform] duration-150 hover:bg-ember-2 active:scale-[0.97]">

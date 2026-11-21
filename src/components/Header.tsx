@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { useI18n } from '../i18n'
 import { profile } from '../data'
 
@@ -22,10 +23,20 @@ export function SignalMark({ className = 'size-5' }: { className?: string }) {
 export function Header() {
   const { t, lang, setLang } = useI18n()
   const link = 'rounded-md px-2.5 py-1.5 text-sm text-muted transition-colors duration-150 hover:text-fg'
+  const [scrolled, setScrolled] = useState(false)
+  useEffect(() => {
+    const on = () => setScrolled(window.scrollY > 24)
+    on()
+    window.addEventListener('scroll', on, { passive: true })
+    return () => window.removeEventListener('scroll', on)
+  }, [])
+  // Fixed, with a spacer holding its place, so shrinking it never shifts the page.
   return (
-    <header className="sticky top-0 z-40 border-b border-line/70 bg-ink/80 backdrop-blur-md">
+    <>
+    <div aria-hidden className="h-14" />
+    <header className={`fixed inset-x-0 top-0 z-40 border-b backdrop-blur-md transition-[background-color,border-color] duration-300 ${scrolled ? 'border-line bg-ink/90' : 'border-transparent bg-ink/40'}`}>
       <a href="#main" className="sr-only rounded-md bg-ember px-3 py-2 font-semibold text-ink focus:not-sr-only focus:absolute focus:start-4 focus:top-3">{t('skip')}</a>
-      <div className="mx-auto flex h-14 max-w-[1200px] items-center gap-2 px-5 sm:px-8">
+      <div className={`mx-auto flex max-w-[1200px] items-center gap-2 px-5 transition-[height] duration-300 ease-out-quint sm:px-8 ${scrolled ? 'h-12' : 'h-14'}`}>
         <a href="#top" className="me-auto flex items-center gap-2 font-semibold tracking-tight" aria-label="dor2500">
           <SignalMark />
           <span>dor2500</span>
@@ -49,5 +60,6 @@ export function Header() {
         </a>
       </div>
     </header>
+    </>
   )
 }

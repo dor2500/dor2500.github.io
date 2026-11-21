@@ -1,11 +1,10 @@
-import { useState } from 'react'
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
+import { useRef, useState } from 'react'
+import { AnimatePresence, motion, useInView, useReducedMotion } from 'motion/react'
 import { useI18n, useFormat, type L10n } from '../i18n'
 import { bySlug, type Repo } from '../data'
 import { PhoneFrame, TvFrame, WatchFrame } from './Devices'
 import { GithubIcon } from './Header'
-
-const EASE = [0.22, 1, 0.36, 1] as const
+import { CountUp, EASE, slide, useDirection } from './Motion'
 
 type Copy = {
   lead: L10n
@@ -97,7 +96,7 @@ function Facts({ repo, copy, accent }: { repo: Repo; copy: Copy; accent: string 
           <div key={x.n}>
             <dt className="sr-only">{pick(x.label)}</dt>
             <dd>
-              <span className="num block text-3xl font-bold tracking-tight" style={{ color: accent }}>{x.n}</span>
+              <CountUp value={Number(x.n)} className="num block text-3xl font-bold tracking-tight" style={{ color: accent }} />
               <span className="mt-1 block text-sm leading-snug text-muted">{pick(x.label)}</span>
             </dd>
           </div>
@@ -163,9 +162,14 @@ function Title({ repo, accent, id }: { repo: Repo; accent: string; id: string })
 }
 
 function TvPlus({ repo }: { repo: Repo }) {
-  const { t, pick } = useI18n()
+  const { t, pick, lang } = useI18n()
   const reduce = useReducedMotion()
+  const rtl = lang === 'he'
   const [screen, setScreen] = useState<number>(-1) // -1 = demo video
+  const dir = useDirection(screen, rtl)
+  const stage = useRef<HTMLDivElement>(null)
+  const on = useInView(stage, { once: true, amount: 0.45 })
+  const side = rtl ? -1 : 1
   const [tvVideo, phoneVideo] = repo.videos
   const tvShots = repo.images.slice(0, 6)
   const phonePoster = repo.images[6]
@@ -180,34 +184,53 @@ function TvPlus({ repo }: { repo: Repo }) {
       </div>
 
       <div className="lg:col-span-7">
-        <div className="relative pb-[9%] pe-[7%] lg:sticky lg:top-24">
+        <div ref={stage} className="relative pb-[9%] pe-[7%] lg:sticky lg:top-24">
           <div aria-hidden className="pointer-events-none absolute inset-[-8%] -z-10 bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--color-tv)_16%,transparent),transparent)]" />
           <TvFrame>
-            <AnimatePresence initial={false}>
+            {/* Power-on: the picture opens from a bright line, like an old tube set warming up. */}
+            <motion.div
+              className="absolute inset-0 origin-center"
+              initial={{ scaleX: 0, scaleY: 0.004 }}
+              animate={on ? { scaleX: [0, 1, 1], scaleY: [0.004, 0.004, 1] } : undefined}
+              transition={{ duration: 0.75, times: [0, 0.4, 1], ease: EASE }}
+            >
+            <AnimatePresence initial={false} custom={dir}>
               {screen === -1 ? (
                 <motion.video
                   key="demo"
                   className="absolute inset-0 size-full object-cover"
                   src={tvVideo} poster={tvShots[1].src}
                   autoPlay={!reduce} muted loop playsInline aria-label={pick({ en: 'Israel TV+ on a TV, demo', he: 'ישראל TV+ בטלוויזיה, הדגמה' })}
-                  initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}
+                  custom={dir} variants={slide} initial="enter" animate="center" exit="exit" transition={{ duration: 0.4, ease: EASE }}
                 />
               ) : (
                 <motion.img
                   key={screen}
                   src={tvShots[screen].src} alt={pick(TV_SCREENS[screen])}
                   className="absolute inset-0 size-full object-cover"
-                  initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}
+                  custom={dir} variants={slide} initial="enter" animate="center" exit="exit" transition={{ duration: 0.4, ease: EASE }}
                 />
               )}
             </AnimatePresence>
+            </motion.div>
+            <motion.div aria-hidden className="pointer-events-none absolute inset-0 bg-white mix-blend-overlay"
+              initial={{ opacity: 0 }} animate={on ? { opacity: [0, 0, 0.55, 0] } : undefined}
+              transition={{ duration: 1.1, times: [0, 0.35, 0.55, 1] }} />
           </TvFrame>
-          <PhoneFrame className="absolute bottom-0 end-0 w-[23%]">
+          <motion.div className="absolute bottom-0 end-0 w-[23%]"
+            initial={{ opacity: 0, x: `${side * 30}%` }} animate={on ? { opacity: 1, x: '0%' } : undefined}
+            transition={{ duration: 0.6, ease: EASE, delay: 0.75 }}>
+          <PhoneFrame>
             <video className="absolute inset-0 size-full object-cover" src={phoneVideo} poster={phonePoster.src} autoPlay={!reduce} muted loop playsInline aria-label={pick({ en: 'Israel TV+ on a phone, demo', he: 'ישראל TV+ בטלפון, הדגמה' })} />
           </PhoneFrame>
-          <WatchFrame className="absolute bottom-[1%] start-[5%] w-[13%]">
+          </motion.div>
+          <motion.div className="absolute bottom-[1%] start-[5%] w-[13%]"
+            initial={{ opacity: 0, y: '40%' }} animate={on ? { opacity: 1, y: '0%' } : undefined}
+            transition={{ duration: 0.6, ease: EASE, delay: 0.9 }}>
+          <WatchFrame>
             <img src={watch.src} alt={pick({ en: 'Israel TV+ on Wear OS', he: 'ישראל TV+ ב-Wear OS' })} className="size-full object-cover" />
           </WatchFrame>
+          </motion.div>
         </div>
 
         <div role="group" aria-label={pick({ en: 'TV screens', he: 'מסכי טלוויזיה' })} className="no-scrollbar -mx-5 mt-8 flex gap-2 overflow-x-auto px-5 sm:mx-0 sm:px-0 lg:mt-6">
@@ -230,8 +253,9 @@ function TvPlus({ repo }: { repo: Repo }) {
 }
 
 function Pulse({ repo }: { repo: Repo }) {
-  const { t, pick } = useI18n()
+  const { t, pick, lang } = useI18n()
   const [idx, setIdx] = useState(0)
+  const dir = useDirection(idx, lang === 'he')
   const [shot, label] = PULSE_SCREENS[idx]
 
   return (
@@ -260,13 +284,12 @@ function Pulse({ repo }: { repo: Repo }) {
             })}
           </div>
           <PhoneFrame className="relative mx-auto w-[min(270px,70vw)]">
-            <AnimatePresence initial={false}>
+            <AnimatePresence initial={false} custom={dir}>
               <motion.img
-                key={shot}
+                key={shot} custom={dir} variants={slide} initial="enter" animate="center" exit="exit"
                 src={repo.images[shot].src} alt={pick({ en: `Pulse, ${label.en} screen`, he: `Pulse, מסך ${label.he}` })}
                 className="absolute inset-0 size-full object-cover object-top"
-                initial={{ opacity: 0, scale: 1.015 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}
-                transition={{ duration: 0.28, ease: EASE }}
+                transition={{ duration: 0.4, ease: EASE }}
               />
             </AnimatePresence>
           </PhoneFrame>

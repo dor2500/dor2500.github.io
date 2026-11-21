@@ -5,8 +5,7 @@ import { others, LANG_COLOR, type Repo } from '../data'
 import { CATEGORIES, PLATFORM_LABEL, type Category, type Platform } from '../data/curated'
 import { Mockup } from './Mockups'
 import { ProjectModal } from './ProjectModal'
-
-const EASE = [0.22, 1, 0.36, 1] as const
+import { EASE } from './Motion'
 
 export function Explorer({ platform, setPlatform }: { platform: Platform | null; setPlatform: (p: Platform | null) => void }) {
   const { t, pick } = useI18n()
@@ -104,12 +103,15 @@ export function Preview({ repo, large }: { repo: Repo; large?: boolean }) {
   if (portrait) {
     const imgs = repo.shots.filter((s) => s.h > s.w * 1.1).slice(0, repo.wide ? 4 : 3)
     return (
-      <div className="absolute inset-0 flex items-start justify-center gap-[3%] px-[6%] pt-[7%]">
-        {imgs.map((s, i) => (
-          <img key={s.src} src={s.src} alt="" loading="lazy" decoding="async" width={s.w} height={s.h}
-            className="preview-img w-[28%] max-w-[150px] rounded-[10px] shadow-[0_12px_30px_-10px_rgb(0_0_0/0.8),0_0_0_1px_rgb(255_255_255/0.06)]"
-            style={{ transitionDelay: `${i * 30}ms` }} />
-        ))}
+      <div dir="ltr" className="absolute inset-0 flex items-start justify-center gap-[3%] px-[6%] pt-[7%]">
+        {imgs.map((s, i) => {
+          const o = i - (imgs.length - 1) / 2 // offset from the middle shot, for the hover fan
+          return (
+            <img key={s.src} src={s.src} alt="" loading="lazy" decoding="async" width={s.w} height={s.h}
+              className="preview-img fan-img w-[28%] max-w-[150px] rounded-[10px] shadow-[0_12px_30px_-10px_rgb(0_0_0/0.8),0_0_0_1px_rgb(255_255_255/0.06)]"
+              style={{ '--o': o, '--a': Math.abs(o), transitionDelay: `${Math.abs(o) * 30}ms` } as React.CSSProperties} />
+          )
+        })}
       </div>
     )
   }
@@ -119,11 +121,18 @@ export function Preview({ repo, large }: { repo: Repo; large?: boolean }) {
 function Card({ repo, onOpen }: { repo: Repo; onOpen: () => void }) {
   const { t, pick } = useI18n()
   const f = useFormat()
+  // Feed the pointer position to CSS so the spotlight follows it without re-rendering.
+  const track = (e: React.PointerEvent<HTMLElement>) => {
+    const r = e.currentTarget.getBoundingClientRect()
+    e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`)
+    e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`)
+  }
   return (
-    <article className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-line bg-s1 transition-colors duration-200 hover:border-line-2">
-      <div className={`relative grow overflow-hidden border-b border-line bg-s2 ${repo.wide ? 'aspect-[16/7]' : 'aspect-[16/10]'}`}>
+    <article onPointerMove={track} className="spot group relative flex h-full flex-col overflow-hidden rounded-xl border border-line bg-s1 transition-colors duration-200 hover:border-line-2">
+      <motion.div layoutId={`media-${repo.name}`} transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
+        className={`relative grow overflow-hidden border-b border-line bg-s2 ${repo.wide ? 'aspect-[16/7]' : 'aspect-[16/10]'}`}>
         <Preview repo={repo} />
-      </div>
+      </motion.div>
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-baseline justify-between gap-3">
           <h3 className="text-lg font-semibold tracking-[-0.01em]">

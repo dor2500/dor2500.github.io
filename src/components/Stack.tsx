@@ -1,6 +1,8 @@
 import { useI18n, useFormat } from '../i18n'
 import { frameworks, generatedAt, languageShare, LANG_COLOR, profile } from '../data'
+import { motion } from 'motion/react'
 import { GithubIcon, SignalMark } from './Header'
+import { CountUp, EASE } from './Motion'
 
 export function Stack() {
   const { t } = useI18n()
@@ -19,8 +21,12 @@ export function Stack() {
         <div className="lg:col-span-8">
           <div className="flex h-3 overflow-hidden rounded-full" role="img"
             aria-label={bars.map((b) => `${b.lang} ${(b.share * 100).toFixed(0)}%`).join(', ')}>
-            {bars.map((b) => (
-              <span key={b.lang} style={{ width: `${b.share * 100}%`, background: LANG_COLOR[b.lang] ?? 'var(--color-line-2)' }} className="h-full border-e-2 border-ink last:border-e-0" />
+            {/* Segments fill in one after another from the reading edge. */}
+            {bars.map((b, i) => (
+              <motion.span key={b.lang} style={{ width: `${b.share * 100}%`, background: LANG_COLOR[b.lang] ?? 'var(--color-line-2)', transformOrigin: 'var(--origin)' }}
+                className="h-full border-e-2 border-ink [--origin:left] last:border-e-0 rtl:[--origin:right]"
+                initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true, amount: 1 }}
+                transition={{ duration: 0.5, ease: EASE, delay: i * 0.07 }} />
             ))}
           </div>
           <ul className="mt-8 grid gap-x-10 sm:grid-cols-2">
@@ -29,7 +35,7 @@ export function Stack() {
                 <span aria-hidden className="size-2.5 rounded-full" style={{ background: LANG_COLOR[l.lang] ?? '#888' }} />
                 <span className="font-medium">{l.lang}</span>
                 <span className="text-sm text-muted">{t('usedIn', { n: l.repos })}</span>
-                <span className="num ms-auto text-sm">{(l.share * 100).toFixed(1)}%</span>
+                <CountUp value={+(l.share * 100).toFixed(1)} decimals={1} suffix="%" className="num ms-auto text-sm" />
               </li>
             ))}
           </ul>

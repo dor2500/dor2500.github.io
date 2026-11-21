@@ -1,4 +1,5 @@
-import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react'
+import { createContext, useCallback, useContext, useLayoutEffect, useState, type ReactNode } from 'react'
+import { flushSync } from 'react-dom'
 
 export type Lang = 'en' | 'he'
 export type L10n = { en: string; he: string }
@@ -86,7 +87,8 @@ function initialLang(): Lang {
 
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>(initialLang)
-  useEffect(() => {
+  // Layout effect, so lang/dir are on <html> before the view transition takes its "after" picture.
+  useLayoutEffect(() => {
     const el = document.documentElement
     el.lang = lang
     el.dir = lang === 'he' ? 'rtl' : 'ltr'
@@ -99,7 +101,12 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     return s
   }, [lang])
   const pick = useCallback((v: L10n) => v[lang], [lang])
-  return <I18nCtx.Provider value={{ lang, setLang: setLangState, t, pick }}>{children}</I18nCtx.Provider>
+  const setLang = useCallback((l: Lang) => {
+    const go = () => flushSync(() => setLangState(l))
+    if (document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.startViewTransition(go)
+    else go()
+  }, [])
+  return <I18nCtx.Provider value={{ lang, setLang, t, pick }}>{children}</I18nCtx.Provider>
 }
 
 export const useI18n = () => useContext(I18nCtx)

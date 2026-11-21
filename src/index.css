@@ -85,3 +85,37 @@ body {
   .preview-img { transition: none; }
   .group:hover .preview-img { transform: none; }
 }
+
+/* Card spotlight: a soft light that follows the pointer, fine pointers only. */
+.spot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 0%), rgb(255 255 255 / 0.06), transparent 70%);
+  opacity: 0;
+  transition: opacity 300ms var(--ease-out-quint);
+}
+@media (hover: hover) and (pointer: fine) {
+  .spot:hover::before { opacity: 1; }
+  /* Phone shots fan out from the middle one. */
+  .group:hover .fan-img {
+    transform: translateX(calc(var(--o) * 10px)) translateY(calc(var(--a) * 5px)) rotate(calc(var(--o) * 3deg)) scale(1.03);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .group:hover .fan-img { transform: none; }
+}
+
+/* Language switch: the whole page crossfades instead of jumping between directions. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 260ms;
+  animation-timing-function: var(--ease-out-quint);
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) { animation: none; }
+}
