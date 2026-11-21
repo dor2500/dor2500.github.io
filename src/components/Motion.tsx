@@ -53,17 +53,14 @@ export const slide = {
   exit: (d: number) => ({ x: `${d * -14}%`, opacity: 0 }),
 }
 
-/** A section heading that tunes in with a short glitch, with its channel number beside it. */
-export function TuneIn({ ch, id, className, children }: { ch: number; id: string; className: string; children: React.ReactNode }) {
-  const ref = useRef<HTMLHeadingElement>(null)
-  const on = useInView(ref, { once: true, amount: 0.8 })
+/** A section heading that rises into place the first time it scrolls into view. */
+export function TuneIn({ id, className, children }: { id: string; className: string; children: React.ReactNode }) {
   return (
-    <h2 ref={ref} id={id} className={className}>
-      <span className={`tune inline-block ${on ? 'on' : ''}`}>{children}</span>
-      <span aria-hidden dir="ltr" className="ms-3 inline-block align-middle font-osd text-[0.5em] font-normal tracking-normal text-phosphor [text-shadow:0_0_8px_rgb(141_255_164/0.6)]">
-        CH {String(ch).padStart(2, '0')}
-      </span>
-    </h2>
+    <motion.h2 id={id} className={className}
+      initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.8 }}
+      transition={{ type: 'spring', bounce: 0, duration: 1 }}>
+      {children}
+    </motion.h2>
   )
 }
 

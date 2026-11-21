@@ -4,7 +4,7 @@ import { useI18n, useFormat } from '../i18n'
 import { others, LANG_COLOR, type Repo } from '../data'
 import { CATEGORIES, PLATFORM_LABEL, type Category, type Platform } from '../data/curated'
 import { Mockup } from './Mockups'
-import { EASE, Sweep, TuneIn } from './Motion'
+import { EASE, TuneIn } from './Motion'
 
 export function Explorer({ platform, setPlatform, onOpen }: { platform: Platform | null; setPlatform: (p: Platform | null) => void; onOpen: (r: Repo) => void }) {
   const { t, pick } = useI18n()
@@ -27,11 +27,10 @@ export function Explorer({ platform, setPlatform, onOpen }: { platform: Platform
 
   return (
     <section id="projects" aria-labelledby="projects-title" className="relative isolate border-t border-line">
-      <Sweep />
       <div className="mx-auto max-w-[1200px] px-5 py-20 sm:px-8 md:py-28">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
-            <TuneIn ch={3} id="projects-title" className="text-[clamp(2rem,4vw,3rem)] font-bold leading-tight tracking-[-0.03em]">{t('projectsTitle')}</TuneIn>
+            <TuneIn id="projects-title" className="text-[clamp(2.4rem,5.5vw,4.25rem)] font-bold leading-[1.05] tracking-[-0.035em]">{t('projectsTitle')}</TuneIn>
             <p className="mt-3 max-w-[52ch] text-lg text-muted">{t('projectsLead')}</p>
           </div>
           <div className="relative w-full sm:w-80">
@@ -39,7 +38,7 @@ export function Explorer({ platform, setPlatform, onOpen }: { platform: Platform
             <svg aria-hidden viewBox="0 0 20 20" className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="9" cy="9" r="6" /><path d="m14 14 4 4" strokeLinecap="round" /></svg>
             <input
               id="search" type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder={t('searchPh')}
-              className="w-full rounded-lg border border-line bg-s1 py-2.5 pe-3 ps-9 text-[15px] placeholder:text-muted/80 transition-colors focus:border-line-2 focus:outline-none focus-visible:outline-2 focus-visible:outline-cyan"
+              className="w-full rounded-full border border-line bg-s1 py-2.5 pe-3 ps-9 text-[15px] placeholder:text-muted/80 transition-colors focus:border-line-2 focus:outline-none focus-visible:outline-2 focus-visible:outline-cyan"
             />
           </div>
         </div>
@@ -50,10 +49,10 @@ export function Explorer({ platform, setPlatform, onOpen }: { platform: Platform
             return (
               <button
                 key={c.id} type="button" aria-pressed={on} onClick={() => setCat(c.id)}
-                className={`relative rounded-md px-3 py-1.5 text-sm transition-colors duration-150 ${on ? 'text-fg' : 'text-muted hover:text-fg'}`}
+                className={`relative rounded-full px-3.5 py-1.5 text-sm transition-colors duration-150 ${on ? 'text-ink' : 'text-muted hover:text-fg'}`}
               >
-                {on && <motion.span layoutId="cat-pill" className="absolute inset-0 rounded-md bg-s2 ring-1 ring-line-2" transition={{ type: 'spring', duration: 0.35, bounce: 0.12 }} />}
-                <span className="relative">{pick(c.label)} <span className="num text-muted">{counts[c.id] ?? 0}</span></span>
+                {on && <motion.span layoutId="cat-pill" className="absolute inset-0 rounded-full bg-fg" transition={{ type: 'spring', duration: 0.35, bounce: 0.12 }} />}
+                <span className="relative">{pick(c.label)} <span className={`num ${on ? 'text-ink/60' : 'text-muted'}`}>{counts[c.id] ?? 0}</span></span>
               </button>
             )
           })}
@@ -76,10 +75,10 @@ export function Explorer({ platform, setPlatform, onOpen }: { platform: Platform
                 transition={{ duration: 0.25, ease: EASE }}
                 className={r.wide ? 'sm:col-span-2' : ''}
               >
-                {/* First time a card scrolls in it flickers on, like a channel finding its picture. */}
+                {/* Cards rise into place the first time they scroll in. */}
                 <motion.div className="h-full"
-                  initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: [0, 1, 0.35, 1], y: 0 }} viewport={{ once: true, amount: 0.25 }}
-                  transition={{ y: { duration: 0.6, ease: EASE, delay: (n % 3) * 0.09 }, opacity: { duration: 0.55, times: [0, 0.3, 0.5, 1], delay: (n % 3) * 0.09 } }}>
+                  initial={{ opacity: 0, y: 48, scale: 0.97 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true, amount: 0.25 }}
+                  transition={{ type: 'spring', bounce: 0, duration: 0.9, delay: (n % 3) * 0.08 }}>
                   <Card repo={r} onOpen={() => onOpen(r)} />
                 </motion.div>
               </motion.li>
@@ -139,9 +138,9 @@ function Card({ repo, onOpen }: { repo: Repo; onOpen: () => void }) {
     e.currentTarget.style.setProperty('--ry', '0deg')
   }
   return (
-    <article onPointerMove={track} onPointerLeave={reset} className="tilt spot group relative flex h-full flex-col overflow-hidden rounded-xl border border-line bg-s1 transition-colors duration-200 hover:border-line-2">
+    <article onPointerMove={track} onPointerLeave={reset} className="spot group relative flex h-full flex-col overflow-hidden rounded-[24px] bg-s1 transition-[transform,box-shadow] duration-500 ease-out-quint hover:-translate-y-1 hover:shadow-[0_30px_60px_-30px_rgb(0_0_0/0.95),0_0_0_1px_rgb(255_255_255/0.08)]">
       <motion.div layoutId={`media-${repo.name}`} transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
-        className={`tv-static relative grow overflow-hidden border-b border-line bg-s2 ${repo.wide ? 'aspect-[16/7]' : 'aspect-[16/10]'}`}>
+        className={`relative grow overflow-hidden bg-s2 ${repo.wide ? 'aspect-[16/7]' : 'aspect-[16/10]'}`}>
         <Preview repo={repo} />
       </motion.div>
       <div className="flex flex-1 flex-col p-5">

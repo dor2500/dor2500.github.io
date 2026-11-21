@@ -36,10 +36,10 @@ export function Header() {
   // Fixed, with a spacer holding its place, so shrinking it never shifts the page.
   return (
     <>
-    <div aria-hidden className="h-14" />
-    <header className={`fixed inset-x-0 top-0 z-40 border-b backdrop-blur-md transition-[background-color,border-color] duration-300 ${scrolled ? 'border-line bg-ink/90' : 'border-transparent bg-ink/40'}`}>
+    <div aria-hidden className="h-12" />
+    <header className={`fixed inset-x-0 top-0 z-40 border-b backdrop-blur-xl backdrop-saturate-150 transition-[background-color,border-color] duration-300 ${scrolled ? 'border-white/10 bg-[rgb(22_22_23/0.78)]' : 'border-transparent bg-black/40'}`}>
       <a href="#main" className="sr-only rounded-md bg-ember px-3 py-2 font-semibold text-ink focus:not-sr-only focus:absolute focus:start-4 focus:top-3">{t('skip')}</a>
-      <div className={`mx-auto flex max-w-[1200px] items-center gap-2 px-5 transition-[height] duration-300 ease-out-quint sm:px-8 ${scrolled ? 'h-12' : 'h-14'}`}>
+      <div className={`mx-auto flex max-w-[1200px] items-center gap-2 px-5 transition-[height] duration-300 ease-out-quint sm:px-8 ${scrolled ? 'h-11' : 'h-12'}`}>
         <a href="#top" className="me-auto flex items-center gap-2 font-semibold tracking-tight" aria-label="dor2500">
           <SignalMark />
           <span>dor2500</span>

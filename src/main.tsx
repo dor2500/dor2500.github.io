@@ -7,6 +7,7 @@ import type { Platform } from './data/curated'
 import { Header } from './components/Header'
 import { Hero } from './components/Hero'
 import { Flagships } from './components/Flagships'
+import { Statement } from './components/Statement'
 import { Explorer } from './components/Explorer'
 import { Footer, Stack } from './components/Stack'
 import { ProjectModal } from './components/ProjectModal'
@@ -32,6 +33,7 @@ function App() {
       <Header />
       <main id="main">
         <Hero onPlatform={pickPlatform} onOpen={openFromTv} />
+        <Statement />
         <Flagships />
         <Explorer platform={platform} setPlatform={setPlatform} onOpen={openCard} />
         <Stack />

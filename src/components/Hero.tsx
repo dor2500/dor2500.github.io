@@ -72,13 +72,13 @@ export function Hero({ onPlatform, onOpen }: { onPlatform: (p: Platform) => void
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: EASE, delay: 0.45 }}>
           <p className="mt-7 max-w-[60ch] text-lg leading-relaxed text-muted text-pretty">{t('heroBio')}</p>
           <div className="mt-9 flex flex-wrap gap-3">
-            <a href="#flagships" className="rounded-lg bg-ember px-5 py-3 font-semibold text-ink transition-[background-color,transform] duration-150 hover:bg-ember-2 active:scale-[0.97]">
+            <a href="#flagships" className="rounded-full bg-ember px-5 py-3 font-semibold text-ink transition-[background-color,transform] duration-150 hover:bg-ember-2 active:scale-[0.97]">
               {t('ctaFlagships')}
             </a>
-            <a href="#projects" className="rounded-lg border border-line-2 px-5 py-3 font-medium transition-[background-color,transform] duration-150 hover:bg-s1 active:scale-[0.97]">
+            <a href="#projects" className="rounded-full border border-line-2 px-5 py-3 font-medium transition-[background-color,transform] duration-150 hover:bg-s1 active:scale-[0.97]">
               {t('ctaAll')}
             </a>
-            <a href={profile.url} className="flex items-center gap-2 rounded-lg px-4 py-3 font-medium text-muted transition-colors duration-150 hover:text-fg">
+            <a href={profile.url} className="flex items-center gap-2 rounded-full px-4 py-3 font-medium text-muted transition-colors duration-150 hover:text-fg">
               <GithubIcon /> {t('ctaGithub')}
             </a>
           </div>

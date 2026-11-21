@@ -130,9 +130,9 @@ function Dialog({ repo, morph, onClose }: { repo: Repo; morph: boolean; onClose:
                   </ul>
                 </div>
                 <div className="flex flex-col gap-2 pt-1">
-                  <a href={repo.url} className="flex items-center justify-center gap-2 rounded-lg bg-ember px-4 py-2.5 font-semibold text-ink transition-colors hover:bg-ember-2"><GithubIcon /> {t('viewCode')}</a>
-                  {repo.release && <a href={`${repo.url}/releases/latest`} className="rounded-lg border border-line-2 px-4 py-2.5 text-center font-medium transition-colors hover:bg-s2">{t('download')}</a>}
-                  {repo.homepage?.includes('github.io') && <a href={repo.homepage} className="rounded-lg border border-line-2 px-4 py-2.5 text-center font-medium transition-colors hover:bg-s2">{t('openSite')}</a>}
+                  <a href={repo.url} className="flex items-center justify-center gap-2 rounded-full bg-ember px-4 py-2.5 font-semibold text-ink transition-colors hover:bg-ember-2"><GithubIcon /> {t('viewCode')}</a>
+                  {repo.release && <a href={`${repo.url}/releases/latest`} className="rounded-full border border-line-2 px-4 py-2.5 text-center font-medium transition-colors hover:bg-s2">{t('download')}</a>}
+                  {repo.homepage?.includes('github.io') && <a href={repo.homepage} className="rounded-full border border-line-2 px-4 py-2.5 text-center font-medium transition-colors hover:bg-s2">{t('openSite')}</a>}
                 </div>
                 <p className="text-muted">{t('updated', { d: f.date(repo.pushedAt) })}</p>
               </aside>

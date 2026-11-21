@@ -4,7 +4,7 @@ import { useI18n, useFormat, type L10n } from '../i18n'
 import { bySlug, type Repo } from '../data'
 import { PhoneFrame, TvFrame, WatchFrame } from './Devices'
 import { GithubIcon } from './Header'
-import { CountUp, EASE, slide, Sweep, TuneIn, useDirection } from './Motion'
+import { CountUp, EASE, slide, TuneIn, useDirection } from './Motion'
 
 type Copy = {
   lead: L10n
@@ -75,14 +75,72 @@ export function Flagships() {
   const { t } = useI18n()
   return (
     <section id="flagships" aria-labelledby="flagships-title" className="relative isolate border-t border-line">
-      <Sweep color="var(--color-tv)" />
       <div className="mx-auto max-w-[1200px] px-5 pt-20 sm:px-8 md:pt-28">
-        <TuneIn ch={2} id="flagships-title" className="text-[clamp(2rem,4vw,3rem)] font-bold leading-tight tracking-[-0.03em]">{t('flagshipsTitle')}</TuneIn>
+        <TuneIn id="flagships-title" className="text-[clamp(2.4rem,5.5vw,4.25rem)] font-bold leading-[1.05] tracking-[-0.035em]">{t('flagshipsTitle')}</TuneIn>
         <p className="mt-3 max-w-[56ch] text-lg text-muted">{t('flagshipsLead')}</p>
       </div>
+      <TvIntro repo={bySlug['israel-tv-plus']} />
       <TvPlus repo={bySlug['israel-tv-plus']} />
       <Pulse repo={bySlug['pulse-speed']} />
     </section>
+  )
+}
+
+/**
+ * A pinned scene: the TV+ demo starts as a small rounded card under a big title,
+ * and grows to fill the screen as you scroll, the way product pages open a reveal.
+ */
+function TvIntro({ repo }: { repo: Repo }) {
+  const { pick } = useI18n()
+  const reduce = useReducedMotion()
+  const ref = useRef<HTMLDivElement>(null)
+  const { scrollYProgress: p } = useScroll({ target: ref, offset: ['start start', 'end end'] })
+  const scale = useTransform(p, [0, 0.6], [0.52, 1])
+  const radius = useTransform(p, [0, 0.6], [44, 0])
+  const shift = useTransform(p, [0, 0.6], ['16vh', '0vh'])
+  const titleOpacity = useTransform(p, [0, 0.22], [1, 0])
+  const titleY = useTransform(p, [0, 0.22], [0, -80])
+  const capOpacity = useTransform(p, [0.62, 0.78], [0, 1])
+  const capY = useTransform(p, [0.62, 0.78], [30, 0])
+  const title = (
+    <div className="px-5 text-center">
+      <p className="text-[clamp(3rem,10vw,8rem)] font-bold leading-[0.95] tracking-[-0.05em]">{repo.title}</p>
+      <p className="mt-4 text-[clamp(1.25rem,2.6vw,2rem)] font-semibold tracking-[-0.02em] text-muted">
+        {pick({ en: 'Every channel. Every screen.', he: 'כל ערוץ. כל מסך.' })}
+      </p>
+    </div>
+  )
+  const caption = pick({
+    en: '434 channels and stations, live on the TV, the phone and the watch.',
+    he: '434 ערוצים ותחנות, בשידור חי בטלוויזיה, בטלפון ובשעון.',
+  })
+  const video = (
+    <video className="size-full object-cover" src={repo.videos[0]} poster={repo.images[1].src} autoPlay={!reduce} muted loop playsInline
+      aria-label={pick({ en: 'Israel TV+ demo', he: 'הדגמה של ישראל TV+' })} />
+  )
+
+  if (reduce) {
+    return (
+      <div className="mx-auto max-w-[1200px] px-5 py-20 sm:px-8">
+        {title}
+        <div className="mt-12 aspect-video overflow-hidden rounded-[28px]">{video}</div>
+        <p className="mt-6 text-center text-lg text-muted">{caption}</p>
+      </div>
+    )
+  }
+  return (
+    <div ref={ref} className="relative h-[280vh]">
+      <div className="sticky top-0 flex h-[100dvh] items-center justify-center overflow-hidden">
+        <motion.div style={{ opacity: titleOpacity, y: titleY }} className="absolute inset-x-0 top-[12vh] z-10">{title}</motion.div>
+        <motion.div style={{ scale, borderRadius: radius, y: shift }} className="relative aspect-video w-[min(100vw,177.7dvh)] overflow-hidden bg-black will-change-transform">
+          {video}
+          <motion.div style={{ opacity: capOpacity }} className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/85 to-transparent" />
+          <motion.p style={{ opacity: capOpacity, y: capY }} className="absolute inset-x-0 bottom-[8%] mx-auto max-w-[24ch] px-5 text-center text-[clamp(1.5rem,3.6vw,3rem)] font-bold leading-tight tracking-[-0.03em] text-balance">
+            {caption}
+          </motion.p>
+        </motion.div>
+      </div>
+    </div>
   )
 }
 
@@ -93,9 +151,9 @@ function Facts({ repo, copy, accent }: { repo: Repo; copy: Copy; accent: string 
   return (
     <>
       <p className="mt-5 max-w-[58ch] text-[17px] leading-relaxed text-muted text-pretty">{pick(copy.lead)}</p>
-      <dl className="mt-8 grid grid-cols-3 gap-4 border-y border-line py-5">
+      <dl className="mt-8 grid grid-cols-3 gap-3">
         {copy.figures.map((x) => (
-          <div key={x.n}>
+          <div key={x.n} className="rounded-2xl bg-s1 p-4">
             <dt className="sr-only">{pick(x.label)}</dt>
             <dd>
               <CountUp value={Number(x.n)} className="num block text-3xl font-bold tracking-tight" style={{ color: accent }} />
@@ -146,9 +204,9 @@ function Ctas({ repo, live, liveLabel }: { repo: Repo; live: string; liveLabel: 
   const { t } = useI18n()
   return (
     <div className="mt-9 flex flex-wrap gap-3">
-      <a href={`${repo.url}/releases/latest`} className="rounded-lg bg-ember px-5 py-3 font-semibold text-ink transition-[background-color,transform] duration-150 hover:bg-ember-2 active:scale-[0.97]">{t('download')}</a>
-      <a href={live} className="rounded-lg border border-line-2 px-5 py-3 font-medium transition-[background-color,transform] duration-150 hover:bg-s1 active:scale-[0.97]">{liveLabel}</a>
-      <a href={repo.url} className="flex items-center gap-2 rounded-lg px-4 py-3 font-medium text-muted transition-colors hover:text-fg"><GithubIcon /> {t('viewCode')}</a>
+      <a href={`${repo.url}/releases/latest`} className="rounded-full bg-ember px-5 py-3 font-semibold text-ink transition-[background-color,transform] duration-150 hover:bg-ember-2 active:scale-[0.97]">{t('download')}</a>
+      <a href={live} className="rounded-full border border-line-2 px-5 py-3 font-medium transition-[background-color,transform] duration-150 hover:bg-s1 active:scale-[0.97]">{liveLabel}</a>
+      <a href={repo.url} className="flex items-center gap-2 rounded-full px-4 py-3 font-medium text-muted transition-colors hover:text-fg"><GithubIcon /> {t('viewCode')}</a>
     </div>
   )
 }
@@ -266,13 +324,10 @@ function TvPlus({ repo }: { repo: Repo }) {
 }
 
 function Pulse({ repo }: { repo: Repo }) {
-  const { t, pick, lang } = useI18n()
-  const [idx, setIdx] = useState(0)
-  const dir = useDirection(idx, lang === 'he')
-  const [shot, label] = PULSE_SCREENS[idx]
-
+  const { t, pick } = useI18n()
   return (
-    <article aria-labelledby="pulse-title" className="mx-auto grid max-w-[1200px] grid-cols-1 gap-12 border-t border-line px-5 py-16 sm:px-8 md:py-24 lg:grid-cols-12 lg:gap-10">
+    <>
+    <article aria-labelledby="pulse-title" className="mx-auto grid max-w-[1200px] grid-cols-1 gap-12 px-5 py-16 sm:px-8 md:py-24 lg:grid-cols-12 lg:gap-10">
       <div className="min-w-0 lg:order-2 lg:col-span-5 lg:col-start-8">
         <Title id="pulse-title" repo={repo} accent="var(--color-pulse)" />
         <Facts repo={repo} copy={PULSE} accent="var(--color-pulse)" />
@@ -280,42 +335,87 @@ function Pulse({ repo }: { repo: Repo }) {
       </div>
 
       <div className="min-w-0 lg:order-1 lg:col-span-7">
-        <div className="relative grid items-center gap-8 overflow-hidden rounded-3xl border border-line bg-s1 p-6 sm:grid-cols-[1fr_auto] sm:p-10 lg:sticky lg:top-24">
-          <div aria-hidden className="pointer-events-none absolute inset-0 rounded-3xl bg-[radial-gradient(60%_60%_at_70%_40%,color-mix(in_srgb,var(--color-pulse)_14%,transparent),transparent)]" />
-          <div role="group" aria-label={pick({ en: 'Pulse screens', he: 'מסכי Pulse' })} className="no-scrollbar relative -mx-6 flex gap-2 overflow-x-auto px-6 sm:mx-0 sm:flex-col sm:overflow-visible sm:px-0">
-            {PULSE_SCREENS.map(([, l], i) => {
-              const on = i === idx
-              return (
-                <button
-                  key={i} type="button" onClick={() => setIdx(i)} aria-pressed={on}
-                  className={`relative shrink-0 rounded-md px-3 py-1.5 text-start text-sm transition-colors duration-150 sm:py-2 ${on ? 'text-fg' : 'text-muted hover:text-fg'}`}
-                >
-                  {on && <motion.span layoutId="pulse-pill" className="absolute inset-0 -z-0 rounded-md bg-pulse/12 ring-1 ring-pulse/40" transition={{ type: 'spring', duration: 0.35, bounce: 0.15 }} />}
-                  <span className="relative">{pick(l)}</span>
-                </button>
-              )
-            })}
-          </div>
-          <motion.div className="relative isolate mx-auto w-[min(270px,70vw)] [perspective:1200px]"
+        <div className="relative grid place-items-center overflow-hidden rounded-[32px] bg-s1 px-6 py-14 sm:py-20 lg:sticky lg:top-24">
+          <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(55%_55%_at_50%_45%,color-mix(in_srgb,var(--color-pulse)_16%,transparent),transparent)]" />
+          <motion.div className="relative isolate w-[min(270px,64vw)] [perspective:1200px]"
             initial={{ opacity: 0, y: 60, rotateX: 28, rotateY: -14 }} whileInView={{ opacity: 1, y: 0, rotateX: 0, rotateY: 0 }}
-            viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.9, ease: EASE }}>
-          {/* Signal rings pulsing out from behind the phone. */}
-          <div aria-hidden className="pointer-events-none absolute left-1/2 top-[42%] -z-10 size-[150%] -translate-x-1/2 -translate-y-1/2">
-            {[0, 1, 2].map((k) => <span key={k} className="pulse-ring" style={{ animationDelay: `${k * 1.1}s` }} />)}
-          </div>
-          <PhoneFrame className="relative">
-            <AnimatePresence initial={false} custom={dir}>
-              <motion.img
-                key={shot} custom={dir} variants={slide} initial="enter" animate="center" exit="exit"
-                src={repo.images[shot].src} alt={pick({ en: `Pulse, ${label.en} screen`, he: `Pulse, מסך ${label.he}` })}
-                className="absolute inset-0 size-full object-cover object-top"
-                transition={{ duration: 0.4, ease: EASE }}
-              />
-            </AnimatePresence>
-          </PhoneFrame>
+            viewport={{ once: true, amount: 0.3 }} transition={{ type: 'spring', bounce: 0, duration: 1.1 }}>
+            {/* Signal rings pulsing out from behind the phone. */}
+            <div aria-hidden className="pointer-events-none absolute left-1/2 top-[42%] -z-10 size-[160%] -translate-x-1/2 -translate-y-1/2">
+              {[0, 1, 2].map((k) => <span key={k} className="pulse-ring" style={{ animationDelay: `${k * 1.1}s` }} />)}
+            </div>
+            <PhoneFrame className="relative">
+              <img src={repo.images[2].src} alt={pick({ en: 'Pulse, test result screen', he: 'Pulse, מסך התוצאה' })} className="absolute inset-0 size-full object-cover object-top" />
+            </PhoneFrame>
           </motion.div>
         </div>
       </div>
     </article>
+    <PulseGallery repo={repo} />
+    </>
+  )
+}
+
+/** Swipeable highlights: one card per screen, snapping to the middle, with arrows and dots. */
+function PulseGallery({ repo }: { repo: Repo }) {
+  const { pick } = useI18n()
+  const reduce = useReducedMotion()
+  const track = useRef<HTMLDivElement>(null)
+  const [active, setActive] = useState(0)
+
+  const onScroll = () => {
+    const el = track.current
+    if (!el) return
+    const mid = el.getBoundingClientRect().left + el.clientWidth / 2
+    let best = 0
+    let dist = Infinity
+    Array.from(el.children).forEach((c, i) => {
+      const r = c.getBoundingClientRect()
+      const d = Math.abs(r.left + r.width / 2 - mid)
+      if (d < dist) { dist = d; best = i }
+    })
+    setActive(best)
+  }
+  const go = (i: number) => {
+    const el = track.current
+    const card = el?.children[Math.max(0, Math.min(PULSE_SCREENS.length - 1, i))] as HTMLElement | undefined
+    if (!el || !card) return
+    card.scrollIntoView({ inline: 'center', block: 'nearest', behavior: reduce ? 'auto' : 'smooth' })
+  }
+  const round = 'grid size-10 place-items-center rounded-full bg-s2 text-fg transition-[background-color,transform,opacity] duration-150 hover:bg-s3 active:scale-90 disabled:opacity-30'
+
+  return (
+    <section aria-labelledby="pulse-gallery-title" className="pb-20 md:pb-28">
+      <h3 id="pulse-gallery-title" className="mx-auto max-w-[1200px] px-5 text-[clamp(1.75rem,3.4vw,2.5rem)] font-bold tracking-[-0.03em] sm:px-8">
+        {pick({ en: 'Take a look around Pulse.', he: 'סיור במסכים של Pulse.' })}
+      </h3>
+      <div ref={track} onScroll={onScroll}
+        className="no-scrollbar mt-8 flex snap-x snap-mandatory gap-5 overflow-x-auto px-[max(1.25rem,calc((100vw-1200px)/2+2rem))] pb-2">
+        {PULSE_SCREENS.map(([shot, label], i) => (
+          <motion.figure key={shot}
+            className="w-[min(74vw,300px)] shrink-0 snap-center rounded-[28px] bg-s1 p-5"
+            initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }}
+            transition={{ type: 'spring', bounce: 0, duration: 0.9, delay: Math.min(i, 4) * 0.06 }}>
+            <figcaption className="text-lg font-semibold tracking-[-0.01em]">{pick(label)}</figcaption>
+            <img src={repo.images[shot].src} alt="" loading="lazy" decoding="async" width={repo.images[shot].w} height={repo.images[shot].h}
+              className="mt-4 w-full rounded-[20px] shadow-[0_0_0_1px_rgb(255_255_255/0.06)]" />
+          </motion.figure>
+        ))}
+      </div>
+      <div className="mt-6 flex items-center justify-center gap-4">
+        <button type="button" className={round} onClick={() => go(active - 1)} disabled={active === 0} aria-label={pick({ en: 'Previous screen', he: 'המסך הקודם' })}>
+          <svg aria-hidden viewBox="0 0 16 16" className="size-4 rtl:-scale-x-100" fill="none" stroke="currentColor" strokeWidth="2"><path d="M10 3 5 8l5 5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+        </button>
+        <div className="flex items-center gap-2 rounded-full bg-s1 px-4 py-3">
+          {PULSE_SCREENS.map(([, label], i) => (
+            <button key={i} type="button" onClick={() => go(i)} aria-label={pick(label)} aria-current={i === active || undefined}
+              className={`h-2 rounded-full transition-[width,background-color] duration-300 ${i === active ? 'w-6 bg-fg' : 'w-2 bg-line-2 hover:bg-muted'}`} />
+          ))}
+        </div>
+        <button type="button" className={round} onClick={() => go(active + 1)} disabled={active === PULSE_SCREENS.length - 1} aria-label={pick({ en: 'Next screen', he: 'המסך הבא' })}>
+          <svg aria-hidden viewBox="0 0 16 16" className="size-4 rtl:-scale-x-100" fill="none" stroke="currentColor" strokeWidth="2"><path d="m6 3 5 5-5 5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+        </button>
+      </div>
+    </section>
   )
 }

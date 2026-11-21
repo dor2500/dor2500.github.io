@@ -2,7 +2,7 @@ import { useI18n, useFormat } from '../i18n'
 import { frameworks, generatedAt, languageShare, LANG_COLOR, profile } from '../data'
 import { motion } from 'motion/react'
 import { GithubIcon, SignalMark } from './Header'
-import { CountUp, EASE, Sweep, TuneIn } from './Motion'
+import { CountUp, EASE, TuneIn } from './Motion'
 
 export function Stack() {
   const { t } = useI18n()
@@ -12,10 +12,9 @@ export function Stack() {
 
   return (
     <section id="stack" aria-labelledby="stack-title" className="relative isolate border-t border-line">
-      <Sweep color="var(--color-ember)" />
       <div className="mx-auto grid max-w-[1200px] gap-14 px-5 py-20 sm:px-8 md:py-28 lg:grid-cols-12 lg:gap-8">
         <div className="lg:col-span-4">
-          <TuneIn ch={4} id="stack-title" className="text-[clamp(2rem,4vw,3rem)] font-bold leading-tight tracking-[-0.03em]">{t('stackTitle')}</TuneIn>
+          <TuneIn id="stack-title" className="text-[clamp(2.4rem,5.5vw,4.25rem)] font-bold leading-[1.05] tracking-[-0.035em]">{t('stackTitle')}</TuneIn>
           <p className="mt-3 max-w-[40ch] text-lg text-muted">{t('stackLead')}</p>
         </div>
 
@@ -46,7 +45,7 @@ export function Stack() {
           <h3 className="mt-14 text-base font-semibold">{t('frameworks')}</h3>
           <ul className="mt-4 flex flex-wrap gap-2">
             {frameworks.map(([name, n], i) => (
-              <motion.li key={name} className="flex items-center gap-2 rounded-md border border-line bg-s1 px-2.5 py-1.5 text-sm transition-colors hover:border-ember/60 hover:text-ember-2"
+              <motion.li key={name} className="flex items-center gap-2 rounded-full bg-s1 px-3.5 py-1.5 text-sm transition-colors hover:bg-s2"
                 initial={{ opacity: 0, scale: 0.7 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
                 transition={{ type: 'spring', duration: 0.5, bounce: 0.35, delay: i * 0.025 }}>
                 {name}
@@ -60,29 +59,16 @@ export function Stack() {
   )
 }
 
-const BARS = ['#bdbdbd', '#bdbd2e', '#2ebdbd', '#2ebd2e', '#bd2ebd', '#bd2e2e', '#2e2ebd']
-
 export function Footer() {
   const { t } = useI18n()
   const f = useFormat()
   return (
     <footer className="relative border-t border-line">
-      {/* Sign-off: the color bars a channel shows when the broadcast day ends. */}
-      <div aria-hidden className="flex h-16 sm:h-24" dir="ltr">
-        {BARS.map((c, i) => (
-          <motion.span key={c} className="flex-1 origin-top" style={{ background: c }}
-            initial={{ scaleY: 0 }} whileInView={{ scaleY: 1 }} viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: EASE, delay: i * 0.06 }} />
-        ))}
-      </div>
-      <div aria-hidden className="flex h-3 sm:h-4" dir="ltr">
-        {BARS.map((c, i) => <span key={c} className="flex-1 opacity-60" style={{ background: BARS[BARS.length - 1 - i] }} />)}
-      </div>
       <div className="mx-auto flex max-w-[1200px] flex-col gap-10 px-5 py-16 sm:px-8 md:flex-row md:items-end md:justify-between">
         <div className="max-w-[46ch]">
           <SignalMark className="size-7" />
           <p className="mt-5 text-xl leading-snug text-pretty">{t('footerLine')}</p>
-          <a href={profile.url} className="mt-6 inline-flex items-center gap-3 rounded-lg border border-line-2 py-2 pe-4 ps-2 transition-colors hover:bg-s1">
+          <a href={profile.url} className="mt-6 inline-flex items-center gap-3 rounded-full border border-line-2 py-2 pe-4 ps-2 transition-colors hover:bg-s1">
             <img src={`${profile.avatar}&s=64`} alt="" width={32} height={32} className="size-8 rounded-md" />
             <span className="font-medium">github.com/{profile.login}</span>
             <GithubIcon className="size-4 text-muted" />
