@@ -45,7 +45,7 @@ export function Explorer({ platform, setPlatform, onOpen, onOpenCmd }: { platfor
               type="button"
               onClick={onOpenCmd}
               aria-label={t('cmdLabel')}
-              className="absolute end-2 top-1/2 -translate-y-1/2 rounded-full border border-white/10 bg-white/[0.06] px-2 py-0.5 font-mono text-[11px] text-muted transition-colors hover:border-white/25 hover:text-fg"
+              className="absolute end-2 top-1/2 -translate-y-1/2 rounded-full border border-[var(--hairline)] bg-[var(--chip-bg)] px-2 py-0.5 font-mono text-[11px] text-muted transition-colors hover:border-[var(--hairline-strong)] hover:text-fg"
               dir="ltr"
             >
               ⌘K
@@ -158,34 +158,35 @@ function Card({ repo, onOpen }: { repo: Repo; onOpen: () => void }) {
       onPointerMove={track}
       onPointerLeave={reset}
       style={{ '--card-accent': accent } as React.CSSProperties}
-      className="bento-card spot tilt group relative flex h-full flex-col overflow-hidden rounded-[26px] border border-white/[0.07] hover:border-white/18 hover:shadow-[0_32px_68px_-28px_rgb(0_0_0/0.95)]"
+      className="bento-card spot tilt group relative flex h-full flex-col overflow-hidden rounded-[26px] hover:border-[var(--hairline-strong)] hover:shadow-[0_28px_60px_-24px_rgb(0_0_0/0.35)]"
     >
       <motion.div layoutId={`media-${repo.name}`} transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
-        className={`tv-static relative grow overflow-hidden bg-[#121216] ${repo.wide ? 'aspect-[16/7]' : 'aspect-[16/10]'}`}>
+        style={{ background: 'var(--media-bg)' }}
+        className={`tv-static relative grow overflow-hidden ${repo.wide ? 'aspect-[16/7]' : 'aspect-[16/10]'}`}>
         <Preview repo={repo} />
         {isNew && (
-          <span className="pointer-events-none absolute start-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full border border-ember/50 bg-ink/80 px-2.5 py-0.5 text-xs font-semibold text-ember-2 backdrop-blur-md">
+          <span className="pointer-events-none absolute start-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full border border-ember/50 bg-black/75 px-2.5 py-0.5 text-xs font-semibold text-ember-2 backdrop-blur-md">
             <span className="size-1.5 animate-pulse rounded-full bg-ember" />
             {t('newBadge')}
           </span>
         )}
-        <span aria-hidden className="pointer-events-none absolute end-3 top-3 z-10 grid size-7 place-items-center rounded-full border border-white/15 bg-ink/70 text-fg/80 opacity-0 backdrop-blur-md transition-[opacity,transform] duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100">
+        <span aria-hidden className="pointer-events-none absolute end-3 top-3 z-10 grid size-7 place-items-center rounded-full border border-white/20 bg-black/65 text-white opacity-0 backdrop-blur-md transition-[opacity,transform] duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100">
           <svg viewBox="0 0 16 16" className="size-3.5 rtl:-scale-x-100" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M5 11 11 5m0 0H6m5 0v5" strokeLinecap="round" strokeLinejoin="round" /></svg>
         </span>
       </motion.div>
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-baseline justify-between gap-3">
-          <h3 className="text-lg font-semibold tracking-[-0.01em] transition-colors duration-200 group-hover:text-white">
+          <h3 className="text-lg font-semibold tracking-[-0.01em] transition-colors duration-200 group-hover:text-ember">
             <button type="button" onClick={onOpen} className="text-start after:absolute after:inset-0 after:content-[''] focus-visible:outline-none" aria-label={t('open', { n: repo.title })}>
               {repo.title}
             </button>
           </h3>
-          {repo.release && <span className="shrink-0 rounded-md border border-white/[0.08] bg-white/[0.04] px-1.5 py-0.5 font-mono text-[11px] text-muted" dir="ltr">{repo.release.tag}</span>}
+          {repo.release && <span className="shrink-0 rounded-md border border-[var(--hairline)] bg-[var(--chip-bg)] px-1.5 py-0.5 font-mono text-[11px] text-muted" dir="ltr">{repo.release.tag}</span>}
         </div>
         <p className="mt-1.5 text-[15px] leading-relaxed text-muted text-pretty">{pick(repo.tagline)}</p>
         <div className="mt-3.5 flex flex-wrap gap-1.5">
           {repo.platforms.slice(0, 3).map((p) => (
-            <span key={p} className="rounded-md border border-white/[0.06] bg-white/[0.03] px-2 py-0.5 text-[11px] text-muted/90">
+            <span key={p} className="rounded-md border border-[var(--hairline)] bg-[var(--chip-bg)] px-2 py-0.5 text-[11px] text-muted">
               {pick(PLATFORM_LABEL[p])}
             </span>
           ))}

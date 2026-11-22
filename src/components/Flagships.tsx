@@ -206,8 +206,8 @@ function Ctas({ repo, live, liveLabel }: { repo: Repo; live: string; liveLabel: 
   const { t } = useI18n()
   return (
     <div className="mt-9 flex flex-wrap gap-3">
-      <a href={`${repo.url}/releases/latest`} className="rounded-full bg-ember px-5 py-3 font-semibold text-ink transition-[background-color,transform] duration-150 hover:bg-ember-2 active:scale-[0.97]">{t('download')}</a>
-      <a href={live} className="rounded-full border border-line-2 px-5 py-3 font-medium transition-[background-color,transform] duration-150 hover:bg-s1 active:scale-[0.97]">{liveLabel}</a>
+      <a href={`${repo.url}/releases/latest`} className="sheen rounded-full bg-ember px-5 py-3 font-semibold text-white transition-[background-color,transform] duration-150 hover:bg-ember-2 active:scale-[0.97]">{t('download')}</a>
+      <a href={live} className="bento-tile rounded-full px-5 py-3 font-medium transition-[background-color,transform] duration-150 hover:bg-[var(--chip-hover)] active:scale-[0.97]">{liveLabel}</a>
       <a href={repo.url} className="flex items-center gap-2 rounded-full px-4 py-3 font-medium text-muted transition-colors hover:text-fg"><GithubIcon /> {t('viewCode')}</a>
     </div>
   )
@@ -218,7 +218,7 @@ function Title({ repo, accent, id, chapter }: { repo: Repo; accent: string; id: 
   const icon = repo.images.at(-1)!
   return (
     <div>
-      <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 font-mono text-[11px] uppercase tracking-wider text-muted" dir="ltr">
+      <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[var(--hairline)] bg-[var(--chip-bg)] px-3 py-1 font-mono text-[11px] uppercase tracking-wider text-muted" dir="ltr">
         <span className="size-1.5 rounded-full" style={{ background: accent, boxShadow: `0 0 8px ${accent}` }} />
         {chapter}
       </div>
@@ -320,9 +320,9 @@ function TvPlus({ repo }: { repo: Repo }) {
             return (
               <button
                 key={i} type="button" onClick={() => setScreen(i)} aria-pressed={active}
-                className={`relative shrink-0 rounded-full px-3.5 py-1.5 text-sm transition-colors duration-150 ${active ? 'text-white' : 'text-muted hover:text-fg'}`}
+                className={`relative shrink-0 rounded-full px-3.5 py-1.5 text-sm transition-colors duration-150 ${active ? 'font-medium text-fg' : 'text-muted hover:text-fg'}`}
               >
-                {active && <motion.span layoutId="tv-screen-pill" className="absolute inset-0 -z-10 rounded-full border border-tv/50 bg-tv/20" transition={{ type: 'spring', duration: 0.35, bounce: 0.15 }} />}
+                {active && <motion.span layoutId="tv-screen-pill" className="absolute inset-0 -z-10 rounded-full border border-tv/50 bg-tv/15" transition={{ type: 'spring', duration: 0.35, bounce: 0.15 }} />}
                 {label}
               </button>
             )
@@ -346,16 +346,16 @@ function Pulse({ repo }: { repo: Repo }) {
       </div>
 
       <div className="min-w-0 lg:order-1 lg:col-span-7">
-        <div className="relative grid place-items-center overflow-hidden rounded-[32px] border border-white/[0.05] bg-s1 px-6 py-14 sm:py-20 lg:sticky lg:top-24">
+        <div className="bento-card relative grid place-items-center overflow-hidden rounded-[32px] px-6 py-14 sm:py-20 lg:sticky lg:top-24">
           <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(55%_55%_at_50%_45%,color-mix(in_srgb,var(--color-pulse)_18%,transparent),transparent)]" />
           {/* Floating live telemetry chips around the phone */}
-          <div aria-hidden dir="ltr" className="float-slow pointer-events-none absolute start-6 top-8 hidden rounded-full border border-pulse/25 bg-ink/75 px-3 py-1.5 font-mono text-xs text-pulse backdrop-blur sm:flex sm:items-center sm:gap-2">
+          <div aria-hidden dir="ltr" className="bento-tile float-slow pointer-events-none absolute start-6 top-8 hidden rounded-full border-pulse/35 px-3 py-1.5 font-mono text-xs text-pulse backdrop-blur sm:flex sm:items-center sm:gap-2">
             <span className="size-1.5 animate-pulse rounded-full bg-pulse" /> 12 ms ping
           </div>
-          <div aria-hidden dir="ltr" className="float-slow pointer-events-none absolute bottom-10 end-6 hidden rounded-full border border-white/10 bg-ink/75 px-3 py-1.5 font-mono text-xs text-fg/90 backdrop-blur sm:flex sm:items-center sm:gap-2" style={{ animationDelay: '1.8s' }}>
+          <div aria-hidden dir="ltr" className="bento-tile float-slow pointer-events-none absolute bottom-10 end-6 hidden rounded-full px-3 py-1.5 font-mono text-xs text-fg backdrop-blur sm:flex sm:items-center sm:gap-2" style={{ animationDelay: '1.8s' }}>
             ↓ 940 Mbps
           </div>
-          <div aria-hidden dir="ltr" className="float-slow pointer-events-none absolute end-8 top-14 hidden rounded-full border border-white/10 bg-ink/75 px-3 py-1.5 font-mono text-xs text-muted backdrop-blur md:flex md:items-center md:gap-2" style={{ animationDelay: '3.1s' }}>
+          <div aria-hidden dir="ltr" className="bento-tile float-slow pointer-events-none absolute end-8 top-14 hidden rounded-full px-3 py-1.5 font-mono text-xs text-muted backdrop-blur md:flex md:items-center md:gap-2" style={{ animationDelay: '3.1s' }}>
             0% packet loss
           </div>
           <motion.div className="relative isolate w-[min(270px,64vw)] [perspective:1200px]"

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'motion/react'
 import { useI18n } from '../i18n'
+import { useTheme } from '../theme'
 import { LANG_COLOR, repos, type Repo } from '../data'
 import { PLATFORM_LABEL } from '../data/curated'
 import { EASE } from './Motion'
@@ -16,6 +17,7 @@ export function CommandPalette({ open, onClose, onSelect }: { open: boolean; onC
 
 function PaletteDialog({ onClose, onSelect }: { onClose: () => void; onSelect: (r: Repo) => void }) {
   const { t, pick, lang, setLang } = useI18n()
+  const { theme, toggleTheme } = useTheme()
   const [query, setQuery] = useState('')
   const [idx, setIdx] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -68,8 +70,8 @@ function PaletteDialog({ onClose, onSelect }: { onClose: () => void; onSelect: (
           exit={{ opacity: 0, scale: 0.97, y: -8, transition: { duration: 0.14 } }}
           transition={{ duration: 0.22, ease: EASE }}
         >
-          <div className="flex items-center gap-3 border-b border-white/10 px-4 py-3.5">
-            <svg aria-hidden viewBox="0 0 20 20" className="size-4 shrink-0 text-ember-2" fill="none" stroke="currentColor" strokeWidth="1.8">
+          <div className="flex items-center gap-2.5 border-b border-[var(--hairline)] px-4 py-3.5">
+            <svg aria-hidden viewBox="0 0 20 20" className="size-4 shrink-0 text-ember" fill="none" stroke="currentColor" strokeWidth="1.8">
               <circle cx="9" cy="9" r="6" /><path d="m14 14 4 4" strokeLinecap="round" />
             </svg>
             <input
@@ -82,12 +84,19 @@ function PaletteDialog({ onClose, onSelect }: { onClose: () => void; onSelect: (
             />
             <button
               type="button"
+              onClick={toggleTheme}
+              className="rounded-md border border-[var(--hairline)] bg-[var(--chip-bg)] px-2 py-0.5 text-xs text-muted transition-colors hover:border-[var(--hairline-strong)] hover:text-fg"
+            >
+              {theme === 'dark' ? t('themeLight') : t('themeDark')}
+            </button>
+            <button
+              type="button"
               onClick={() => setLang(lang === 'en' ? 'he' : 'en')}
-              className="rounded-md border border-white/10 bg-white/[0.05] px-2 py-0.5 text-xs text-muted transition-colors hover:border-white/20 hover:text-fg"
+              className="rounded-md border border-[var(--hairline)] bg-[var(--chip-bg)] px-2 py-0.5 text-xs text-muted transition-colors hover:border-[var(--hairline-strong)] hover:text-fg"
             >
               {t('switchLang')}
             </button>
-            <kbd className="hidden rounded-md border border-white/10 bg-white/[0.05] px-1.5 py-0.5 font-mono text-[11px] text-muted sm:inline">ESC</kbd>
+            <kbd className="hidden rounded-md border border-[var(--hairline)] bg-[var(--chip-bg)] px-1.5 py-0.5 font-mono text-[11px] text-muted sm:inline">ESC</kbd>
           </div>
 
           <div className="max-h-[52vh] overflow-y-auto p-2">
@@ -103,7 +112,7 @@ function PaletteDialog({ onClose, onSelect }: { onClose: () => void; onSelect: (
                         type="button"
                         onMouseEnter={() => setIdx(i)}
                         onClick={() => { onClose(); onSelect(r) }}
-                        className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-start transition-colors ${active ? 'bg-white/[0.09] text-white' : 'text-fg/85 hover:bg-white/[0.05]'}`}
+                        className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-start transition-colors ${active ? 'bg-[var(--chip-hover)] text-fg' : 'text-fg/85 hover:bg-[var(--chip-bg)]'}`}
                       >
                         <span
                           aria-hidden
@@ -119,7 +128,7 @@ function PaletteDialog({ onClose, onSelect }: { onClose: () => void; onSelect: (
                         </span>
                         <span className="hidden shrink-0 items-center gap-1.5 sm:flex">
                           {r.platforms.slice(0, 2).map((p) => (
-                            <span key={p} className="rounded-md border border-white/[0.08] bg-white/[0.04] px-1.5 py-0.5 text-[11px] text-muted">
+                            <span key={p} className="rounded-md border border-[var(--hairline)] bg-[var(--chip-bg)] px-1.5 py-0.5 text-[11px] text-muted">
                               {pick(PLATFORM_LABEL[p])}
                             </span>
                           ))}
@@ -132,7 +141,7 @@ function PaletteDialog({ onClose, onSelect }: { onClose: () => void; onSelect: (
             )}
           </div>
 
-          <div className="flex items-center justify-between border-t border-white/[0.08] bg-white/[0.02] px-4 py-2 text-[11px] text-muted">
+          <div className="flex items-center justify-between border-t border-[var(--hairline)] bg-[var(--chip-bg)] px-4 py-2 text-[11px] text-muted">
             <span>{t('cmdHint')}</span>
             <span className="font-mono">{results.length} / {repos.length}</span>
           </div>

@@ -11,8 +11,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:opsz,wght@14..32,400..800&family=IBM+Plex+Sans+Hebrew:wght@400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700;800&family=VT323&display=swap" rel="stylesheet" />
     <script>
-      try { var l = localStorage.getItem('lang') || ((navigator.language || '').startsWith('he') ? 'he' : 'en');
-        document.documentElement.lang = l; document.documentElement.dir = l === 'he' ? 'rtl' : 'ltr'; } catch (e) {}
+      try {
+        var l = localStorage.getItem('lang') || ((navigator.language || '').startsWith('he') ? 'he' : 'en');
+        document.documentElement.lang = l; document.documentElement.dir = l === 'he' ? 'rtl' : 'ltr';
+        var th = localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        document.documentElement.dataset.theme = th; document.documentElement.style.colorScheme = th;
+      } catch (e) {}
     </script>
   </head>
   <body>

@@ -22,8 +22,8 @@ export function Stack() {
         </div>
 
         <div className="space-y-6 lg:col-span-8">
-          <div className="bento-card rounded-[28px] border border-white/[0.07] p-6 sm:p-7">
-            <div className="flex h-3.5 overflow-hidden rounded-full bg-white/[0.05]" role="img"
+          <div className="bento-card rounded-[28px] p-6 sm:p-7">
+            <div className="flex h-3.5 overflow-hidden rounded-full bg-[var(--chip-bg)]" role="img"
               aria-label={bars.map((b) => `${b.lang} ${(b.share * 100).toFixed(0)}%`).join(', ')}>
               {/* Segments fill in one after another from the reading edge and glow on hover. */}
               {bars.map((b, i) => {
@@ -46,7 +46,7 @@ export function Stack() {
                   <motion.li key={l.lang}
                     onPointerEnter={() => setHovered(l.lang)}
                     onPointerLeave={() => setHovered(null)}
-                    className={`flex items-center gap-3 border-b border-white/[0.06] py-3 transition-colors duration-200 ${on ? 'text-white' : ''}`}
+                    className={`flex items-center gap-3 border-b border-[var(--hairline)] py-3 transition-colors duration-200 ${on ? 'text-fg' : ''}`}
                     initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 1 }}
                     transition={{ duration: 0.45, ease: EASE, delay: (i % 2) * 0.06 + Math.floor(i / 2) * 0.05 }}>
                     <span aria-hidden className="size-2.5 rounded-full transition-transform duration-200" style={{ background: LANG_COLOR[l.lang] ?? '#888', transform: on ? 'scale(1.45)' : undefined, boxShadow: on ? `0 0 12px ${LANG_COLOR[l.lang] ?? '#888'}` : undefined }} />
@@ -59,11 +59,11 @@ export function Stack() {
             </ul>
           </div>
 
-          <div className="bento-card rounded-[28px] border border-white/[0.07] p-6 sm:p-7">
+          <div className="bento-card rounded-[28px] p-6 sm:p-7">
             <h3 className="text-base font-semibold">{t('frameworks')}</h3>
             <ul className="mt-4 flex flex-wrap gap-2">
               {frameworks.map(([name, n], i) => (
-                <motion.li key={name} className="bento-tile flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm transition-[background-color,border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.08]"
+                <motion.li key={name} className="bento-tile flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm transition-[background-color,border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-[var(--hairline-strong)] hover:bg-[var(--chip-hover)]"
                   initial={{ opacity: 0, scale: 0.7 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
                   transition={{ type: 'spring', duration: 0.5, bounce: 0.35, delay: i * 0.025 }}>
                   {name}

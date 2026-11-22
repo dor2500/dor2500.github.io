@@ -11,6 +11,10 @@ const strings = {
   navStack: { en: 'Stack', he: 'טכנולוגיות' },
   switchLang: { en: 'עברית', he: 'English' },
   switchLangLabel: { en: 'Switch to Hebrew', he: 'Switch to English' },
+  switchToLight: { en: 'Switch to light mode', he: 'מעבר למצב בהיר' },
+  switchToDark: { en: 'Switch to dark mode', he: 'מעבר למצב כהה' },
+  themeLight: { en: 'Light', he: 'בהיר' },
+  themeDark: { en: 'Dark', he: 'כהה' },
 
   heroStatus: { en: 'Open source · Built in Hebrew & English', he: 'קוד פתוח · בעברית ובאנגלית' },
   heroTitle: { en: 'I build apps that end up on every screen in the house.', he: 'אני בונה אפליקציות שמגיעות לכל מסך בבית.' },

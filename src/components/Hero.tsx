@@ -64,11 +64,11 @@ export function Hero({ onPlatform, onOpen }: { onPlatform: (p: Platform) => void
           initial={{ opacity: 0, y: -6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: EASE }}
-          className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-3.5 py-1.5 text-xs font-medium text-fg/85 shadow-[inset_0_1px_0_rgb(255_255_255/0.1)] backdrop-blur-xl"
+          className="bento-tile mb-6 inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-medium text-fg/85 backdrop-blur-xl"
         >
           <span className="relative flex size-2">
-            <span className="absolute inline-flex size-full animate-ping rounded-full bg-phosphor opacity-70" />
-            <span className="relative inline-flex size-2 rounded-full bg-phosphor" />
+            <span className="absolute inline-flex size-full animate-ping rounded-full bg-pulse opacity-70" />
+            <span className="relative inline-flex size-2 rounded-full bg-pulse" />
           </span>
           {t('heroStatus')}
         </motion.div>
@@ -97,10 +97,10 @@ export function Hero({ onPlatform, onOpen }: { onPlatform: (p: Platform) => void
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: EASE, delay: 0.45 }}>
           <p className="mt-7 max-w-[60ch] text-lg leading-relaxed text-muted text-pretty">{t('heroBio')}</p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <a href="#flagships" className="sheen rounded-full bg-ember px-5 py-3 font-semibold text-ink shadow-[0_8px_32px_-6px_color-mix(in_srgb,var(--color-ember)_75%,transparent)] transition-[background-color,transform,box-shadow] duration-150 hover:bg-ember-2 hover:shadow-[0_14px_40px_-4px_color-mix(in_srgb,var(--color-ember)_85%,transparent)] active:scale-[0.97]">
+            <a href="#flagships" className="sheen rounded-full bg-ember px-5 py-3 font-semibold text-white shadow-[0_8px_32px_-6px_color-mix(in_srgb,var(--color-ember)_75%,transparent)] transition-[background-color,transform,box-shadow] duration-150 hover:bg-ember-2 hover:shadow-[0_14px_40px_-4px_color-mix(in_srgb,var(--color-ember)_85%,transparent)] active:scale-[0.97]">
               {t('ctaFlagships')}
             </a>
-            <a href="#projects" className="bento-tile rounded-full px-5 py-3 font-medium transition-[background-color,border-color,transform] duration-150 hover:border-white/25 hover:bg-white/[0.08] active:scale-[0.97]">
+            <a href="#projects" className="bento-tile rounded-full px-5 py-3 font-medium transition-[background-color,border-color,transform] duration-150 hover:border-[var(--hairline-strong)] hover:bg-[var(--chip-hover)] active:scale-[0.97]">
               {t('ctaAll')}
             </a>
             <a href={profile.url} className="flex items-center gap-2 rounded-full px-4 py-3 font-medium text-muted transition-colors duration-150 hover:text-fg">

@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { MotionConfig } from 'motion/react'
 import './index.css'
 import { I18nProvider } from './i18n'
+import { ThemeProvider } from './theme'
 import type { Platform } from './data/curated'
 import { Header } from './components/Header'
 import { Hero } from './components/Hero'
@@ -63,9 +64,11 @@ function App() {
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <MotionConfig reducedMotion="user">
-      <I18nProvider>
-        <App />
-      </I18nProvider>
+      <ThemeProvider>
+        <I18nProvider>
+          <App />
+        </I18nProvider>
+      </ThemeProvider>
     </MotionConfig>
   </StrictMode>,
 )

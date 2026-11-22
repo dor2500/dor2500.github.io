@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { AnimatePresence, motion, useInView, useReducedMotion } from 'motion/react'
+import { AnimatePresence, motion, useInView, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { useI18n } from '../i18n'
 import { flagships, LANG_COLOR, others, type Repo } from '../data'
 import { Preview } from './Explorer'
@@ -59,6 +59,8 @@ export function ChannelTv({ onOpen }: { onOpen: (r: Repo) => void }) {
   const [osd, setOsd] = useState(true)
   const box = useRef<HTMLDivElement>(null)
   const visible = useInView(box, { amount: 0.3 })
+  const { scrollYProgress } = useScroll({ target: box, offset: ['start end', 'end start'] })
+  const tvLift = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [18, -22])
   const surfing = !paused && !hover && visible && !reduce
   const repo = CHANNELS[ch]
 
@@ -104,7 +106,7 @@ export function ChannelTv({ onOpen }: { onOpen: (r: Repo) => void }) {
       : (repo.language && LANG_COLOR[repo.language]) || 'var(--color-ember)'
 
   return (
-    <div ref={box} className="relative" onPointerEnter={() => setHover(true)} onPointerLeave={() => setHover(false)}>
+    <motion.div ref={box} style={{ y: tvLift }} className="relative" onPointerEnter={() => setHover(true)} onPointerLeave={() => setHover(false)}>
       <div
         aria-hidden
         className="pointer-events-none absolute -inset-[14%] -z-10 blur-3xl transition-colors duration-700"
@@ -160,14 +162,14 @@ export function ChannelTv({ onOpen }: { onOpen: (r: Repo) => void }) {
 
             {/* Lower third */}
             <AnimatePresence mode="wait">
-              <motion.div key={repo.name} className="absolute inset-x-[4%] bottom-[6%] font-sans text-fg [text-shadow:none]"
+              <motion.div key={repo.name} className="absolute inset-x-[4%] bottom-[6%] font-sans text-white [text-shadow:none]"
                 initial={{ opacity: 0, x: rtl ? 24 : -24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, transition: { duration: 0.12 } }}
                 transition={{ duration: 0.4, ease: EASE, delay: 0.2 }}>
-                <div className="inline-flex max-w-full items-stretch overflow-hidden rounded-md bg-ink/85 shadow-lg backdrop-blur">
+                <div className="inline-flex max-w-full items-stretch overflow-hidden rounded-md bg-black/80 shadow-lg backdrop-blur">
                   <span className="w-1.5 shrink-0 bg-ember" />
                   <span className="min-w-0 px-3 py-2">
-                    <span className="block truncate text-[clamp(0.95rem,1.8vw,1.25rem)] font-bold leading-tight">{repo.title}</span>
-                    <span className="block truncate text-[clamp(0.75rem,1.3vw,0.9rem)] text-muted">{pick(repo.tagline)}</span>
+                    <span className="block truncate text-[clamp(0.95rem,1.8vw,1.25rem)] font-bold leading-tight text-white">{repo.title}</span>
+                    <span className="block truncate text-[clamp(0.75rem,1.3vw,0.9rem)] text-white/75">{pick(repo.tagline)}</span>
                   </span>
                 </div>
               </motion.div>
@@ -199,17 +201,17 @@ export function ChannelTv({ onOpen }: { onOpen: (r: Repo) => void }) {
               : <svg aria-hidden viewBox="0 0 16 16" className="size-4" fill="currentColor"><rect x="4" y="3.5" width="3" height="9" rx="0.8" /><rect x="9" y="3.5" width="3" height="9" rx="0.8" /></svg>}
           </button>
         </div>
-        <span aria-hidden className="hidden h-5 w-px bg-white/10 sm:block" />
+        <span aria-hidden className="hidden h-5 w-px bg-[var(--hairline-strong)] sm:block" />
         <div className="flex flex-wrap gap-1" dir="ltr">
           {CHANNELS.map((r, i) => (
             <button key={r.name} type="button" onClick={() => tune(i)} aria-pressed={i === ch} aria-label={t('chN', { n: i + 1, t: r.title })}
-              className={`h-7 min-w-7 rounded-lg px-1.5 font-osd text-base leading-none transition-[background-color,color,box-shadow] duration-150 ${i === ch ? 'bg-ember text-ink shadow-[0_0_16px_color-mix(in_srgb,var(--color-ember)_55%,transparent)]' : 'bg-white/[0.04] text-muted hover:bg-white/[0.1] hover:text-fg'}`}>
+              className={`h-7 min-w-7 rounded-lg px-1.5 font-osd text-base leading-none transition-[background-color,color,box-shadow] duration-150 ${i === ch ? 'bg-ember text-white shadow-[0_0_16px_color-mix(in_srgb,var(--color-ember)_55%,transparent)]' : 'bg-[var(--chip-bg)] text-muted hover:bg-[var(--chip-hover)] hover:text-fg'}`}>
               {pad(i + 1)}
             </button>
           ))}
         </div>
       </div>
       <p className="mt-2 hidden text-xs text-muted md:block">{t('tvHint')}</p>
-    </div>
+    </motion.div>
   )
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { motion, useScroll, useSpring } from 'motion/react'
 import { useI18n } from '../i18n'
+import { useTheme } from '../theme'
 import { profile } from '../data'
 
 export function GithubIcon({ className = 'size-4' }: { className?: string }) {
@@ -25,6 +26,7 @@ const NAV_IDS = ['flagships', 'projects', 'stack'] as const
 
 export function Header({ onOpenCmd }: { onOpenCmd: () => void }) {
   const { t, lang, setLang } = useI18n()
+  const { theme, toggleTheme } = useTheme()
   const [scrolled, setScrolled] = useState(false)
   const [active, setActive] = useState<(typeof NAV_IDS)[number] | null>(null)
   const { scrollYProgress } = useScroll()
@@ -63,10 +65,14 @@ export function Header({ onOpenCmd }: { onOpenCmd: () => void }) {
     <header className="pointer-events-none fixed inset-x-0 top-0 z-40 px-4 pt-3 sm:px-6">
       <a href="#main" className="pointer-events-auto sr-only rounded-md bg-ember px-3 py-2 font-semibold text-ink focus:not-sr-only focus:absolute focus:start-4 focus:top-3">{t('skip')}</a>
       <div
-        className={`pointer-events-auto relative mx-auto flex items-center gap-2 overflow-hidden rounded-full border backdrop-blur-2xl backdrop-saturate-150 transition-[max-width,height,background-color,border-color,box-shadow] duration-500 ease-out-quint ${
+        style={{
+          background: scrolled ? 'var(--header-bg-scrolled)' : 'var(--header-bg)',
+          borderColor: scrolled ? 'var(--hairline-strong)' : 'var(--hairline)',
+        }}
+        className={`pointer-events-auto relative mx-auto flex items-center gap-1.5 overflow-hidden rounded-full border backdrop-blur-2xl backdrop-saturate-150 transition-[max-width,height,background-color,border-color,box-shadow] duration-500 ease-out-quint sm:gap-2 ${
           scrolled
-            ? 'h-12 max-w-[820px] border-white/12 bg-[rgb(16_16_20/0.82)] px-4 shadow-[inset_0_1px_0_rgb(255_255_255/0.12),0_20px_50px_-20px_rgb(0_0_0/0.95)]'
-            : 'h-13 max-w-[1200px] border-white/[0.06] bg-[rgb(14_14_17/0.55)] px-5 shadow-[inset_0_1px_0_rgb(255_255_255/0.07)]'
+            ? 'h-12 max-w-[860px] px-4 shadow-[0_18px_48px_-20px_rgb(0_0_0/0.35)]'
+            : 'h-13 max-w-[1200px] px-5 shadow-[0_8px_24px_-16px_rgb(0_0_0/0.2)]'
         }`}
       >
         <a href="#top" className="group me-auto flex items-center gap-2.5 font-semibold tracking-tight" aria-label="dor2500">
@@ -81,9 +87,9 @@ export function Header({ onOpenCmd }: { onOpenCmd: () => void }) {
                 key={item.id}
                 href={`#${item.id}`}
                 aria-current={on ? 'location' : undefined}
-                className={`relative rounded-full px-3.5 py-1.5 text-sm transition-colors duration-150 ${on ? 'text-white' : 'text-muted hover:text-fg'}`}
+                className={`relative rounded-full px-3.5 py-1.5 text-sm transition-colors duration-150 ${on ? 'font-medium text-fg' : 'text-muted hover:text-fg'}`}
               >
-                {on && <motion.span layoutId="nav-pill" className="absolute inset-0 -z-10 rounded-full border border-white/10 bg-white/[0.1]" transition={{ type: 'spring', duration: 0.4, bounce: 0.15 }} />}
+                {on && <motion.span layoutId="nav-pill" className="absolute inset-0 -z-10 rounded-full border border-[var(--hairline-strong)] bg-[var(--chip-hover)]" transition={{ type: 'spring', duration: 0.4, bounce: 0.15 }} />}
                 {item.label}
               </a>
             )
@@ -93,22 +99,40 @@ export function Header({ onOpenCmd }: { onOpenCmd: () => void }) {
           type="button"
           onClick={onOpenCmd}
           aria-label={t('cmdLabel')}
-          className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-muted transition-[border-color,background-color,color] duration-150 hover:border-white/20 hover:bg-white/[0.08] hover:text-fg"
+          className="flex items-center gap-2 rounded-full border border-[var(--hairline)] bg-[var(--chip-bg)] px-2.5 py-1.5 text-xs font-medium text-muted transition-[border-color,background-color,color] duration-150 hover:border-[var(--hairline-strong)] hover:bg-[var(--chip-hover)] hover:text-fg sm:px-3"
         >
           <svg aria-hidden viewBox="0 0 20 20" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="9" cy="9" r="6" /><path d="m14 14 4 4" strokeLinecap="round" /></svg>
           <span className="hidden md:inline">{t('cmdLabel')}</span>
-          <kbd className="rounded bg-white/[0.07] px-1.5 py-0.5 font-mono text-[10px] text-fg/80" dir="ltr">⌘K</kbd>
+          <kbd className="rounded bg-[var(--chip-hover)] px-1.5 py-0.5 font-mono text-[10px] text-fg/80" dir="ltr">⌘K</kbd>
+        </button>
+        <button
+          type="button"
+          onClick={toggleTheme}
+          aria-label={theme === 'dark' ? t('switchToLight') : t('switchToDark')}
+          title={theme === 'dark' ? t('switchToLight') : t('switchToDark')}
+          className="grid size-8 place-items-center rounded-full border border-[var(--hairline)] bg-[var(--chip-bg)] text-muted transition-[border-color,background-color,color,transform] duration-200 hover:border-[var(--hairline-strong)] hover:bg-[var(--chip-hover)] hover:text-fg active:scale-90"
+        >
+          {theme === 'dark' ? (
+            <svg aria-hidden viewBox="0 0 20 20" className="size-4" fill="none" stroke="currentColor" strokeWidth="1.7">
+              <circle cx="10" cy="10" r="3.5" />
+              <path d="M10 2.5v2M10 15.5v2M2.5 10h2M15.5 10h2M4.7 4.7l1.4 1.4M13.9 13.9l1.4 1.4M15.3 4.7l-1.4 1.4M6.1 13.9l-1.4 1.4" strokeLinecap="round" />
+            </svg>
+          ) : (
+            <svg aria-hidden viewBox="0 0 20 20" className="size-4" fill="none" stroke="currentColor" strokeWidth="1.7">
+              <path d="M16.2 12.6A6.8 6.8 0 0 1 7.4 3.8a6.8 6.8 0 1 0 8.8 8.8Z" strokeLinejoin="round" />
+            </svg>
+          )}
         </button>
         <button
           type="button"
           onClick={() => setLang(lang === 'en' ? 'he' : 'en')}
           aria-label={t('switchLangLabel')}
           lang={lang === 'en' ? 'he' : 'en'}
-          className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-sm font-medium transition-[border-color,background-color] duration-150 hover:border-white/20 hover:bg-white/[0.08] active:scale-[0.97]"
+          className="rounded-full border border-[var(--hairline)] bg-[var(--chip-bg)] px-3 py-1 text-sm font-medium transition-[border-color,background-color] duration-150 hover:border-[var(--hairline-strong)] hover:bg-[var(--chip-hover)] active:scale-[0.97]"
         >
           {t('switchLang')}
         </button>
-        <a href={profile.url} className="grid size-8 place-items-center rounded-full text-muted transition-colors hover:bg-white/[0.08] hover:text-fg" aria-label={t('ctaGithub')}>
+        <a href={profile.url} className="grid size-8 place-items-center rounded-full text-muted transition-colors hover:bg-[var(--chip-hover)] hover:text-fg" aria-label={t('ctaGithub')}>
           <GithubIcon className="size-[17px]" />
         </a>
         {/* Scroll progress hairline tucked neatly along the bottom edge of the island. */}

@@ -46,7 +46,7 @@ function Word({ progress, from, to, still, accent, children }: { progress: Motio
     <>
       <motion.span
         style={{ opacity: still ? 1 : opacity }}
-        className={accent ? 'bg-gradient-to-b from-white via-fg to-ember-2 bg-clip-text text-transparent' : undefined}
+        className={accent ? 'text-ember-glow' : undefined}
       >
         {children}
       </motion.span>{' '}
