@@ -70,6 +70,11 @@ export const CURATED: Record<string, Curated> = {
     stack: ['Kotlin', 'Jetpack Compose', 'Material 3 Expressive', 'Coroutines', 'Firebase'],
   },
 
+  'antigravity-remote': {
+    category: 'android', wide: true,
+    tagline: { en: 'Control Antigravity IDE from your phone: live agent chats, command approvals, terminal and files', he: 'שליטה ב-Antigravity IDE מהטלפון: שיחות סוכן בשידור חי, אישור פקודות, טרמינל וקבצים' },
+    platforms: ['android', 'windows'], stack: ['Kotlin', 'Jetpack Compose', 'TypeScript', 'Node.js', 'WebSockets'],
+  },
   tafnit: {
     category: 'android', wide: true,
     tagline: { en: 'Israeli public transit, fast and without ads', he: 'תחבורה ציבורית בישראל, מהירה ובלי פרסומות' },
@@ -170,6 +175,11 @@ export const CURATED: Record<string, Curated> = {
     mockup: { kind: 'player', title: 'YouTube Music' },
   },
 
+  'tiktok-webos-tv': {
+    category: 'web',
+    tagline: { en: 'Phone-style 9:16 TikTok for LG Smart TVs, with a bundled webOS Node.js service and Magic Remote support', he: 'טיקטוק אנכי 9:16 בסגנון טלפון לטלוויזיות LG חכמות, עם שירות Node.js מובנה ותמיכה בשלט החכם' },
+    platforms: ['webos'], stack: ['JavaScript', 'webOS SDK', 'Node.js', 'Luna Bus'],
+  },
   'walkie-talkie': {
     category: 'web',
     tagline: { en: 'Push to talk in the browser, straight between devices, no sign-up', he: 'לוחצים ומדברים בדפדפן, ישירות בין המכשירים, בלי הרשמה' },

@@ -4,7 +4,7 @@ import { useI18n, useFormat, type L10n } from '../i18n'
 import { bySlug, type Repo } from '../data'
 import { PhoneFrame, TvFrame, WatchFrame } from './Devices'
 import { GithubIcon } from './Header'
-import { CountUp, EASE, slide, TuneIn, useDirection } from './Motion'
+import { CountUp, EASE, slide, Sweep, TuneIn, useDirection } from './Motion'
 
 type Copy = {
   lead: L10n
@@ -75,6 +75,7 @@ export function Flagships() {
   const { t } = useI18n()
   return (
     <section id="flagships" aria-labelledby="flagships-title" className="relative isolate border-t border-line">
+      <Sweep color="var(--color-tv)" />
       <div className="mx-auto max-w-[1200px] px-5 pt-20 sm:px-8 md:pt-28">
         <TuneIn id="flagships-title" className="text-[clamp(2.4rem,5.5vw,4.25rem)] font-bold leading-[1.05] tracking-[-0.035em]">{t('flagshipsTitle')}</TuneIn>
         <p className="mt-3 max-w-[56ch] text-lg text-muted">{t('flagshipsLead')}</p>
@@ -153,7 +154,8 @@ function Facts({ repo, copy, accent }: { repo: Repo; copy: Copy; accent: string 
       <p className="mt-5 max-w-[58ch] text-[17px] leading-relaxed text-muted text-pretty">{pick(copy.lead)}</p>
       <dl className="mt-8 grid grid-cols-3 gap-3">
         {copy.figures.map((x) => (
-          <div key={x.n} className="rounded-2xl bg-s1 p-4">
+          <div key={x.n} className="group relative overflow-hidden rounded-2xl border border-white/[0.04] bg-s1 p-4 transition-[transform,border-color,background-color] duration-300 ease-out-quint hover:-translate-y-0.5 hover:border-white/15 hover:bg-s2">
+            <span aria-hidden className="pointer-events-none absolute inset-x-4 top-0 h-px opacity-50 transition-opacity duration-300 group-hover:opacity-100" style={{ background: `linear-gradient(90deg, transparent, ${accent}, transparent)` }} />
             <dt className="sr-only">{pick(x.label)}</dt>
             <dd>
               <CountUp value={Number(x.n)} className="num block text-3xl font-bold tracking-tight" style={{ color: accent }} />
@@ -335,8 +337,18 @@ function Pulse({ repo }: { repo: Repo }) {
       </div>
 
       <div className="min-w-0 lg:order-1 lg:col-span-7">
-        <div className="relative grid place-items-center overflow-hidden rounded-[32px] bg-s1 px-6 py-14 sm:py-20 lg:sticky lg:top-24">
-          <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(55%_55%_at_50%_45%,color-mix(in_srgb,var(--color-pulse)_16%,transparent),transparent)]" />
+        <div className="relative grid place-items-center overflow-hidden rounded-[32px] border border-white/[0.05] bg-s1 px-6 py-14 sm:py-20 lg:sticky lg:top-24">
+          <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(55%_55%_at_50%_45%,color-mix(in_srgb,var(--color-pulse)_18%,transparent),transparent)]" />
+          {/* Floating live telemetry chips around the phone */}
+          <div aria-hidden dir="ltr" className="float-slow pointer-events-none absolute start-6 top-8 hidden rounded-full border border-pulse/25 bg-ink/75 px-3 py-1.5 font-mono text-xs text-pulse backdrop-blur sm:flex sm:items-center sm:gap-2">
+            <span className="size-1.5 animate-pulse rounded-full bg-pulse" /> 12 ms ping
+          </div>
+          <div aria-hidden dir="ltr" className="float-slow pointer-events-none absolute bottom-10 end-6 hidden rounded-full border border-white/10 bg-ink/75 px-3 py-1.5 font-mono text-xs text-fg/90 backdrop-blur sm:flex sm:items-center sm:gap-2" style={{ animationDelay: '1.8s' }}>
+            ↓ 940 Mbps
+          </div>
+          <div aria-hidden dir="ltr" className="float-slow pointer-events-none absolute end-8 top-14 hidden rounded-full border border-white/10 bg-ink/75 px-3 py-1.5 font-mono text-xs text-muted backdrop-blur md:flex md:items-center md:gap-2" style={{ animationDelay: '3.1s' }}>
+            0% packet loss
+          </div>
           <motion.div className="relative isolate w-[min(270px,64vw)] [perspective:1200px]"
             initial={{ opacity: 0, y: 60, rotateX: 28, rotateY: -14 }} whileInView={{ opacity: 1, y: 0, rotateX: 0, rotateY: 0 }}
             viewport={{ once: true, amount: 0.3 }} transition={{ type: 'spring', bounce: 0, duration: 1.1 }}>
@@ -393,7 +405,7 @@ function PulseGallery({ repo }: { repo: Repo }) {
         className="no-scrollbar mt-8 flex snap-x snap-mandatory gap-5 overflow-x-auto px-[max(1.25rem,calc((100vw-1200px)/2+2rem))] pb-2">
         {PULSE_SCREENS.map(([shot, label], i) => (
           <motion.figure key={shot}
-            className="w-[min(74vw,300px)] shrink-0 snap-center rounded-[28px] bg-s1 p-5"
+            className={`w-[min(74vw,300px)] shrink-0 snap-center rounded-[28px] border bg-s1 p-5 transition-[border-color,transform,opacity] duration-300 ${i === active ? 'border-pulse/40 opacity-100 shadow-[0_20px_50px_-24px_color-mix(in_srgb,var(--color-pulse)_35%,transparent)]' : 'border-white/[0.04] opacity-75 hover:opacity-100'}`}
             initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }}
             transition={{ type: 'spring', bounce: 0, duration: 0.9, delay: Math.min(i, 4) * 0.06 }}>
             <figcaption className="text-lg font-semibold tracking-[-0.01em]">{pick(label)}</figcaption>

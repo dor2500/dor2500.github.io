@@ -4,7 +4,7 @@ import { useI18n, useFormat } from '../i18n'
 import { others, LANG_COLOR, type Repo } from '../data'
 import { CATEGORIES, PLATFORM_LABEL, type Category, type Platform } from '../data/curated'
 import { Mockup } from './Mockups'
-import { EASE, TuneIn } from './Motion'
+import { EASE, Sweep, TuneIn } from './Motion'
 
 export function Explorer({ platform, setPlatform, onOpen }: { platform: Platform | null; setPlatform: (p: Platform | null) => void; onOpen: (r: Repo) => void }) {
   const { t, pick } = useI18n()
@@ -27,6 +27,7 @@ export function Explorer({ platform, setPlatform, onOpen }: { platform: Platform
 
   return (
     <section id="projects" aria-labelledby="projects-title" className="relative isolate border-t border-line">
+      <Sweep color="var(--color-ember)" />
       <div className="mx-auto max-w-[1200px] px-5 py-20 sm:px-8 md:py-28">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
@@ -120,32 +121,47 @@ export function Preview({ repo, large }: { repo: Repo; large?: boolean }) {
   return <img src={c.src} alt="" loading="lazy" decoding="async" width={c.w} height={c.h} className="preview-img absolute inset-0 size-full object-cover object-top" />
 }
 
+const NEW_WINDOW_MS = 14 * 86_400_000
+
 function Card({ repo, onOpen }: { repo: Repo; onOpen: () => void }) {
   const { t, pick } = useI18n()
   const f = useFormat()
-  // Feed the pointer position to CSS so the spotlight follows it without re-rendering.
+  const isNew = Date.now() - new Date(repo.createdAt).getTime() < NEW_WINDOW_MS
+  const accent = (repo.language && LANG_COLOR[repo.language]) || 'var(--color-ember)'
+  // Feed the pointer position to CSS so the spotlight and 3D tilt follow it without re-rendering.
   const track = (e: React.PointerEvent<HTMLElement>) => {
     const r = e.currentTarget.getBoundingClientRect()
     e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`)
     e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`)
     const px = (e.clientX - r.left) / r.width - 0.5
     const py = (e.clientY - r.top) / r.height - 0.5
-    e.currentTarget.style.setProperty('--ry', `${px * 7}deg`)
-    e.currentTarget.style.setProperty('--rx', `${py * -7}deg`)
+    e.currentTarget.style.setProperty('--ry', `${px * 5.5}deg`)
+    e.currentTarget.style.setProperty('--rx', `${py * -5.5}deg`)
   }
   const reset = (e: React.PointerEvent<HTMLElement>) => {
     e.currentTarget.style.setProperty('--rx', '0deg')
     e.currentTarget.style.setProperty('--ry', '0deg')
   }
   return (
-    <article onPointerMove={track} onPointerLeave={reset} className="spot group relative flex h-full flex-col overflow-hidden rounded-[24px] bg-s1 transition-[transform,box-shadow] duration-500 ease-out-quint hover:-translate-y-1 hover:shadow-[0_30px_60px_-30px_rgb(0_0_0/0.95),0_0_0_1px_rgb(255_255_255/0.08)]">
+    <article
+      onPointerMove={track}
+      onPointerLeave={reset}
+      style={{ '--card-accent': accent } as React.CSSProperties}
+      className="spot tilt group relative flex h-full flex-col overflow-hidden rounded-[24px] border border-white/[0.05] bg-s1 shadow-[0_12px_30px_-20px_rgb(0_0_0/0.8)] hover:border-white/15 hover:shadow-[0_30px_60px_-28px_rgb(0_0_0/0.95)]"
+    >
       <motion.div layoutId={`media-${repo.name}`} transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
-        className={`relative grow overflow-hidden bg-s2 ${repo.wide ? 'aspect-[16/7]' : 'aspect-[16/10]'}`}>
+        className={`tv-static relative grow overflow-hidden bg-s2 ${repo.wide ? 'aspect-[16/7]' : 'aspect-[16/10]'}`}>
         <Preview repo={repo} />
+        {isNew && (
+          <span className="pointer-events-none absolute start-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full border border-ember/50 bg-ink/80 px-2.5 py-0.5 text-xs font-semibold text-ember-2 backdrop-blur">
+            <span className="size-1.5 animate-pulse rounded-full bg-ember" />
+            {t('newBadge')}
+          </span>
+        )}
       </motion.div>
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-baseline justify-between gap-3">
-          <h3 className="text-lg font-semibold tracking-[-0.01em]">
+          <h3 className="text-lg font-semibold tracking-[-0.01em] transition-colors duration-200 group-hover:text-white">
             <button type="button" onClick={onOpen} className="text-start after:absolute after:inset-0 after:content-[''] focus-visible:outline-none" aria-label={t('open', { n: repo.title })}>
               {repo.title}
             </button>
@@ -160,12 +176,20 @@ function Card({ repo, onOpen }: { repo: Repo; onOpen: () => void }) {
               {repo.language}
             </span>
           )}
-          {repo.homepage?.includes('github.io') && <span className="flex items-center gap-1.5 text-pulse"><span aria-hidden className="size-1.5 rounded-full bg-pulse" />{t('live')}</span>}
+          {repo.homepage?.includes('github.io') && (
+            <span className="flex items-center gap-1.5 text-pulse">
+              <span aria-hidden className="relative flex size-2">
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-pulse opacity-60" />
+                <span className="relative inline-flex size-2 rounded-full bg-pulse" />
+              </span>
+              {t('live')}
+            </span>
+          )}
           <span className="ms-auto">{f.ago(repo.release?.date ?? repo.pushedAt)}</span>
         </div>
       </div>
       {/* Keyboard focus ring for the whole card, driven by the stretched button. */}
-      <span aria-hidden className="pointer-events-none absolute inset-0 rounded-xl ring-2 ring-cyan opacity-0 transition-opacity group-has-[:focus-visible]:opacity-100" />
+      <span aria-hidden className="pointer-events-none absolute inset-0 rounded-[24px] ring-2 ring-cyan opacity-0 transition-opacity group-has-[:focus-visible]:opacity-100" />
     </article>
   )
 }

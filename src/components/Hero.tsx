@@ -14,8 +14,8 @@ export function SignalBars({ level, delay = 0, max = 5 }: { level: number; delay
       {Array.from({ length: max }, (_, i) => (
         <motion.span
           key={i}
-          className="relative w-[5px] overflow-hidden rounded-[1.5px] bg-s3"
-          style={{ height: `${(i + 1) * 20}%`, transformOrigin: 'bottom' }}
+          className="sig-bar relative w-[5px] overflow-hidden rounded-[1.5px] bg-s3"
+          style={{ height: `${(i + 1) * 20}%`, transformOrigin: 'bottom', '--d': `${i * 55}ms` } as React.CSSProperties}
           initial={{ scaleY: 0 }}
           whileInView={{ scaleY: 1 }}
           viewport={{ once: true }}
@@ -44,9 +44,26 @@ export function Hero({ onPlatform, onOpen }: { onPlatform: (p: Platform) => void
   const max = top[0][1]
 
   return (
-    <section id="top" aria-labelledby="hero-title">
+    <section id="top" aria-labelledby="hero-title" className="relative isolate">
+      {/* Living ambient backdrop: faint dot grid + two slowly breathing aurora orbs. */}
+      <div aria-hidden className="bg-grid pointer-events-none absolute inset-x-0 top-0 -z-20 h-[760px] [mask-image:radial-gradient(ellipse_75%_60%_at_50%_20%,#000,transparent)]" />
+      <div aria-hidden className="aurora-orb pointer-events-none absolute -top-24 start-[6%] -z-10 h-[420px] w-[420px] rounded-full bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--color-ember)_15%,transparent),transparent)] blur-3xl" />
+      <div aria-hidden className="aurora-orb-2 pointer-events-none absolute top-24 end-[4%] -z-10 h-[460px] w-[460px] rounded-full bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--color-tv)_14%,transparent),transparent)] blur-3xl" />
+
     <div className="mx-auto grid max-w-[1280px] grid-cols-1 items-center gap-12 px-5 pb-16 pt-12 sm:px-8 md:pt-20 lg:grid-cols-12 lg:gap-10">
       <div className="min-w-0 lg:col-span-5">
+        <motion.div
+          initial={{ opacity: 0, y: -6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: EASE }}
+          className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-s1/80 px-3 py-1 text-xs font-medium text-muted backdrop-blur"
+        >
+          <span className="relative flex size-2">
+            <span className="absolute inline-flex size-full animate-ping rounded-full bg-phosphor opacity-70" />
+            <span className="relative inline-flex size-2 rounded-full bg-phosphor" />
+          </span>
+          {t('heroStatus')}
+        </motion.div>
         <h1
           id="hero-title"
           key={t('heroTitle')}
@@ -72,10 +89,10 @@ export function Hero({ onPlatform, onOpen }: { onPlatform: (p: Platform) => void
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: EASE, delay: 0.45 }}>
           <p className="mt-7 max-w-[60ch] text-lg leading-relaxed text-muted text-pretty">{t('heroBio')}</p>
           <div className="mt-9 flex flex-wrap gap-3">
-            <a href="#flagships" className="rounded-full bg-ember px-5 py-3 font-semibold text-ink transition-[background-color,transform] duration-150 hover:bg-ember-2 active:scale-[0.97]">
+            <a href="#flagships" className="sheen rounded-full bg-ember px-5 py-3 font-semibold text-ink shadow-[0_8px_30px_-8px_color-mix(in_srgb,var(--color-ember)_65%,transparent)] transition-[background-color,transform,box-shadow] duration-150 hover:bg-ember-2 hover:shadow-[0_12px_36px_-6px_color-mix(in_srgb,var(--color-ember)_80%,transparent)] active:scale-[0.97]">
               {t('ctaFlagships')}
             </a>
-            <a href="#projects" className="rounded-full border border-line-2 px-5 py-3 font-medium transition-[background-color,transform] duration-150 hover:bg-s1 active:scale-[0.97]">
+            <a href="#projects" className="rounded-full border border-line-2 px-5 py-3 font-medium transition-[background-color,border-color,transform] duration-150 hover:border-white/30 hover:bg-s1 active:scale-[0.97]">
               {t('ctaAll')}
             </a>
             <a href={profile.url} className="flex items-center gap-2 rounded-full px-4 py-3 font-medium text-muted transition-colors duration-150 hover:text-fg">

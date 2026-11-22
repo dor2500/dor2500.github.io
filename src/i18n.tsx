@@ -12,6 +12,7 @@ const strings = {
   switchLang: { en: 'עברית', he: 'English' },
   switchLangLabel: { en: 'Switch to Hebrew', he: 'Switch to English' },
 
+  heroStatus: { en: 'Open source · Built in Hebrew & English', he: 'קוד פתוח · בעברית ובאנגלית' },
   heroTitle: { en: 'I build apps that end up on every screen in the house.', he: 'אני בונה אפליקציות שמגיעות לכל מסך בבית.' },
   heroBio: {
     en: 'TV apps for LG and Samsung, native Android apps in Kotlin and Compose, Windows tools in C# and PowerShell, and classic games remastered for 4K. Almost everything ships in Hebrew and English, with real right-to-left support.',
@@ -62,6 +63,8 @@ const strings = {
   clearSearch: { en: 'Clear search', he: 'ניקוי החיפוש' },
   open: { en: 'Open details for {n}', he: 'פתיחת פרטים על {n}' },
   live: { en: 'Live', he: 'באוויר' },
+  newBadge: { en: 'New', he: 'חדש' },
+  backToTop: { en: 'Back to top', he: 'חזרה למעלה' },
   close: { en: 'Close', he: 'סגירה' },
   fromReadme: { en: 'From the README', he: 'מתוך ה-README' },
   screenshots: { en: 'Screenshots', he: 'צילומי מסך' },

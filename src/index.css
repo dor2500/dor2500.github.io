@@ -90,7 +90,7 @@ body {
   .group:hover .preview-img { transform: none; }
 }
 
-/* Card spotlight: a soft light that follows the pointer, fine pointers only. */
+/* Card spotlight: a soft light + glowing border that follow the pointer, fine pointers only. */
 .spot::before {
   content: '';
   position: absolute;
@@ -98,12 +98,29 @@ body {
   z-index: 1;
   pointer-events: none;
   border-radius: inherit;
-  background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 0%), rgb(255 255 255 / 0.06), transparent 70%);
+  background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--card-accent, #ffffff) 14%, transparent), transparent 68%);
+  opacity: 0;
+  transition: opacity 300ms var(--ease-out-quint);
+}
+.spot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(280px circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--card-accent, var(--color-ember)) 65%, white 15%), transparent 70%);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
   opacity: 0;
   transition: opacity 300ms var(--ease-out-quint);
 }
 @media (hover: hover) and (pointer: fine) {
-  .spot:hover::before { opacity: 1; }
+  .spot:hover::before,
+  .spot:hover::after { opacity: 1; }
   /* Phone shots fan out from the middle one. */
   .group:hover .fan-img {
     transform: translateX(calc(var(--o) * 10px)) translateY(calc(var(--a) * 5px)) rotate(calc(var(--o) * 3deg)) scale(1.03);
@@ -238,4 +255,110 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .pulse-ring { animation: none; }
   .tilt { transform: none !important; }
+  .aurora-orb, .float-slow, .sheen::after, .eq-bar, .radar-ping { animation: none !important; }
+}
+
+/* ---------- Living atmosphere & micro-motion ---------- */
+
+/* Subtle dot-grid texture for depth on pure black surfaces. */
+.bg-grid {
+  background-image: radial-gradient(rgb(255 255 255 / 0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Slowly drifting ambient aurora orbs. */
+.aurora-orb {
+  animation: drift 18s ease-in-out infinite alternate;
+  will-change: transform;
+}
+.aurora-orb-2 {
+  animation: drift-alt 22s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@keyframes drift {
+  0% { transform: translate3d(-4%, -3%, 0) scale(1); }
+  50% { transform: translate3d(5%, 4%, 0) scale(1.08); }
+  100% { transform: translate3d(-2%, 6%, 0) scale(0.96); }
+}
+@keyframes drift-alt {
+  0% { transform: translate3d(4%, 2%, 0) scale(1.04); }
+  50% { transform: translate3d(-5%, -4%, 0) scale(0.95); }
+  100% { transform: translate3d(3%, -6%, 0) scale(1.06); }
+}
+
+/* Gentle floating bob for telemetry badges & accents. */
+.float-slow {
+  animation: float-bob 5.5s ease-in-out infinite;
+}
+@keyframes float-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+/* Light sheen sweep across primary CTA buttons on hover. */
+.sheen {
+  position: relative;
+  overflow: hidden;
+}
+.sheen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-120%) skewX(-22deg);
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.35), transparent);
+  pointer-events: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .sheen:hover::after {
+    animation: sheen-sweep 700ms var(--ease-out-quint);
+  }
+}
+@keyframes sheen-sweep {
+  from { transform: translateX(-120%) skewX(-22deg); }
+  to { transform: translateX(140%) skewX(-22deg); }
+}
+
+/* Live broadcast equalizer bars. */
+.eq-bar {
+  transform-origin: bottom;
+  animation: eq-bounce 1.2s ease-in-out infinite alternate;
+}
+@keyframes eq-bounce {
+  0% { transform: scaleY(0.28); }
+  50% { transform: scaleY(1); }
+  100% { transform: scaleY(0.45); }
+}
+
+/* Radar ping for SignalFinder & Live status dots. */
+.radar-ping {
+  animation: radar-expand 2.4s cubic-bezier(0.2, 0.7, 0.3, 1) infinite;
+}
+@keyframes radar-expand {
+  0% { transform: scale(0.4); opacity: 0.75; }
+  100% { transform: scale(1.15); opacity: 0; }
+}
+
+/* Hover equalizer dance on platform signal bars. */
+@media (hover: hover) and (pointer: fine) {
+  .group:hover .sig-bar {
+    animation: sig-dance 520ms var(--ease-out-quint) var(--d, 0ms);
+  }
+}
+@keyframes sig-dance {
+  0%, 100% { transform: scaleY(1); }
+  45% { transform: scaleY(1.22); }
+}
+
+/* Sleek SMPTE-inspired broadcast color stripe at the very bottom of the page. */
+.smpte-bar {
+  background: linear-gradient(
+    90deg,
+    #e5e5e5 0% 14.28%,
+    #f1e05a 14.28% 28.56%,
+    #6ccbff 28.56% 42.84%,
+    #6fd6b5 42.84% 57.12%,
+    #a97bff 57.12% 71.4%,
+    #ff3b4e 71.4% 85.68%,
+    #2997ff 85.68% 100%
+  );
 }

@@ -14,17 +14,19 @@ export function GithubIcon({ className = 'size-4' }: { className?: string }) {
 export function SignalMark({ className = 'size-5' }: { className?: string }) {
   return (
     <svg viewBox="0 0 20 20" aria-hidden className={className}>
-      <rect x="2" y="12" width="4" height="6" rx="1" fill="var(--color-ember)" />
-      <rect x="8" y="7" width="4" height="11" rx="1" fill="var(--color-ember)" />
-      <rect x="14" y="2" width="4" height="16" rx="1" fill="var(--color-ember)" />
+      <rect x="2" y="12" width="4" height="6" rx="1" fill="var(--color-ember)" className="origin-bottom transition-transform duration-300 group-hover:scale-y-125" />
+      <rect x="8" y="7" width="4" height="11" rx="1" fill="var(--color-ember)" className="origin-bottom transition-transform delay-75 duration-300 group-hover:scale-y-90" />
+      <rect x="14" y="2" width="4" height="16" rx="1" fill="var(--color-ember)" className="origin-bottom transition-transform delay-150 duration-300 group-hover:scale-y-110" />
     </svg>
   )
 }
 
+const NAV_IDS = ['flagships', 'projects', 'stack'] as const
+
 export function Header() {
   const { t, lang, setLang } = useI18n()
-  const link = 'rounded-md px-2.5 py-1.5 text-sm text-muted transition-colors duration-150 hover:text-fg'
   const [scrolled, setScrolled] = useState(false)
+  const [active, setActive] = useState<(typeof NAV_IDS)[number] | null>(null)
   const { scrollYProgress } = useScroll()
   const progress = useSpring(scrollYProgress, { stiffness: 260, damping: 40, restDelta: 0.001 })
   useEffect(() => {
@@ -33,6 +35,27 @@ export function Header() {
     window.addEventListener('scroll', on, { passive: true })
     return () => window.removeEventListener('scroll', on)
   }, [])
+  useEffect(() => {
+    const els = NAV_IDS.map((id) => document.getElementById(id)).filter((el): el is HTMLElement => !!el)
+    if (!els.length) return
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) setActive(e.target.id as (typeof NAV_IDS)[number])
+        }
+      },
+      { rootMargin: '-35% 0px -55% 0px' },
+    )
+    els.forEach((el) => io.observe(el))
+    const onTop = () => { if (window.scrollY < 260) setActive(null) }
+    window.addEventListener('scroll', onTop, { passive: true })
+    return () => { io.disconnect(); window.removeEventListener('scroll', onTop) }
+  }, [])
+  const navItems = [
+    { id: 'flagships' as const, label: t('navFlagships') },
+    { id: 'projects' as const, label: t('navProjects') },
+    { id: 'stack' as const, label: t('navStack') },
+  ]
   // Fixed, with a spacer holding its place, so shrinking it never shifts the page.
   return (
     <>
@@ -40,14 +63,25 @@ export function Header() {
     <header className={`fixed inset-x-0 top-0 z-40 border-b backdrop-blur-xl backdrop-saturate-150 transition-[background-color,border-color] duration-300 ${scrolled ? 'border-white/10 bg-[rgb(22_22_23/0.78)]' : 'border-transparent bg-black/40'}`}>
       <a href="#main" className="sr-only rounded-md bg-ember px-3 py-2 font-semibold text-ink focus:not-sr-only focus:absolute focus:start-4 focus:top-3">{t('skip')}</a>
       <div className={`mx-auto flex max-w-[1200px] items-center gap-2 px-5 transition-[height] duration-300 ease-out-quint sm:px-8 ${scrolled ? 'h-11' : 'h-12'}`}>
-        <a href="#top" className="me-auto flex items-center gap-2 font-semibold tracking-tight" aria-label="dor2500">
+        <a href="#top" className="group me-auto flex items-center gap-2 font-semibold tracking-tight" aria-label="dor2500">
           <SignalMark />
           <span>dor2500</span>
         </a>
-        <nav aria-label="Primary" className="hidden items-center sm:flex">
-          <a className={link} href="#flagships">{t('navFlagships')}</a>
-          <a className={link} href="#projects">{t('navProjects')}</a>
-          <a className={link} href="#stack">{t('navStack')}</a>
+        <nav aria-label="Primary" className="hidden items-center gap-0.5 sm:flex">
+          {navItems.map((item) => {
+            const on = active === item.id
+            return (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                aria-current={on ? 'location' : undefined}
+                className={`relative rounded-full px-3 py-1.5 text-sm transition-colors duration-150 ${on ? 'text-fg' : 'text-muted hover:text-fg'}`}
+              >
+                {on && <motion.span layoutId="nav-pill" className="absolute inset-0 -z-10 rounded-full bg-white/10" transition={{ type: 'spring', duration: 0.4, bounce: 0.15 }} />}
+                {item.label}
+              </a>
+            )
+          })}
         </nav>
         <button
           type="button"

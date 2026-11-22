@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useInView, useReducedMotion } from 'motion/react'
 import { useI18n } from '../i18n'
-import { flagships, others, type Repo } from '../data'
+import { flagships, LANG_COLOR, others, type Repo } from '../data'
 import { Preview } from './Explorer'
 import { EASE } from './Motion'
 
@@ -96,13 +96,25 @@ export function ChannelTv({ onOpen }: { onOpen: (r: Repo) => void }) {
 
   const rtl = lang === 'he'
   const remote = 'grid size-10 place-items-center rounded-full border border-line-2 bg-s1 text-muted transition-[color,background-color,transform] duration-150 hover:bg-s2 hover:text-fg active:scale-90'
+  // Ambilight: backlight shifts smoothly to match the tuned channel.
+  const ambilight = repo.name === 'israel-tv-plus'
+    ? 'var(--color-tv)'
+    : repo.name === 'pulse-speed'
+      ? 'var(--color-pulse)'
+      : (repo.language && LANG_COLOR[repo.language]) || 'var(--color-ember)'
 
   return (
     <div ref={box} className="relative" onPointerEnter={() => setHover(true)} onPointerLeave={() => setHover(false)}>
-      <div aria-hidden className="pointer-events-none absolute -inset-[12%] -z-10 bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--color-ember)_18%,transparent),transparent)] blur-2xl" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -inset-[14%] -z-10 blur-3xl transition-colors duration-700"
+        style={{ background: `radial-gradient(closest-side, color-mix(in srgb, ${ambilight} 24%, transparent), transparent)` }}
+      />
 
       {/* Cabinet */}
-      <div className="rounded-[26px] bg-gradient-to-b from-[#1c2027] to-[#0b0d11] p-[3.2%] shadow-[0_50px_100px_-40px_rgb(0_0_0/0.95),0_0_0_1px_var(--color-line-2),inset_0_1px_0_rgb(255_255_255/0.06)]">
+      <div className="relative rounded-[26px] bg-gradient-to-b from-[#1c2027] to-[#0b0d11] p-[3.2%] shadow-[0_50px_100px_-40px_rgb(0_0_0/0.95),0_0_0_1px_var(--color-line-2),inset_0_1px_0_rgb(255_255_255/0.06)]">
+        {/* Tiny power LED on the bottom-right bezel */}
+        <span aria-hidden className="absolute bottom-[1.3%] end-[5%] size-1.5 rounded-full bg-phosphor shadow-[0_0_8px_var(--color-phosphor)]" />
         <motion.div
           className="crt relative aspect-video overflow-hidden rounded-[18px] bg-black"
           initial={{ clipPath: 'inset(49.6% 0 49.6% 0 round 18px)', filter: 'brightness(3)' }}
@@ -139,6 +151,11 @@ export function ChannelTv({ onOpen }: { onOpen: (r: Repo) => void }) {
             <span className="absolute right-[4%] top-[5%] flex items-center gap-2 text-[clamp(1rem,2vw,1.4rem)] leading-none text-fg [text-shadow:0_1px_4px_rgb(0_0_0/0.9)]">
               <span className="size-2.5 animate-pulse rounded-full bg-rec shadow-[0_0_8px_var(--color-rec)]" />
               {t('onAir')} <Clock />
+              <span className="ms-1 hidden h-3 items-end gap-[2px] sm:flex" aria-hidden>
+                {[0, 1, 2].map((k) => (
+                  <span key={k} className="eq-bar w-[2.5px] rounded-full bg-phosphor/85" style={{ height: '100%', animationDelay: `${k * 0.24}s` }} />
+                ))}
+              </span>
             </span>
 
             {/* Lower third */}

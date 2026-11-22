@@ -49,11 +49,11 @@ function render(m: M, large?: boolean) {
         <PhoneFrame className="h-full w-auto">
           <div className="relative flex h-full flex-col items-center justify-center bg-[#0d1512]">
             {[1, 0.72, 0.46].map((s, i) => (
-              <span key={i} className="absolute aspect-square rounded-full border border-pulse/30" style={{ width: `${s * 92}%` }} />
+              <span key={i} className="radar-ping absolute aspect-square rounded-full border border-pulse/40" style={{ width: `${s * 92}%`, animationDelay: `${i * 0.65}s` }} />
             ))}
-            <span className="size-2.5 rounded-full bg-pulse shadow-[0_0_14px_var(--color-pulse)]" />
+            <span className="size-2.5 rounded-full bg-pulse shadow-[0_0_16px_var(--color-pulse)]" />
             <div className="absolute bottom-[10%] flex items-end gap-0.5" aria-hidden>
-              {[3, 5, 7, 9].map((h) => <span key={h} className="w-1 rounded-sm bg-pulse" style={{ height: h * 1.4 }} />)}
+              {[3, 5, 7, 9].map((h, i) => <span key={h} className="eq-bar w-1 rounded-sm bg-pulse" style={{ height: h * 1.4, animationDelay: `${i * 0.16}s` }} />)}
               <span className="ms-1.5 font-mono text-[9px] text-pulse">-61 dBm</span>
             </div>
           </div>
@@ -71,7 +71,7 @@ function render(m: M, large?: boolean) {
             ))}
             <div className="col-span-3 flex items-end gap-[3%] rounded-md border border-line bg-s1 p-2">
               {[40, 62, 35, 80, 55, 90, 70, 48, 66, 84, 58, 74].map((h, i) => (
-                <span key={i} className="flex-1 rounded-sm bg-cyan/70" style={{ height: `${h}%` }} />
+                <span key={i} className="eq-bar flex-1 rounded-sm bg-cyan/75" style={{ height: `${h}%`, animationDuration: `${1.8 + (i % 4) * 0.45}s`, animationDelay: `${i * 0.12}s` }} />
               ))}
             </div>
           </div>
@@ -81,10 +81,14 @@ function render(m: M, large?: boolean) {
       return (
         <WindowFrame title={m.title} className="h-full w-full max-w-[560px]">
           <div className="flex h-full gap-3 p-3" dir="ltr">
-            <div className="aspect-square h-full max-h-28 rounded-md bg-gradient-to-br from-[#ff4e6a] via-[#a43cff] to-[#2a2f6b]" />
+            <div className="relative aspect-square h-full max-h-28 overflow-hidden rounded-md bg-gradient-to-br from-[#ff4e6a] via-[#a43cff] to-[#2a2f6b]">
+              <div className="absolute bottom-1.5 end-1.5 flex h-3 items-end gap-[2px]">
+                {[0, 1, 2].map((k) => <span key={k} className="eq-bar w-[2.5px] rounded-full bg-white/90" style={{ height: '100%', animationDelay: `${k * 0.22}s` }} />)}
+              </div>
+            </div>
             <div className="flex min-w-0 flex-1 flex-col justify-center gap-1.5">
               {[90, 70, 80, 60].map((w, i) => <span key={i} className={`h-1.5 rounded-full ${i ? 'bg-s3' : 'bg-fg/70'}`} style={{ width: `${w}%` }} />)}
-              <div className="mt-2 h-1 rounded-full bg-s3"><div className="h-full w-2/5 rounded-full bg-ember" /></div>
+              <div className="mt-2 h-1 overflow-hidden rounded-full bg-s3"><div className="h-full w-2/5 animate-pulse rounded-full bg-ember" /></div>
             </div>
           </div>
         </WindowFrame>
