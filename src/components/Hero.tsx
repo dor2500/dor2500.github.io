@@ -1,10 +1,10 @@
 import { motion } from 'motion/react'
 import { useI18n } from '../i18n'
-import { platformCounts, profile, stats, type Repo } from '../data'
+import { platformCounts, profile, type Repo } from '../data'
 import { PLATFORM_LABEL, type Platform } from '../data/curated'
 import { GithubIcon } from './Header'
-import { CountUp, EASE, Magnetic } from './Motion'
-import { ChannelTv } from './ChannelTv'
+import { EASE, Magnetic } from './Motion'
+import { HeroBento } from './HeroBento'
 import { Ticker } from './Ticker'
 
 export function SignalBars({ level, delay = 0, max = 5 }: { level: number; delay?: number; max?: number }) {
@@ -35,7 +35,7 @@ export function SignalBars({ level, delay = 0, max = 5 }: { level: number; delay
   )
 }
 
-export function Hero({ onPlatform, onOpen }: { onPlatform: (p: Platform) => void; onOpen: (r: Repo) => void }) {
+export function Hero({ onPlatform, onOpen, onOpenCmd }: { onPlatform: (p: Platform) => void; onOpen: (r: Repo) => void; onOpenCmd: () => void }) {
   const { t, pick, lang } = useI18n()
   const top = platformCounts.slice(0, 10)
   const max = top[0][1]
@@ -119,32 +119,8 @@ export function Hero({ onPlatform, onOpen }: { onPlatform: (p: Platform) => void
           </a>
         </motion.div>
 
-        {/* Centered Bento Telemetry Bar */}
-        <motion.dl
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, ease: EASE, delay: 0.32 }}
-          className="mx-auto mt-10 grid max-w-[540px] grid-cols-3 gap-3"
-        >
-          {[
-            { n: stats.repos, label: t('statProjects'), color: 'var(--color-ember-2)' },
-            { n: stats.releases, label: t('statReleases'), color: 'var(--color-tv)' },
-            { n: platformCounts.length, label: t('statPlatforms'), color: 'var(--color-pulse)' },
-          ].map((m) => (
-            <div key={m.label} className="bento-tile rounded-2xl px-4 py-3.5 text-center">
-              <dt className="sr-only">{m.label}</dt>
-              <dd>
-                <CountUp value={m.n} className="num block text-2xl font-bold tracking-tight sm:text-3xl" style={{ color: m.color }} />
-                <span className="mt-0.5 block text-xs text-muted">{m.label}</span>
-              </dd>
-            </div>
-          ))}
-        </motion.dl>
-
-        {/* Full-width Cinematic Centered OLED TV Centerpiece */}
-        <div className="mx-auto mt-12 max-w-[980px] text-start md:mt-16">
-          <ChannelTv onOpen={onOpen} />
-        </div>
+        {/* Brand-new Apple-style Interactive Bento Showcase Stage */}
+        <HeroBento onOpen={onOpen} onPlatform={onPlatform} onOpenCmd={onOpenCmd} />
       </div>
 
       <Ticker />

@@ -49,7 +49,7 @@ function App() {
     <>
       <Header onOpenCmd={() => setCmdOpen(true)} />
       <main id="main">
-        <Hero onPlatform={pickPlatform} onOpen={openFromTv} />
+        <Hero onPlatform={pickPlatform} onOpen={openFromTv} onOpenCmd={() => setCmdOpen(true)} />
         <ShowcaseStrip onOpen={openFromTv} />
         <Statement />
         <Flagships />
