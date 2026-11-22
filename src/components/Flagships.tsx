@@ -314,26 +314,26 @@ function Title({ repo, accent, id, chapter }: { repo: Repo; accent: string; id: 
                     </motion.div>
                   </div>
 
-        <div role="group" aria-label={pick({ en: 'TV screens', he: 'מסכי טלוויזיה' })} className="no-scrollbar -mx-5 mt-8 flex gap-1.5 overflow-x-auto px-5 sm:mx-0 sm:px-0 lg:mt-6">
-          <div className="bento-tile inline-flex gap-1 rounded-full p-1">
-          {[-1, ...tvShots.keys()].map((i) => {
-            const label = i === -1 ? pick({ en: 'Demo video', he: 'סרטון הדגמה' }) : pick(TV_SCREENS[i])
-            const active = screen === i
-            return (
-              <button
-                key={i} type="button" onClick={() => setScreen(i)} aria-pressed={active}
-                className={`relative shrink-0 rounded-full px-3.5 py-1.5 text-sm transition-colors duration-150 ${active ? 'font-medium text-fg' : 'text-muted hover:text-fg'}`}
-              >
-                {active && <motion.span layoutId="tv-screen-pill" className="absolute inset-0 -z-10 rounded-full border border-tv/50 bg-tv/15" transition={{ type: 'spring', duration: 0.35, bounce: 0.15 }} />}
-                {label}
-              </button>
-            )
-          })}
-          </div>
-        </div>
-      </div>
-    </article>
-  )
+                  <div role="group" aria-label={pick({ en: 'TV screens', he: 'מסכי טלוויזיה' })} className="no-scrollbar -mx-5 mt-8 flex gap-1.5 overflow-x-auto px-5 sm:mx-0 sm:px-0 lg:mt-6">
+                    <div className="bento-tile inline-flex gap-1 rounded-full p-1">
+                      {[-1, ...tvShots.keys()].map((i) => {
+                        const label = i === -1 ? pick({ en: 'Demo video', he: 'סרטון הדגמה' }) : pick(TV_SCREENS[i])
+                        const active = screen === i
+                        return (
+                          <button
+                            key={i} type="button" onClick={() => setScreen(i)} aria-pressed={active}
+                            className={`relative shrink-0 rounded-full px-3.5 py-1.5 text-sm transition-colors duration-150 ${active ? 'font-medium text-fg' : 'text-muted hover:text-fg'}`}
+                          >
+                            {active && <motion.span layoutId="tv-screen-pill" className="absolute inset-0 -z-10 rounded-full border border-tv/50 bg-tv/15" transition={{ type: 'spring', duration: 0.35, bounce: 0.15 }} />}
+                            {label}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </article>
+              )
 }
 
               function Pulse({repo}: {repo: Repo }) {
@@ -348,36 +348,36 @@ function Title({ repo, accent, id, chapter }: { repo: Repo; accent: string; id: 
                     <Ctas repo={repo} live="https://dor2500.github.io/pulse-speed/app/" liveLabel={t('tryWeb')} />
                   </div>
 
-      <div className="min-w-0 lg:order-1 lg:col-span-7">
-        <div className="bento-card relative grid place-items-center overflow-hidden rounded-[32px] px-6 py-14 sm:py-20 lg:sticky lg:top-24">
-          <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(55%_55%_at_50%_45%,color-mix(in_srgb,var(--color-pulse)_18%,transparent),transparent)]" />
-          {/* Floating live telemetry chips around the phone */}
-          <div aria-hidden dir="ltr" className="bento-tile float-slow pointer-events-none absolute start-6 top-8 hidden rounded-full border-pulse/35 px-3 py-1.5 font-mono text-xs text-pulse backdrop-blur sm:flex sm:items-center sm:gap-2">
-            <span className="size-1.5 animate-pulse rounded-full bg-pulse" /> 12 ms ping
-          </div>
-          <div aria-hidden dir="ltr" className="bento-tile float-slow pointer-events-none absolute bottom-10 end-6 hidden rounded-full px-3 py-1.5 font-mono text-xs text-fg backdrop-blur sm:flex sm:items-center sm:gap-2" style={{ animationDelay: '1.8s' }}>
-            ↓ 940 Mbps
-          </div>
-          <div aria-hidden dir="ltr" className="bento-tile float-slow pointer-events-none absolute end-8 top-14 hidden rounded-full px-3 py-1.5 font-mono text-xs text-muted backdrop-blur md:flex md:items-center md:gap-2" style={{ animationDelay: '3.1s' }}>
-            0% packet loss
-          </div>
-          <motion.div className="relative isolate w-[min(270px,64vw)] [perspective:1200px]"
-            initial={{ opacity: 0, y: 60, rotateX: 28, rotateY: -14 }} whileInView={{ opacity: 1, y: 0, rotateX: 0, rotateY: 0 }}
-            viewport={{ once: true, amount: 0.3 }} transition={{ type: 'spring', bounce: 0, duration: 1.1 }}>
-            {/* Signal rings pulsing out from behind the phone. */}
-            <div aria-hidden className="pointer-events-none absolute left-1/2 top-[42%] -z-10 size-[160%] -translate-x-1/2 -translate-y-1/2">
-              {[0, 1, 2].map((k) => <span key={k} className="pulse-ring" style={{ animationDelay: `${k * 1.1}s` }} />)}
-            </div>
-            <PhoneFrame className="relative">
-              <img src={repo.images[2].src} alt={pick({ en: 'Pulse, test result screen', he: 'Pulse, מסך התוצאה' })} className="absolute inset-0 size-full object-cover object-top" />
-            </PhoneFrame>
-          </motion.div>
-        </div>
-      </div>
-    </article>
-    <PulseGallery repo={repo} />
-    </>
-  )
+                  <div className="min-w-0 lg:order-1 lg:col-span-7">
+                    <div className="bento-card relative grid place-items-center overflow-hidden rounded-[32px] px-6 py-14 sm:py-20 lg:sticky lg:top-24">
+                      <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(55%_55%_at_50%_45%,color-mix(in_srgb,var(--color-pulse)_18%,transparent),transparent)]" />
+                      {/* Floating live telemetry chips around the phone */}
+                      <div aria-hidden dir="ltr" className="bento-tile float-slow pointer-events-none absolute start-6 top-8 hidden rounded-full border-pulse/35 px-3 py-1.5 font-mono text-xs text-pulse backdrop-blur sm:flex sm:items-center sm:gap-2">
+                        <span className="size-1.5 animate-pulse rounded-full bg-pulse" /> 12 ms ping
+                      </div>
+                      <div aria-hidden dir="ltr" className="bento-tile float-slow pointer-events-none absolute bottom-10 end-6 hidden rounded-full px-3 py-1.5 font-mono text-xs text-fg backdrop-blur sm:flex sm:items-center sm:gap-2" style={{ animationDelay: '1.8s' }}>
+                        ↓ 940 Mbps
+                      </div>
+                      <div aria-hidden dir="ltr" className="bento-tile float-slow pointer-events-none absolute end-8 top-14 hidden rounded-full px-3 py-1.5 font-mono text-xs text-muted backdrop-blur md:flex md:items-center md:gap-2" style={{ animationDelay: '3.1s' }}>
+                        0% packet loss
+                      </div>
+                      <motion.div className="relative isolate w-[min(270px,64vw)] [perspective:1200px]"
+                        initial={{ opacity: 0, y: 60, rotateX: 28, rotateY: -14 }} whileInView={{ opacity: 1, y: 0, rotateX: 0, rotateY: 0 }}
+                        viewport={{ once: true, amount: 0.3 }} transition={{ type: 'spring', bounce: 0, duration: 1.1 }}>
+                        {/* Signal rings pulsing out from behind the phone. */}
+                        <div aria-hidden className="pointer-events-none absolute left-1/2 top-[42%] -z-10 size-[160%] -translate-x-1/2 -translate-y-1/2">
+                          {[0, 1, 2].map((k) => <span key={k} className="pulse-ring" style={{ animationDelay: `${k * 1.1}s` }} />)}
+                        </div>
+                        <PhoneFrame className="relative">
+                          <img src={repo.images[2].src} alt={pick({ en: 'Pulse, test result screen', he: 'Pulse, מסך התוצאה' })} className="absolute inset-0 size-full object-cover object-top" />
+                        </PhoneFrame>
+                      </motion.div>
+                    </div>
+                  </div>
+                </article>
+                <PulseGallery repo={repo} />
+              </>
+              )
 }
 
               /** Swipeable highlights: one card per screen, snapping to the middle, with arrows and dots. */

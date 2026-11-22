@@ -13,7 +13,6 @@ import { Explorer } from './components/Explorer'
 import { Footer, Stack } from './components/Stack'
 import { ProjectModal } from './components/ProjectModal'
 import { CommandPalette } from './components/CommandPalette'
-import { ActionCanvas } from './components/ActionCanvas'
 import { ShowcaseStrip } from './components/ShowcaseStrip'
 import { FLAGSHIPS } from './data/curated'
 import type { Repo } from './data'
@@ -48,7 +47,6 @@ function App() {
 
   return (
     <>
-      <ActionCanvas />
       <Header onOpenCmd={() => setCmdOpen(true)} />
       <main id="main">
         <Hero onPlatform={pickPlatform} onOpen={openFromTv} />

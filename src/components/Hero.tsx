@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
+import { motion } from 'motion/react'
 import { useI18n } from '../i18n'
 import { platformCounts, profile, stats, type Repo } from '../data'
 import { PLATFORM_LABEL, type Platform } from '../data/curated'
@@ -7,9 +6,6 @@ import { GithubIcon } from './Header'
 import { CountUp, EASE, Magnetic } from './Motion'
 import { ChannelTv } from './ChannelTv'
 import { Ticker } from './Ticker'
-
-const ROTATE_EN = ['every screen in the house.', 'LG & Samsung smart TVs.', 'native Android phones.', 'modern Windows desktops.']
-const ROTATE_HE = ['לכל מסך בבית.', 'לטלוויזיות LG וסמסונג.', 'לטלפונים עם Android.', 'למחשבי Windows מודרניים.']
 
 export function SignalBars({ level, delay = 0, max = 5 }: { level: number; delay?: number; max?: number }) {
   return (
@@ -24,7 +20,6 @@ export function SignalBars({ level, delay = 0, max = 5 }: { level: number; delay
           viewport={{ once: true }}
           transition={{ duration: 0.35, ease: EASE, delay: delay + i * 0.05 }}
         >
-          {/* Each lit bar flickers on in turn, like a phone finding signal. */}
           {i < level && (
             <motion.span
               className="absolute inset-0 bg-ember"
@@ -42,17 +37,8 @@ export function SignalBars({ level, delay = 0, max = 5 }: { level: number; delay
 
 export function Hero({ onPlatform, onOpen }: { onPlatform: (p: Platform) => void; onOpen: (r: Repo) => void }) {
   const { t, pick, lang } = useI18n()
-  const reduce = useReducedMotion()
   const top = platformCounts.slice(0, 10)
   const max = top[0][1]
-  const phrases = lang === 'he' ? ROTATE_HE : ROTATE_EN
-  const [wordIdx, setWordIdx] = useState(0)
-
-  useEffect(() => {
-    if (reduce) return
-    const id = setInterval(() => setWordIdx((i) => (i + 1) % phrases.length), 2800)
-    return () => clearInterval(id)
-  }, [reduce, phrases.length])
 
   const onPointerMove = (e: React.PointerEvent<HTMLElement>) => {
     const r = e.currentTarget.getBoundingClientRect()
@@ -62,83 +48,101 @@ export function Hero({ onPlatform, onOpen }: { onPlatform: (p: Platform) => void
 
   return (
     <section id="top" aria-labelledby="hero-title" onPointerMove={onPointerMove} className="relative isolate">
-      {/* Living ambient backdrop: faint dot grid + pointer aura + two slowly breathing aurora orbs. */}
-      <div aria-hidden className="bg-grid pointer-events-none absolute inset-x-0 top-0 -z-20 h-[820px] [mask-image:radial-gradient(ellipse_78%_64%_at_50%_22%,#000,transparent)]" />
-      <div aria-hidden className="cursor-aura pointer-events-none absolute inset-x-0 top-0 -z-15 h-[820px] transition-opacity duration-500" />
-      <div aria-hidden className="aurora-orb pointer-events-none absolute -top-24 start-[6%] -z-10 h-[440px] w-[440px] rounded-full bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--color-ember)_18%,transparent),transparent)] blur-3xl" />
-      <div aria-hidden className="aurora-orb-2 pointer-events-none absolute top-24 end-[4%] -z-10 h-[480px] w-[480px] rounded-full bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--color-tv)_16%,transparent),transparent)] blur-3xl" />
+      {/* Clean Apple-style studio stage light + subtle cursor aura */}
+      <div aria-hidden className="bg-grid pointer-events-none absolute inset-x-0 top-0 -z-20 h-[760px] opacity-70 [mask-image:radial-gradient(ellipse_70%_58%_at_50%_18%,#000,transparent)]" />
+      <div aria-hidden className="cursor-aura pointer-events-none absolute inset-x-0 top-0 -z-15 h-[760px]" />
+      <div aria-hidden className="aurora-orb pointer-events-none absolute -top-32 left-1/2 -z-10 h-[520px] w-[min(920px,95vw)] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--color-ember)_15%,transparent),color-mix(in_srgb,var(--color-tv)_10%,transparent)_55%,transparent)] blur-3xl" />
 
-    <div className="mx-auto grid max-w-[1280px] grid-cols-1 items-center gap-12 px-5 pb-16 pt-10 sm:px-8 md:pt-16 lg:grid-cols-12 lg:gap-10">
-      <div className="min-w-0 lg:col-span-5">
+      {/* Centered monumental Apple product-launch Hero */}
+      <div className="mx-auto max-w-[1160px] px-5 pb-16 pt-10 text-center sm:px-8 md:pt-16">
         <motion.div
-          initial={{ opacity: 0, y: -6 }}
+          initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: EASE }}
-          className="bento-tile mb-6 inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-medium text-fg/85 backdrop-blur-xl"
+          className="bento-tile mx-auto mb-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium text-fg/85 backdrop-blur-xl"
         >
           <span className="relative flex size-2">
-            <span className="absolute inline-flex size-full animate-ping rounded-full bg-pulse opacity-70" />
+            <span className="absolute inline-flex size-full animate-ping rounded-full bg-pulse opacity-75" />
             <span className="relative inline-flex size-2 rounded-full bg-pulse" />
           </span>
           {t('heroStatus')}
         </motion.div>
-        <h1
-          id="hero-title"
-          className="text-[clamp(2.6rem,5.4vw,4.35rem)] font-bold leading-[1.02] tracking-[-0.035em] text-balance"
-        >
-          <span className="text-metallic block">{t('heroLeadPrefix')}</span>
-          <span className="relative mt-1 block min-h-[2.15em] [perspective:800px]">
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={`${lang}-${wordIdx}`}
-                initial={{ opacity: 0, y: 26, rotateX: -35 }}
-                animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                exit={{ opacity: 0, y: -22, rotateX: 35 }}
-                transition={{ type: 'spring', stiffness: 260, damping: 22 }}
-                className="text-ember-glow inline-block origin-center"
-              >
-                {phrases[wordIdx]}
-              </motion.span>
-            </AnimatePresence>
-          </span>
-        </h1>
-        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: EASE, delay: 0.25 }}>
-          <p className="mt-5 max-w-[60ch] text-lg leading-relaxed text-muted text-pretty">{t('heroBio')}</p>
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <Magnetic>
-              <a href="#flagships" className="sheen inline-block rounded-full bg-ember px-6 py-3 font-semibold text-white shadow-[0_8px_32px_-6px_color-mix(in_srgb,var(--color-ember)_75%,transparent)] transition-[background-color,transform,box-shadow] duration-150 hover:bg-ember-2 hover:shadow-[0_14px_40px_-4px_color-mix(in_srgb,var(--color-ember)_85%,transparent)] active:scale-[0.97]">
-                {t('ctaFlagships')}
-              </a>
-            </Magnetic>
-            <Magnetic strength={0.18}>
-              <a href="#projects" className="bento-tile inline-block rounded-full px-5 py-3 font-medium transition-[background-color,border-color,transform] duration-150 hover:border-[var(--hairline-strong)] hover:bg-[var(--chip-hover)] active:scale-[0.97]">
-                {t('ctaAll')}
-              </a>
-            </Magnetic>
-            <a href={profile.url} className="flex items-center gap-2 rounded-full px-4 py-3 font-medium text-muted transition-colors duration-150 hover:text-fg">
-              <GithubIcon /> {t('ctaGithub')}
-            </a>
-          </div>
-          {/* Glass bento telemetry strip */}
-          <dl className="mt-9 grid max-w-[460px] grid-cols-3 gap-2.5">
-            {[
-              { n: stats.repos, label: t('statProjects'), color: 'var(--color-ember-2)' },
-              { n: stats.releases, label: t('statReleases'), color: 'var(--color-tv)' },
-              { n: platformCounts.length, label: t('statPlatforms'), color: 'var(--color-pulse)' },
-            ].map((m) => (
-              <div key={m.label} className="bento-tile rounded-2xl px-3.5 py-3">
-                <dt className="sr-only">{m.label}</dt>
-                <dd>
-                  <CountUp value={m.n} className="num block text-2xl font-bold tracking-tight" style={{ color: m.color }} />
-                  <span className="mt-0.5 block text-[11px] leading-snug text-muted">{m.label}</span>
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </motion.div>
-      </div>
 
-        <div className="min-w-0 lg:col-span-7">
+        <motion.h1
+          id="hero-title"
+          key={lang}
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.75, ease: EASE }}
+          className="mx-auto max-w-[18ch] text-[clamp(2.8rem,7vw,5.6rem)] font-bold leading-[0.98] tracking-[-0.04em] text-balance"
+        >
+          {lang === 'he' ? (
+            <>
+              <span className="text-metallic">אפליקציות שמגיעות </span>
+              <span className="text-ember-glow">לכל מסך בבית.</span>
+            </>
+          ) : (
+            <>
+              <span className="text-metallic">Apps built for </span>
+              <span className="text-ember-glow">every screen in the house.</span>
+            </>
+          )}
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, ease: EASE, delay: 0.14 }}
+          className="mx-auto mt-6 max-w-[60ch] text-lg leading-relaxed text-muted text-pretty sm:text-xl"
+        >
+          {t('heroBio')}
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, ease: EASE, delay: 0.24 }}
+          className="mt-9 flex flex-wrap items-center justify-center gap-3"
+        >
+          <Magnetic>
+            <a href="#flagships" className="sheen inline-block rounded-full bg-ember px-6 py-3 font-semibold text-white shadow-[0_10px_34px_-6px_color-mix(in_srgb,var(--color-ember)_75%,transparent)] transition-[background-color,transform,box-shadow] duration-150 hover:bg-ember-2 active:scale-[0.97]">
+              {t('ctaFlagships')}
+            </a>
+          </Magnetic>
+          <Magnetic strength={0.18}>
+            <a href="#projects" className="bento-tile inline-block rounded-full px-6 py-3 font-medium transition-[background-color,border-color,transform] duration-150 hover:border-[var(--hairline-strong)] hover:bg-[var(--chip-hover)] active:scale-[0.97]">
+              {t('ctaAll')}
+            </a>
+          </Magnetic>
+          <a href={profile.url} className="inline-flex items-center gap-2 rounded-full px-4 py-3 font-medium text-muted transition-colors duration-150 hover:text-fg">
+            <GithubIcon /> {t('ctaGithub')}
+          </a>
+        </motion.div>
+
+        {/* Centered Bento Telemetry Bar */}
+        <motion.dl
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, ease: EASE, delay: 0.32 }}
+          className="mx-auto mt-10 grid max-w-[540px] grid-cols-3 gap-3"
+        >
+          {[
+            { n: stats.repos, label: t('statProjects'), color: 'var(--color-ember-2)' },
+            { n: stats.releases, label: t('statReleases'), color: 'var(--color-tv)' },
+            { n: platformCounts.length, label: t('statPlatforms'), color: 'var(--color-pulse)' },
+          ].map((m) => (
+            <div key={m.label} className="bento-tile rounded-2xl px-4 py-3.5 text-center">
+              <dt className="sr-only">{m.label}</dt>
+              <dd>
+                <CountUp value={m.n} className="num block text-2xl font-bold tracking-tight sm:text-3xl" style={{ color: m.color }} />
+                <span className="mt-0.5 block text-xs text-muted">{m.label}</span>
+              </dd>
+            </div>
+          ))}
+        </motion.dl>
+
+        {/* Full-width Cinematic Centered OLED TV Centerpiece */}
+        <div className="mx-auto mt-12 max-w-[980px] text-start md:mt-16">
           <ChannelTv onOpen={onOpen} />
         </div>
       </div>
@@ -163,11 +167,11 @@ export function Hero({ onPlatform, onOpen }: { onPlatform: (p: Platform) => void
               <button
                 type="button"
                 onClick={() => onPlatform(p)}
-                className="bento-tile group flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-start transition-[transform,border-color,background-color,color] duration-200 hover:-translate-y-0.5 hover:border-ember/40 hover:bg-white/[0.06] hover:text-ember-2"
+                className="bento-tile group flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-start transition-[transform,border-color,background-color,color] duration-200 hover:-translate-y-0.5 hover:border-ember/40 hover:bg-[var(--chip-hover)] hover:text-ember"
               >
                 <span className="flex-1 truncate text-[14px] font-medium">{pick(PLATFORM_LABEL[p])}</span>
                 <SignalBars level={Math.ceil(Math.sqrt(n / max) * 5)} delay={0.35 + i * 0.05} />
-                <span className="num w-5 text-end text-sm text-muted group-hover:text-ember-2">{n}</span>
+                <span className="num w-5 text-end text-sm text-muted group-hover:text-ember">{n}</span>
               </button>
             </li>
           ))}

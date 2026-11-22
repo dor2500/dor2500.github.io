@@ -184,7 +184,7 @@ export function ChannelTv({ onOpen }: { onOpen: (r: Repo) => void }) {
                 <div className="inline-flex max-w-full items-stretch overflow-hidden rounded-md bg-black/80 shadow-lg backdrop-blur">
                   <span className="w-1.5 shrink-0 bg-ember" />
                   <span className="min-w-0 px-3 py-2">
-                    <span className="block truncate text-[clamp(0.95rem,1.8vw,1.25rem)] font-bold leading-tight text-white">{repo.title}</span>
+                    <span dir="ltr" className="block truncate text-[clamp(0.95rem,1.8vw,1.25rem)] font-bold leading-tight text-white">{repo.title}</span>
                     <span className="block truncate text-[clamp(0.75rem,1.3vw,0.9rem)] text-white/75">{pick(repo.tagline)}</span>
                   </span>
                 </div>
@@ -202,8 +202,9 @@ export function ChannelTv({ onOpen }: { onOpen: (r: Repo) => void }) {
       <div aria-hidden className="mx-auto h-4 w-[18%] bg-gradient-to-b from-[#161a20] to-[#0b0d11]" />
       <div aria-hidden className="mx-auto h-2 w-[42%] rounded-full bg-[#161a20]" />
 
-      {/* Sleek frosted glass remote dock */}
-      <div role="group" aria-label={t('tvLabel')} className="bento-tile mt-5 inline-flex max-w-full flex-wrap items-center gap-2.5 rounded-2xl p-2 backdrop-blur-xl">
+      {/* Sleek frosted glass remote dock, centered under the TV */}
+      <div className="mt-5 flex flex-col items-center">
+      <div role="group" aria-label={t('tvLabel')} className="bento-tile inline-flex max-w-full flex-wrap items-center justify-center gap-2.5 rounded-2xl p-2 backdrop-blur-xl">
         <div className="flex items-center gap-1.5">
           <button type="button" className={remote} aria-label={t('chDown')} onClick={() => tune(ch - 1)}>
             <svg aria-hidden viewBox="0 0 16 16" className="size-4 rtl:-scale-x-100" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M10 3 5 8l5 5" strokeLinecap="round" strokeLinejoin="round" /></svg>
@@ -227,7 +228,8 @@ export function ChannelTv({ onOpen }: { onOpen: (r: Repo) => void }) {
           ))}
         </div>
       </div>
-      <p className="mt-2 hidden text-xs text-muted md:block">{t('tvHint')}</p>
+      <p className="mt-2 hidden text-center text-xs text-muted md:block">{t('tvHint')}</p>
+      </div>
     </motion.div>
   )
 }
