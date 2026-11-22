@@ -75,6 +75,14 @@ const strings = {
   statProjects: { en: 'Open-source apps', he: 'פרויקטים בקוד פתוח' },
   statReleases: { en: 'Shipped releases', he: 'גרסאות להורדה' },
   statPlatforms: { en: 'Target platforms', he: 'פלטפורמות יעד' },
+  spotlightKicker: { en: '3D INTERACTIVE DECK', he: 'במת תצוגה תלת־ממדית' },
+  spotlightTitle: { en: 'Swipe through the highlights.', he: 'דפדפו בפרויקטים הכי חמים.' },
+  inspect: { en: 'Inspect', he: 'פתח' },
+  surpriseMe: { en: 'Surprise me', he: 'הפתע אותי' },
+  sortNewest: { en: 'Newest', he: 'הכי חדש' },
+  sortReleases: { en: 'Releases', he: 'עם גרסה' },
+  sortAZ: { en: 'A–Z', he: 'א–ת' },
+  heroLeadPrefix: { en: 'I build open-source apps for', he: 'אני בונה אפליקציות קוד פתוח' },
   close: { en: 'Close', he: 'סגירה' },
   fromReadme: { en: 'From the README', he: 'מתוך ה-README' },
   screenshots: { en: 'Screenshots', he: 'צילומי מסך' },
@@ -105,7 +113,7 @@ function initialLang(): Lang {
   try {
     const s = localStorage.getItem('lang')
     if (s === 'he' || s === 'en') return s
-  } catch {}
+  } catch { }
   return navigator.language?.startsWith('he') ? 'he' : 'en'
 }
 
@@ -117,7 +125,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     el.lang = lang
     el.dir = lang === 'he' ? 'rtl' : 'ltr'
     document.title = lang === 'he' ? 'dor2500: אפליקציות לכל מסך' : 'dor2500: apps for every screen'
-    try { localStorage.setItem('lang', lang) } catch {}
+    try { localStorage.setItem('lang', lang) } catch { }
   }, [lang])
   const t = useCallback((k: StrKey, vars?: Record<string, string | number>) => {
     let s: string = strings[k][lang]

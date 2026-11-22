@@ -6,19 +6,30 @@ import { CATEGORIES, PLATFORM_LABEL, type Category, type Platform } from '../dat
 import { Mockup } from './Mockups'
 import { EASE, Sweep, TuneIn } from './Motion'
 
+type SortMode = 'newest' | 'releases' | 'az'
+
 export function Explorer({ platform, setPlatform, onOpen, onOpenCmd }: { platform: Platform | null; setPlatform: (p: Platform | null) => void; onOpen: (r: Repo) => void; onOpenCmd: () => void }) {
   const { t, pick } = useI18n()
   const [cat, setCat] = useState<Category | 'all'>('all')
+  const [sort, setSort] = useState<SortMode>('newest')
   const [query, setQuery] = useState('')
   const q = useDeferredValue(query.trim().toLowerCase())
 
-  const list = useMemo(
-    () => others.filter((r) =>
+  const list = useMemo(() => {
+    const filtered = others.filter((r) =>
       (cat === 'all' || r.category === cat) &&
       (!platform || r.platforms.includes(platform)) &&
-      (!q || [r.title, r.name, r.description ?? '', r.tagline.en, r.tagline.he, r.language ?? '', ...r.stack, ...r.topics].join(' ').toLowerCase().includes(q))),
-    [cat, platform, q],
-  )
+      (!q || [r.title, r.name, r.description ?? '', r.tagline.en, r.tagline.he, r.language ?? '', ...r.stack, ...r.topics].join(' ').toLowerCase().includes(q)),
+    )
+    if (sort === 'az') return [...filtered].sort((a, b) => a.title.localeCompare(b.title))
+    if (sort === 'releases') return [...filtered].sort((a, b) => Number(!!b.release) - Number(!!a.release))
+    return filtered
+  }, [cat, platform, q, sort])
+
+  const surprise = () => {
+    const pool = list.length ? list : others
+    onOpen(pool[Math.floor(Math.random() * pool.length)])
+  }
   const counts = useMemo(() => {
     const m: Record<string, number> = { all: others.length }
     for (const r of others) m[r.category] = (m[r.category] ?? 0) + 1
@@ -34,47 +45,77 @@ export function Explorer({ platform, setPlatform, onOpen, onOpenCmd }: { platfor
             <TuneIn id="projects-title" className="text-[clamp(2.4rem,5.5vw,4.25rem)] font-bold leading-[1.05] tracking-[-0.035em]">{t('projectsTitle')}</TuneIn>
             <p className="mt-3 max-w-[52ch] text-lg text-muted">{t('projectsLead')}</p>
           </div>
-          <div className="relative w-full sm:w-88">
-            <label htmlFor="search" className="sr-only">{t('search')}</label>
-            <svg aria-hidden viewBox="0 0 20 20" className="pointer-events-none absolute start-3.5 top-1/2 size-4 -translate-y-1/2 text-muted" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="9" cy="9" r="6" /><path d="m14 14 4 4" strokeLinecap="round" /></svg>
-            <input
-              id="search" type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder={t('searchPh')}
-              className="bento-tile w-full rounded-full py-2.5 pe-14 ps-10 text-[15px] placeholder:text-muted/80 transition-colors focus:border-white/25 focus:outline-none focus-visible:outline-2 focus-visible:outline-cyan"
-            />
+          <div className="flex w-full flex-wrap items-center gap-2.5 sm:w-auto">
+            <div className="relative flex-1 sm:w-76 sm:flex-none">
+              <label htmlFor="search" className="sr-only">{t('search')}</label>
+              <svg aria-hidden viewBox="0 0 20 20" className="pointer-events-none absolute start-3.5 top-1/2 size-4 -translate-y-1/2 text-muted" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="9" cy="9" r="6" /><path d="m14 14 4 4" strokeLinecap="round" /></svg>
+              <input
+                id="search" type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder={t('searchPh')}
+                className="bento-tile w-full rounded-full py-2.5 pe-14 ps-10 text-[15px] placeholder:text-muted/80 transition-colors focus:border-[var(--hairline-strong)] focus:outline-none focus-visible:outline-2 focus-visible:outline-cyan"
+              />
+              <button
+                type="button"
+                onClick={onOpenCmd}
+                aria-label={t('cmdLabel')}
+                className="absolute end-2 top-1/2 -translate-y-1/2 rounded-full border border-[var(--hairline)] bg-[var(--chip-bg)] px-2 py-0.5 font-mono text-[11px] text-muted transition-colors hover:border-[var(--hairline-strong)] hover:text-fg"
+                dir="ltr"
+              >
+                ⌘K
+              </button>
+            </div>
             <button
               type="button"
-              onClick={onOpenCmd}
-              aria-label={t('cmdLabel')}
-              className="absolute end-2 top-1/2 -translate-y-1/2 rounded-full border border-[var(--hairline)] bg-[var(--chip-bg)] px-2 py-0.5 font-mono text-[11px] text-muted transition-colors hover:border-[var(--hairline-strong)] hover:text-fg"
-              dir="ltr"
+              onClick={surprise}
+              className="sheen inline-flex shrink-0 items-center gap-1.5 rounded-full bg-ember px-4 py-2.5 text-sm font-semibold text-white shadow-[0_6px_24px_-6px_color-mix(in_srgb,var(--color-ember)_70%,transparent)] transition-[background-color,transform] duration-150 hover:bg-ember-2 active:scale-95"
             >
-              ⌘K
+              <span aria-hidden>⚡</span>
+              {t('surpriseMe')}
             </button>
           </div>
         </div>
 
-        <div className="mt-10 flex flex-wrap items-center gap-2" role="group" aria-label={t('navProjects')}>
-          <div className="bento-tile inline-flex flex-wrap items-center gap-0.5 rounded-full p-1">
-          {CATEGORIES.map((c) => {
-            const on = cat === c.id
-            return (
-              <button
-                key={c.id} type="button" aria-pressed={on} onClick={() => setCat(c.id)}
-                className={`relative rounded-full px-3.5 py-1.5 text-sm transition-colors duration-150 ${on ? 'font-medium text-ink' : 'text-muted hover:text-fg'}`}
-              >
-                {on && <motion.span layoutId="cat-pill" className="absolute inset-0 rounded-full bg-fg shadow-[0_2px_12px_rgb(255_255_255/0.25)]" transition={{ type: 'spring', duration: 0.35, bounce: 0.12 }} />}
-                <span className="relative">{pick(c.label)} <span className={`num ${on ? 'text-ink/60' : 'text-muted'}`}>{counts[c.id] ?? 0}</span></span>
+        <div className="mt-10 flex flex-wrap items-center justify-between gap-3" role="group" aria-label={t('navProjects')}>
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="bento-tile inline-flex flex-wrap items-center gap-0.5 rounded-full p-1">
+              {CATEGORIES.map((c) => {
+                const on = cat === c.id
+                return (
+                  <button
+                    key={c.id} type="button" aria-pressed={on} onClick={() => setCat(c.id)}
+                    className={`relative rounded-full px-3.5 py-1.5 text-sm transition-colors duration-150 ${on ? 'font-medium text-ink' : 'text-muted hover:text-fg'}`}
+                  >
+                    {on && <motion.span layoutId="cat-pill" className="absolute inset-0 rounded-full bg-fg shadow-[0_2px_12px_rgb(255_255_255/0.25)]" transition={{ type: 'spring', duration: 0.35, bounce: 0.12 }} />}
+                    <span className="relative">{pick(c.label)} <span className={`num ${on ? 'text-ink/60' : 'text-muted'}`}>{counts[c.id] ?? 0}</span></span>
+                  </button>
+                )
+              })}
+            </div>
+            {platform && (
+              <button type="button" onClick={() => setPlatform(null)} aria-label={t('clearPlatform')}
+                className="flex items-center gap-1.5 rounded-full border border-ember/50 bg-ember/12 px-3 py-1.5 text-sm text-ember-2 transition-colors hover:bg-ember/20">
+                {t('onPlatform', { p: pick(PLATFORM_LABEL[platform]) })}
+                <svg aria-hidden viewBox="0 0 12 12" className="size-3" stroke="currentColor" strokeWidth="1.8"><path d="M3 3l6 6M9 3l-6 6" strokeLinecap="round" /></svg>
               </button>
-            )
-          })}
+            )}
           </div>
-          {platform && (
-            <button type="button" onClick={() => setPlatform(null)} aria-label={t('clearPlatform')}
-              className="flex items-center gap-1.5 rounded-full border border-ember/50 bg-ember/12 px-3 py-1.5 text-sm text-ember-2 transition-colors hover:bg-ember/20">
-              {t('onPlatform', { p: pick(PLATFORM_LABEL[platform]) })}
-              <svg aria-hidden viewBox="0 0 12 12" className="size-3" stroke="currentColor" strokeWidth="1.8"><path d="M3 3l6 6M9 3l-6 6" strokeLinecap="round" /></svg>
-            </button>
-          )}
+          <div className="bento-tile inline-flex items-center gap-0.5 rounded-full p-1 text-xs">
+            {([
+              ['newest', t('sortNewest')],
+              ['releases', t('sortReleases')],
+              ['az', t('sortAZ')],
+            ] as const).map(([id, label]) => (
+              <button
+                key={id}
+                type="button"
+                onClick={() => setSort(id)}
+                aria-pressed={sort === id}
+                className={`relative rounded-full px-3 py-1 transition-colors ${sort === id ? 'font-semibold text-fg' : 'text-muted hover:text-fg'}`}
+              >
+                {sort === id && <motion.span layoutId="sort-pill" className="absolute inset-0 -z-10 rounded-full bg-[var(--chip-hover)]" transition={{ type: 'spring', duration: 0.35, bounce: 0.15 }} />}
+                {label}
+              </button>
+            ))}
+          </div>
         </div>
         <p className="sr-only" aria-live="polite">{t('showing', { n: list.length })}</p>
 
@@ -158,7 +199,7 @@ function Card({ repo, onOpen }: { repo: Repo; onOpen: () => void }) {
       onPointerMove={track}
       onPointerLeave={reset}
       style={{ '--card-accent': accent } as React.CSSProperties}
-      className="bento-card spot tilt group relative flex h-full flex-col overflow-hidden rounded-[26px] hover:border-[var(--hairline-strong)] hover:shadow-[0_28px_60px_-24px_rgb(0_0_0/0.35)]"
+      className="bento-card neon-card spot tilt group relative flex h-full flex-col overflow-hidden rounded-[26px] hover:shadow-[0_28px_60px_-24px_rgb(0_0_0/0.4)]"
     >
       <motion.div layoutId={`media-${repo.name}`} transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
         style={{ background: 'var(--media-bg)' }}

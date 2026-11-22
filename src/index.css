@@ -74,13 +74,17 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
 }
+
 html[dir='rtl'] {
   /* Hebrew reads better a touch looser and without negative tracking. */
   --tracking-tight: 0;
   --tracking-tighter: 0;
 }
+
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {
@@ -108,21 +112,37 @@ body {
   mix-blend-mode: overlay;
 }
 
-.no-scrollbar { scrollbar-width: none; }
-.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar {
+  scrollbar-width: none;
+}
 
-.num { font-variant-numeric: tabular-nums; }
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
 
 /* Card preview: a slow, small zoom on hover, only on devices that can hover. */
 .preview-img {
   transition: transform 500ms var(--ease-out-quint);
 }
+
 @media (hover: hover) and (pointer: fine) {
-  .group:hover .preview-img { transform: scale(1.03); }
+  .group:hover .preview-img {
+    transform: scale(1.03);
+  }
 }
+
 @media (prefers-reduced-motion: reduce) {
-  .preview-img { transition: none; }
-  .group:hover .preview-img { transform: none; }
+  .preview-img {
+    transition: none;
+  }
+
+  .group:hover .preview-img {
+    transform: none;
+  }
 }
 
 /* Card spotlight: a soft light + glowing border that follow the pointer, fine pointers only. */
@@ -137,6 +157,7 @@ body {
   opacity: 0;
   transition: opacity 300ms var(--ease-out-quint);
 }
+
 .spot::after {
   content: '';
   position: absolute;
@@ -153,16 +174,24 @@ body {
   opacity: 0;
   transition: opacity 300ms var(--ease-out-quint);
 }
+
 @media (hover: hover) and (pointer: fine) {
+
   .spot:hover::before,
-  .spot:hover::after { opacity: 1; }
+  .spot:hover::after {
+    opacity: 1;
+  }
+
   /* Phone shots fan out from the middle one. */
   .group:hover .fan-img {
     transform: translateX(calc(var(--o) * 10px)) translateY(calc(var(--a) * 5px)) rotate(calc(var(--o) * 3deg)) scale(1.03);
   }
 }
+
 @media (prefers-reduced-motion: reduce) {
-  .group:hover .fan-img { transform: none; }
+  .group:hover .fan-img {
+    transform: none;
+  }
 }
 
 /* Language switch: the whole page crossfades instead of jumping between directions. */
@@ -171,9 +200,13 @@ body {
   animation-duration: 260ms;
   animation-timing-function: var(--ease-out-quint);
 }
+
 @media (prefers-reduced-motion: reduce) {
+
   ::view-transition-old(root),
-  ::view-transition-new(root) { animation: none; }
+  ::view-transition-new(root) {
+    animation: none;
+  }
 }
 
 /* ---------- Broadcast look ---------- */
@@ -194,6 +227,7 @@ body {
     radial-gradient(120% 90% at 50% 50%, transparent 60%, rgb(0 0 0 / 0.55)),
     linear-gradient(160deg, rgb(255 255 255 / 0.07), transparent 35%);
 }
+
 .crt::after {
   content: '';
   position: absolute;
@@ -205,30 +239,90 @@ body {
   background: linear-gradient(to bottom, transparent, rgb(255 255 255 / 0.05), transparent);
   animation: roll 7s linear infinite;
 }
+
 @keyframes roll {
-  from { transform: translateY(-100%); }
-  to { transform: translateY(560%); }
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(560%);
+  }
 }
 
 /* News crawl. */
-.ticker-track { animation: crawl 70s linear infinite; }
+.ticker-track {
+  animation: crawl 70s linear infinite;
+}
+
 .ticker:hover .ticker-track,
-.ticker:focus-within .ticker-track { animation-play-state: paused; }
-[dir='rtl'] .ticker-track { animation-name: crawl-rtl; }
-@keyframes crawl { to { transform: translateX(-50%); } }
-@keyframes crawl-rtl { to { transform: translateX(50%); } }
-.ticker-mask { mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent); }
+.ticker:focus-within .ticker-track {
+  animation-play-state: paused;
+}
+
+[dir='rtl'] .ticker-track {
+  animation-name: crawl-rtl;
+}
+
+@keyframes crawl {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes crawl-rtl {
+  to {
+    transform: translateX(50%);
+  }
+}
+
+.ticker-mask {
+  mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+}
 
 /* Section titles tune in with a short glitch. */
-.tune { clip-path: inset(0 0 100% 0); }
-.tune.on { animation: tune 650ms steps(1, end) both; }
+.tune {
+  clip-path: inset(0 0 100% 0);
+}
+
+.tune.on {
+  animation: tune 650ms steps(1, end) both;
+}
+
 @keyframes tune {
-  0% { clip-path: inset(40% 0 52% 0); transform: translateX(-8px); text-shadow: 4px 0 var(--color-rec), -4px 0 var(--color-cyan); }
-  12% { clip-path: inset(8% 0 70% 0); transform: translateX(6px); }
-  24% { clip-path: inset(62% 0 6% 0); transform: translateX(-4px); }
-  36% { clip-path: inset(0 0 0 0); transform: translateX(3px); text-shadow: 2px 0 var(--color-rec), -2px 0 var(--color-cyan); }
-  50% { transform: translateX(-1px); text-shadow: 1px 0 var(--color-rec), -1px 0 var(--color-cyan); }
-  62%, 100% { clip-path: inset(-20% -5% -20% -5%); transform: none; text-shadow: none; }
+  0% {
+    clip-path: inset(40% 0 52% 0);
+    transform: translateX(-8px);
+    text-shadow: 4px 0 var(--color-rec), -4px 0 var(--color-cyan);
+  }
+
+  12% {
+    clip-path: inset(8% 0 70% 0);
+    transform: translateX(6px);
+  }
+
+  24% {
+    clip-path: inset(62% 0 6% 0);
+    transform: translateX(-4px);
+  }
+
+  36% {
+    clip-path: inset(0 0 0 0);
+    transform: translateX(3px);
+    text-shadow: 2px 0 var(--color-rec), -2px 0 var(--color-cyan);
+  }
+
+  50% {
+    transform: translateX(-1px);
+    text-shadow: 1px 0 var(--color-rec), -1px 0 var(--color-cyan);
+  }
+
+  62%,
+  100% {
+    clip-path: inset(-20% -5% -20% -5%);
+    transform: none;
+    text-shadow: none;
+  }
 }
 
 /* Project cards: a flash of static when the pointer lands on one. */
@@ -243,25 +337,61 @@ body {
   mix-blend-mode: screen;
   opacity: 0;
 }
+
 @media (hover: hover) and (pointer: fine) {
-  .group:hover .tv-static::after { animation: static-flash 380ms steps(6, end); }
+  .group:hover .tv-static::after {
+    animation: static-flash 380ms steps(6, end);
+  }
 }
+
 @keyframes static-flash {
-  0% { opacity: 0.9; background-position: 0 0; }
-  33% { opacity: 0.7; background-position: -37px 21px; }
-  66% { opacity: 0.4; background-position: 19px -44px; }
-  100% { opacity: 0; background-position: 51px 13px; }
+  0% {
+    opacity: 0.9;
+    background-position: 0 0;
+  }
+
+  33% {
+    opacity: 0.7;
+    background-position: -37px 21px;
+  }
+
+  66% {
+    opacity: 0.4;
+    background-position: 19px -44px;
+  }
+
+  100% {
+    opacity: 0;
+    background-position: 51px 13px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .crt::after, .ticker-track { animation: none; }
-  .ticker-mask { overflow-x: auto; }
-  .tune, .tune.on { clip-path: none; animation: none; }
-  .group:hover .tv-static::after { animation: none; }
+
+  .crt::after,
+  .ticker-track {
+    animation: none;
+  }
+
+  .ticker-mask {
+    overflow-x: auto;
+  }
+
+  .tune,
+  .tune.on {
+    clip-path: none;
+    animation: none;
+  }
+
+  .group:hover .tv-static::after {
+    animation: none;
+  }
 }
 
 /* Decorative glows bleed past the edges; clip them (clip, unlike hidden, keeps sticky working). */
-#root { overflow-x: clip; }
+#root {
+  overflow-x: clip;
+}
 
 /* Pulse: rings of signal spreading out behind the phone. */
 .pulse-ring {
@@ -273,9 +403,17 @@ body {
   opacity: 0;
   animation: ring 3.3s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
 }
+
 @keyframes ring {
-  0% { transform: scale(0.35); opacity: 0.8; }
-  100% { transform: scale(1); opacity: 0; }
+  0% {
+    transform: scale(0.35);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
 }
 
 /* Project cards tilt toward the pointer. */
@@ -284,13 +422,28 @@ body {
     transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
     transition: transform 400ms var(--ease-out-quint), border-color 200ms;
   }
-  .tilt:hover { transition: transform 120ms linear, border-color 200ms; }
+
+  .tilt:hover {
+    transition: transform 120ms linear, border-color 200ms;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pulse-ring { animation: none; }
-  .tilt { transform: none !important; }
-  .aurora-orb, .float-slow, .sheen::after, .eq-bar, .radar-ping { animation: none !important; }
+  .pulse-ring {
+    animation: none;
+  }
+
+  .tilt {
+    transform: none !important;
+  }
+
+  .aurora-orb,
+  .float-slow,
+  .sheen::after,
+  .eq-bar,
+  .radar-ping {
+    animation: none !important;
+  }
 }
 
 /* ---------- Living atmosphere & micro-motion ---------- */
@@ -306,28 +459,55 @@ body {
   animation: drift 18s ease-in-out infinite alternate;
   will-change: transform;
 }
+
 .aurora-orb-2 {
   animation: drift-alt 22s ease-in-out infinite alternate;
   will-change: transform;
 }
+
 @keyframes drift {
-  0% { transform: translate3d(-4%, -3%, 0) scale(1); }
-  50% { transform: translate3d(5%, 4%, 0) scale(1.08); }
-  100% { transform: translate3d(-2%, 6%, 0) scale(0.96); }
+  0% {
+    transform: translate3d(-4%, -3%, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(5%, 4%, 0) scale(1.08);
+  }
+
+  100% {
+    transform: translate3d(-2%, 6%, 0) scale(0.96);
+  }
 }
+
 @keyframes drift-alt {
-  0% { transform: translate3d(4%, 2%, 0) scale(1.04); }
-  50% { transform: translate3d(-5%, -4%, 0) scale(0.95); }
-  100% { transform: translate3d(3%, -6%, 0) scale(1.06); }
+  0% {
+    transform: translate3d(4%, 2%, 0) scale(1.04);
+  }
+
+  50% {
+    transform: translate3d(-5%, -4%, 0) scale(0.95);
+  }
+
+  100% {
+    transform: translate3d(3%, -6%, 0) scale(1.06);
+  }
 }
 
 /* Gentle floating bob for telemetry badges & accents. */
 .float-slow {
   animation: float-bob 5.5s ease-in-out infinite;
 }
+
 @keyframes float-bob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-7px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-7px);
+  }
 }
 
 /* Light sheen sweep across primary CTA buttons on hover. */
@@ -335,6 +515,7 @@ body {
   position: relative;
   overflow: hidden;
 }
+
 .sheen::after {
   content: '';
   position: absolute;
@@ -343,14 +524,21 @@ body {
   background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.35), transparent);
   pointer-events: none;
 }
+
 @media (hover: hover) and (pointer: fine) {
   .sheen:hover::after {
     animation: sheen-sweep 700ms var(--ease-out-quint);
   }
 }
+
 @keyframes sheen-sweep {
-  from { transform: translateX(-120%) skewX(-22deg); }
-  to { transform: translateX(140%) skewX(-22deg); }
+  from {
+    transform: translateX(-120%) skewX(-22deg);
+  }
+
+  to {
+    transform: translateX(140%) skewX(-22deg);
+  }
 }
 
 /* Live broadcast equalizer bars. */
@@ -358,19 +546,36 @@ body {
   transform-origin: bottom;
   animation: eq-bounce 1.2s ease-in-out infinite alternate;
 }
+
 @keyframes eq-bounce {
-  0% { transform: scaleY(0.28); }
-  50% { transform: scaleY(1); }
-  100% { transform: scaleY(0.45); }
+  0% {
+    transform: scaleY(0.28);
+  }
+
+  50% {
+    transform: scaleY(1);
+  }
+
+  100% {
+    transform: scaleY(0.45);
+  }
 }
 
 /* Radar ping for SignalFinder & Live status dots. */
 .radar-ping {
   animation: radar-expand 2.4s cubic-bezier(0.2, 0.7, 0.3, 1) infinite;
 }
+
 @keyframes radar-expand {
-  0% { transform: scale(0.4); opacity: 0.75; }
-  100% { transform: scale(1.15); opacity: 0; }
+  0% {
+    transform: scale(0.4);
+    opacity: 0.75;
+  }
+
+  100% {
+    transform: scale(1.15);
+    opacity: 0;
+  }
 }
 
 /* Hover equalizer dance on platform signal bars. */
@@ -379,23 +584,29 @@ body {
     animation: sig-dance 520ms var(--ease-out-quint) var(--d, 0ms);
   }
 }
+
 @keyframes sig-dance {
-  0%, 100% { transform: scaleY(1); }
-  45% { transform: scaleY(1.22); }
+
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+
+  45% {
+    transform: scaleY(1.22);
+  }
 }
 
 /* Sleek SMPTE-inspired broadcast color stripe at the very bottom of the page. */
 .smpte-bar {
-  background: linear-gradient(
-    90deg,
-    #e5e5e5 0% 14.28%,
-    #f1e05a 14.28% 28.56%,
-    #6ccbff 28.56% 42.84%,
-    #6fd6b5 42.84% 57.12%,
-    #a97bff 57.12% 71.4%,
-    #ff3b4e 71.4% 85.68%,
-    #2997ff 85.68% 100%
-  );
+  background: linear-gradient(90deg,
+      #e5e5e5 0% 14.28%,
+      #f1e05a 14.28% 28.56%,
+      #6ccbff 28.56% 42.84%,
+      #6fd6b5 42.84% 57.12%,
+      #a97bff 57.12% 71.4%,
+      #ff3b4e 71.4% 85.68%,
+      #2997ff 85.68% 100%);
 }
 
 /* ---------- Modern obsidian & Apple studio glass surfaces ---------- */
@@ -465,4 +676,65 @@ html[data-theme='light'] .text-ember-glow {
 }
 html[data-theme='light'] .cursor-aura {
   background: radial-gradient(560px circle at var(--gx, 50%) var(--gy, 22%), color-mix(in srgb, var(--color-tv) 9%, transparent), transparent 65%);
+}
+
+/* ---------- High-Action Kinetic Effects ---------- */
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* Spinning neon conic border on hover */
+.neon-card {
+  position: relative;
+}
+.neon-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--angle),
+    transparent 0deg,
+    color-mix(in srgb, var(--card-accent, var(--color-ember)) 85%, white 10%) 55deg,
+    var(--color-tv) 115deg,
+    transparent 180deg,
+    transparent 360deg
+  );
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 4;
+  transition: opacity 280ms var(--ease-out-quint);
+  animation: spin-border 3.6s linear infinite;
+}
+@media (hover: hover) and (pointer: fine) {
+  .neon-card:hover::before { opacity: 1; }
+}
+@keyframes spin-border {
+  to { --angle: 360deg; }
+}
+
+/* Second reverse-direction marquee track */
+.ticker-track-rev { animation: crawl-rev 62s linear infinite; }
+.ticker:hover .ticker-track-rev,
+.ticker:focus-within .ticker-track-rev { animation-play-state: paused; }
+[dir='rtl'] .ticker-track-rev { animation-name: crawl-rev-rtl; }
+@keyframes crawl-rev {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0%); }
+}
+@keyframes crawl-rev-rtl {
+  from { transform: translateX(50%); }
+  to { transform: translateX(0%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .neon-card::before, .ticker-track-rev { animation: none !important; }
 }

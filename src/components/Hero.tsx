@@ -1,12 +1,15 @@
-import { Fragment } from 'react'
-import { motion } from 'motion/react'
+import { useEffect, useState } from 'react'
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { useI18n } from '../i18n'
 import { platformCounts, profile, stats, type Repo } from '../data'
 import { PLATFORM_LABEL, type Platform } from '../data/curated'
 import { GithubIcon } from './Header'
-import { CountUp, EASE } from './Motion'
+import { CountUp, EASE, Magnetic } from './Motion'
 import { ChannelTv } from './ChannelTv'
 import { Ticker } from './Ticker'
+
+const ROTATE_EN = ['every screen in the house.', 'LG & Samsung smart TVs.', 'native Android phones.', 'modern Windows desktops.']
+const ROTATE_HE = ['לכל מסך בבית.', 'לטלוויזיות LG וסמסונג.', 'לטלפונים עם Android.', 'למחשבי Windows מודרניים.']
 
 export function SignalBars({ level, delay = 0, max = 5 }: { level: number; delay?: number; max?: number }) {
   return (
@@ -38,11 +41,18 @@ export function SignalBars({ level, delay = 0, max = 5 }: { level: number; delay
 }
 
 export function Hero({ onPlatform, onOpen }: { onPlatform: (p: Platform) => void; onOpen: (r: Repo) => void }) {
-  const { t, pick } = useI18n()
+  const { t, pick, lang } = useI18n()
+  const reduce = useReducedMotion()
   const top = platformCounts.slice(0, 10)
   const max = top[0][1]
-  const titleWords = t('heroTitle').split(' ')
-  const accentStart = Math.max(0, titleWords.length - 3)
+  const phrases = lang === 'he' ? ROTATE_HE : ROTATE_EN
+  const [wordIdx, setWordIdx] = useState(0)
+
+  useEffect(() => {
+    if (reduce) return
+    const id = setInterval(() => setWordIdx((i) => (i + 1) % phrases.length), 2800)
+    return () => clearInterval(id)
+  }, [reduce, phrases.length])
 
   const onPointerMove = (e: React.PointerEvent<HTMLElement>) => {
     const r = e.currentTarget.getBoundingClientRect()
@@ -55,8 +65,8 @@ export function Hero({ onPlatform, onOpen }: { onPlatform: (p: Platform) => void
       {/* Living ambient backdrop: faint dot grid + pointer aura + two slowly breathing aurora orbs. */}
       <div aria-hidden className="bg-grid pointer-events-none absolute inset-x-0 top-0 -z-20 h-[820px] [mask-image:radial-gradient(ellipse_78%_64%_at_50%_22%,#000,transparent)]" />
       <div aria-hidden className="cursor-aura pointer-events-none absolute inset-x-0 top-0 -z-15 h-[820px] transition-opacity duration-500" />
-      <div aria-hidden className="aurora-orb pointer-events-none absolute -top-24 start-[6%] -z-10 h-[440px] w-[440px] rounded-full bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--color-ember)_16%,transparent),transparent)] blur-3xl" />
-      <div aria-hidden className="aurora-orb-2 pointer-events-none absolute top-24 end-[4%] -z-10 h-[480px] w-[480px] rounded-full bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--color-tv)_14%,transparent),transparent)] blur-3xl" />
+      <div aria-hidden className="aurora-orb pointer-events-none absolute -top-24 start-[6%] -z-10 h-[440px] w-[440px] rounded-full bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--color-ember)_18%,transparent),transparent)] blur-3xl" />
+      <div aria-hidden className="aurora-orb-2 pointer-events-none absolute top-24 end-[4%] -z-10 h-[480px] w-[480px] rounded-full bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--color-tv)_16%,transparent),transparent)] blur-3xl" />
 
     <div className="mx-auto grid max-w-[1280px] grid-cols-1 items-center gap-12 px-5 pb-16 pt-10 sm:px-8 md:pt-16 lg:grid-cols-12 lg:gap-10">
       <div className="min-w-0 lg:col-span-5">
@@ -74,35 +84,37 @@ export function Hero({ onPlatform, onOpen }: { onPlatform: (p: Platform) => void
         </motion.div>
         <h1
           id="hero-title"
-          key={t('heroTitle')}
-          className="max-w-[14ch] text-[clamp(2.6rem,5.6vw,4.5rem)] font-bold leading-[0.98] tracking-[-0.035em] text-balance"
+          className="text-[clamp(2.6rem,5.4vw,4.35rem)] font-bold leading-[1.02] tracking-[-0.035em] text-balance"
         >
-          {/* Words rise out of a mask one after another, so the line reads itself in. */}
-          {titleWords.map((w, i, all) => (
-            <Fragment key={i}>
-            <span className="-mb-[0.14em] inline-block overflow-hidden pb-[0.14em] align-top">
+          <span className="text-metallic block">{t('heroLeadPrefix')}</span>
+          <span className="relative mt-1 block min-h-[2.15em] [perspective:800px]">
+            <AnimatePresence mode="wait">
               <motion.span
-                className={`inline-block ${i >= accentStart ? 'text-ember-glow' : 'text-metallic'}`}
-                initial={{ y: '105%' }}
-                animate={{ y: '0%' }}
-                transition={{ duration: 0.7, ease: EASE, delay: 0.05 + i * 0.055 }}
+                key={`${lang}-${wordIdx}`}
+                initial={{ opacity: 0, y: 26, rotateX: -35 }}
+                animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                exit={{ opacity: 0, y: -22, rotateX: 35 }}
+                transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+                className="text-ember-glow inline-block origin-center"
               >
-                {w}
+                {phrases[wordIdx]}
               </motion.span>
-            </span>
-            {i < all.length - 1 && ' '}
-            </Fragment>
-          ))}
+            </AnimatePresence>
+          </span>
         </h1>
-        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: EASE, delay: 0.45 }}>
-          <p className="mt-7 max-w-[60ch] text-lg leading-relaxed text-muted text-pretty">{t('heroBio')}</p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a href="#flagships" className="sheen rounded-full bg-ember px-5 py-3 font-semibold text-white shadow-[0_8px_32px_-6px_color-mix(in_srgb,var(--color-ember)_75%,transparent)] transition-[background-color,transform,box-shadow] duration-150 hover:bg-ember-2 hover:shadow-[0_14px_40px_-4px_color-mix(in_srgb,var(--color-ember)_85%,transparent)] active:scale-[0.97]">
-              {t('ctaFlagships')}
-            </a>
-            <a href="#projects" className="bento-tile rounded-full px-5 py-3 font-medium transition-[background-color,border-color,transform] duration-150 hover:border-[var(--hairline-strong)] hover:bg-[var(--chip-hover)] active:scale-[0.97]">
-              {t('ctaAll')}
-            </a>
+        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: EASE, delay: 0.25 }}>
+          <p className="mt-5 max-w-[60ch] text-lg leading-relaxed text-muted text-pretty">{t('heroBio')}</p>
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <Magnetic>
+              <a href="#flagships" className="sheen inline-block rounded-full bg-ember px-6 py-3 font-semibold text-white shadow-[0_8px_32px_-6px_color-mix(in_srgb,var(--color-ember)_75%,transparent)] transition-[background-color,transform,box-shadow] duration-150 hover:bg-ember-2 hover:shadow-[0_14px_40px_-4px_color-mix(in_srgb,var(--color-ember)_85%,transparent)] active:scale-[0.97]">
+                {t('ctaFlagships')}
+              </a>
+            </Magnetic>
+            <Magnetic strength={0.18}>
+              <a href="#projects" className="bento-tile inline-block rounded-full px-5 py-3 font-medium transition-[background-color,border-color,transform] duration-150 hover:border-[var(--hairline-strong)] hover:bg-[var(--chip-hover)] active:scale-[0.97]">
+                {t('ctaAll')}
+              </a>
+            </Magnetic>
             <a href={profile.url} className="flex items-center gap-2 rounded-full px-4 py-3 font-medium text-muted transition-colors duration-150 hover:text-fg">
               <GithubIcon /> {t('ctaGithub')}
             </a>
@@ -126,12 +138,12 @@ export function Hero({ onPlatform, onOpen }: { onPlatform: (p: Platform) => void
         </motion.div>
       </div>
 
-      <div className="min-w-0 lg:col-span-7">
-        <ChannelTv onOpen={onOpen} />
+        <div className="min-w-0 lg:col-span-7">
+          <ChannelTv onOpen={onOpen} />
+        </div>
       </div>
-    </div>
 
-    <Ticker />
+      <Ticker />
 
       <motion.aside
         aria-labelledby="reception-title"

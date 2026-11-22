@@ -105,16 +105,32 @@ export function ChannelTv({ onOpen }: { onOpen: (r: Repo) => void }) {
       ? 'var(--color-pulse)'
       : (repo.language && LANG_COLOR[repo.language]) || 'var(--color-ember)'
 
+  const onTvMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const r = e.currentTarget.getBoundingClientRect()
+    const px = (e.clientX - r.left) / r.width - 0.5
+    const py = (e.clientY - r.top) / r.height - 0.5
+    e.currentTarget.style.setProperty('--ry', `${px * 8}deg`)
+    e.currentTarget.style.setProperty('--rx', `${py * -6}deg`)
+  }
+  const onTvLeave = (e: React.PointerEvent<HTMLDivElement>) => {
+    e.currentTarget.style.setProperty('--rx', '0deg')
+    e.currentTarget.style.setProperty('--ry', '0deg')
+  }
+
   return (
     <motion.div ref={box} style={{ y: tvLift }} className="relative" onPointerEnter={() => setHover(true)} onPointerLeave={() => setHover(false)}>
       <div
         aria-hidden
-        className="pointer-events-none absolute -inset-[14%] -z-10 blur-3xl transition-colors duration-700"
-        style={{ background: `radial-gradient(closest-side, color-mix(in srgb, ${ambilight} 24%, transparent), transparent)` }}
+        className="pointer-events-none absolute -inset-[16%] -z-10 blur-3xl transition-colors duration-700"
+        style={{ background: `radial-gradient(closest-side, color-mix(in srgb, ${ambilight} 28%, transparent), transparent)` }}
       />
 
-      {/* Razor-thin OLED glass & titanium frame */}
-      <div className="relative rounded-[28px] bg-gradient-to-b from-[#232730] via-[#13151b] to-[#08090c] p-[2.2%] shadow-[0_50px_110px_-36px_rgb(0_0_0/0.98),0_0_0_1px_rgb(255_255_255/0.12),inset_0_1px_0_rgb(255_255_255/0.18)]">
+      {/* Razor-thin OLED glass & titanium frame with live 3D mouse tilt */}
+      <div
+        onPointerMove={onTvMove}
+        onPointerLeave={onTvLeave}
+        className="tilt relative rounded-[28px] bg-gradient-to-b from-[#232730] via-[#13151b] to-[#08090c] p-[2.2%] shadow-[0_50px_110px_-36px_rgb(0_0_0/0.98),0_0_0_1px_rgb(255_255_255/0.12),inset_0_1px_0_rgb(255_255_255/0.18)]"
+      >
         {/* Tiny power LED on the bottom-right bezel */}
         <span aria-hidden className="absolute bottom-[0.95%] end-[4.5%] size-1.5 rounded-full bg-phosphor shadow-[0_0_8px_var(--color-phosphor)]" />
         <motion.div

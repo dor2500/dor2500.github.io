@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef } from 'react'
-import { animate, motion, useInView, useReducedMotion } from 'motion/react'
+import { animate, motion, useInView, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from 'motion/react'
 
 export const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -79,6 +79,47 @@ export function Sweep({ color = 'var(--color-cyan)' }: { color?: string }) {
           transition={{ y: { duration: 1.6, ease: [0.45, 0, 0.55, 1] }, opacity: { duration: 1.9, times: [0, 0.8, 1] } }}
         />
       )}
+    </div>
+  )
+}
+
+/** Magnetic pull wrapper: smoothly pulls a button toward the pointer on hover. */
+export function Magnetic({ children, strength = 0.25, className }: { children: React.ReactNode; strength?: number; className?: string }) {
+  const reduce = useReducedMotion()
+  const mx = useMotionValue(0)
+  const my = useMotionValue(0)
+  const x = useSpring(mx, { stiffness: 260, damping: 18 })
+  const y = useSpring(my, { stiffness: 260, damping: 18 })
+
+  const onMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (reduce) return
+    const r = e.currentTarget.getBoundingClientRect()
+    mx.set((e.clientX - (r.left + r.width / 2)) * strength)
+    my.set((e.clientY - (r.top + r.height / 2)) * strength)
+  }
+  const onLeave = () => { mx.set(0); my.set(0) }
+
+  return (
+    <motion.div onPointerMove={onMove} onPointerLeave={onLeave} style={{ x, y }} className={`inline-block ${className ?? ''}`}>
+      {children}
+    </motion.div>
+  )
+}
+
+/** Giant background typography that glides horizontally as you scroll past. */
+export function KineticWatermark({ text, reverse = false }: { text: string; reverse?: boolean }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const reduce = useReducedMotion()
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
+  const x = useTransform(scrollYProgress, [0, 1], reduce ? ['0%', '0%'] : reverse ? ['-12%', '12%'] : ['12%', '-12%'])
+  return (
+    <div ref={ref} aria-hidden className="pointer-events-none absolute inset-x-0 top-12 -z-10 overflow-hidden select-none">
+      <motion.p
+        style={{ x }}
+        className="whitespace-nowrap text-center text-[clamp(5rem,17vw,15rem)] font-black uppercase leading-none tracking-[-0.05em] text-fg opacity-[0.035]"
+      >
+        {text}
+      </motion.p>
     </div>
   )
 }
