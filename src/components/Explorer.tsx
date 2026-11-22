@@ -6,7 +6,7 @@ import { CATEGORIES, PLATFORM_LABEL, type Category, type Platform } from '../dat
 import { Mockup } from './Mockups'
 import { EASE, Sweep, TuneIn } from './Motion'
 
-export function Explorer({ platform, setPlatform, onOpen }: { platform: Platform | null; setPlatform: (p: Platform | null) => void; onOpen: (r: Repo) => void }) {
+export function Explorer({ platform, setPlatform, onOpen, onOpenCmd }: { platform: Platform | null; setPlatform: (p: Platform | null) => void; onOpen: (r: Repo) => void; onOpenCmd: () => void }) {
   const { t, pick } = useI18n()
   const [cat, setCat] = useState<Category | 'all'>('all')
   const [query, setQuery] = useState('')
@@ -34,32 +34,43 @@ export function Explorer({ platform, setPlatform, onOpen }: { platform: Platform
             <TuneIn id="projects-title" className="text-[clamp(2.4rem,5.5vw,4.25rem)] font-bold leading-[1.05] tracking-[-0.035em]">{t('projectsTitle')}</TuneIn>
             <p className="mt-3 max-w-[52ch] text-lg text-muted">{t('projectsLead')}</p>
           </div>
-          <div className="relative w-full sm:w-80">
+          <div className="relative w-full sm:w-88">
             <label htmlFor="search" className="sr-only">{t('search')}</label>
-            <svg aria-hidden viewBox="0 0 20 20" className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="9" cy="9" r="6" /><path d="m14 14 4 4" strokeLinecap="round" /></svg>
+            <svg aria-hidden viewBox="0 0 20 20" className="pointer-events-none absolute start-3.5 top-1/2 size-4 -translate-y-1/2 text-muted" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="9" cy="9" r="6" /><path d="m14 14 4 4" strokeLinecap="round" /></svg>
             <input
               id="search" type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder={t('searchPh')}
-              className="w-full rounded-full border border-line bg-s1 py-2.5 pe-3 ps-9 text-[15px] placeholder:text-muted/80 transition-colors focus:border-line-2 focus:outline-none focus-visible:outline-2 focus-visible:outline-cyan"
+              className="bento-tile w-full rounded-full py-2.5 pe-14 ps-10 text-[15px] placeholder:text-muted/80 transition-colors focus:border-white/25 focus:outline-none focus-visible:outline-2 focus-visible:outline-cyan"
             />
+            <button
+              type="button"
+              onClick={onOpenCmd}
+              aria-label={t('cmdLabel')}
+              className="absolute end-2 top-1/2 -translate-y-1/2 rounded-full border border-white/10 bg-white/[0.06] px-2 py-0.5 font-mono text-[11px] text-muted transition-colors hover:border-white/25 hover:text-fg"
+              dir="ltr"
+            >
+              ⌘K
+            </button>
           </div>
         </div>
 
-        <div className="mt-10 flex flex-wrap items-center gap-x-1 gap-y-2" role="group" aria-label={t('navProjects')}>
+        <div className="mt-10 flex flex-wrap items-center gap-2" role="group" aria-label={t('navProjects')}>
+          <div className="bento-tile inline-flex flex-wrap items-center gap-0.5 rounded-full p-1">
           {CATEGORIES.map((c) => {
             const on = cat === c.id
             return (
               <button
                 key={c.id} type="button" aria-pressed={on} onClick={() => setCat(c.id)}
-                className={`relative rounded-full px-3.5 py-1.5 text-sm transition-colors duration-150 ${on ? 'text-ink' : 'text-muted hover:text-fg'}`}
+                className={`relative rounded-full px-3.5 py-1.5 text-sm transition-colors duration-150 ${on ? 'font-medium text-ink' : 'text-muted hover:text-fg'}`}
               >
-                {on && <motion.span layoutId="cat-pill" className="absolute inset-0 rounded-full bg-fg" transition={{ type: 'spring', duration: 0.35, bounce: 0.12 }} />}
+                {on && <motion.span layoutId="cat-pill" className="absolute inset-0 rounded-full bg-fg shadow-[0_2px_12px_rgb(255_255_255/0.25)]" transition={{ type: 'spring', duration: 0.35, bounce: 0.12 }} />}
                 <span className="relative">{pick(c.label)} <span className={`num ${on ? 'text-ink/60' : 'text-muted'}`}>{counts[c.id] ?? 0}</span></span>
               </button>
             )
           })}
+          </div>
           {platform && (
             <button type="button" onClick={() => setPlatform(null)} aria-label={t('clearPlatform')}
-              className="ms-2 flex items-center gap-1.5 rounded-md border border-ember/50 bg-ember/10 px-2.5 py-1.5 text-sm text-ember-2 transition-colors hover:bg-ember/20">
+              className="flex items-center gap-1.5 rounded-full border border-ember/50 bg-ember/12 px-3 py-1.5 text-sm text-ember-2 transition-colors hover:bg-ember/20">
               {t('onPlatform', { p: pick(PLATFORM_LABEL[platform]) })}
               <svg aria-hidden viewBox="0 0 12 12" className="size-3" stroke="currentColor" strokeWidth="1.8"><path d="M3 3l6 6M9 3l-6 6" strokeLinecap="round" /></svg>
             </button>
@@ -147,17 +158,20 @@ function Card({ repo, onOpen }: { repo: Repo; onOpen: () => void }) {
       onPointerMove={track}
       onPointerLeave={reset}
       style={{ '--card-accent': accent } as React.CSSProperties}
-      className="spot tilt group relative flex h-full flex-col overflow-hidden rounded-[24px] border border-white/[0.05] bg-s1 shadow-[0_12px_30px_-20px_rgb(0_0_0/0.8)] hover:border-white/15 hover:shadow-[0_30px_60px_-28px_rgb(0_0_0/0.95)]"
+      className="bento-card spot tilt group relative flex h-full flex-col overflow-hidden rounded-[26px] border border-white/[0.07] hover:border-white/18 hover:shadow-[0_32px_68px_-28px_rgb(0_0_0/0.95)]"
     >
       <motion.div layoutId={`media-${repo.name}`} transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
-        className={`tv-static relative grow overflow-hidden bg-s2 ${repo.wide ? 'aspect-[16/7]' : 'aspect-[16/10]'}`}>
+        className={`tv-static relative grow overflow-hidden bg-[#121216] ${repo.wide ? 'aspect-[16/7]' : 'aspect-[16/10]'}`}>
         <Preview repo={repo} />
         {isNew && (
-          <span className="pointer-events-none absolute start-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full border border-ember/50 bg-ink/80 px-2.5 py-0.5 text-xs font-semibold text-ember-2 backdrop-blur">
+          <span className="pointer-events-none absolute start-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full border border-ember/50 bg-ink/80 px-2.5 py-0.5 text-xs font-semibold text-ember-2 backdrop-blur-md">
             <span className="size-1.5 animate-pulse rounded-full bg-ember" />
             {t('newBadge')}
           </span>
         )}
+        <span aria-hidden className="pointer-events-none absolute end-3 top-3 z-10 grid size-7 place-items-center rounded-full border border-white/15 bg-ink/70 text-fg/80 opacity-0 backdrop-blur-md transition-[opacity,transform] duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100">
+          <svg viewBox="0 0 16 16" className="size-3.5 rtl:-scale-x-100" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M5 11 11 5m0 0H6m5 0v5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+        </span>
       </motion.div>
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-baseline justify-between gap-3">
@@ -166,10 +180,17 @@ function Card({ repo, onOpen }: { repo: Repo; onOpen: () => void }) {
               {repo.title}
             </button>
           </h3>
-          {repo.release && <span className="shrink-0 font-mono text-xs text-muted" dir="ltr">{repo.release.tag}</span>}
+          {repo.release && <span className="shrink-0 rounded-md border border-white/[0.08] bg-white/[0.04] px-1.5 py-0.5 font-mono text-[11px] text-muted" dir="ltr">{repo.release.tag}</span>}
         </div>
         <p className="mt-1.5 text-[15px] leading-relaxed text-muted text-pretty">{pick(repo.tagline)}</p>
-        <div className="mt-auto flex items-center gap-4 pt-5 text-[13px] text-muted">
+        <div className="mt-3.5 flex flex-wrap gap-1.5">
+          {repo.platforms.slice(0, 3).map((p) => (
+            <span key={p} className="rounded-md border border-white/[0.06] bg-white/[0.03] px-2 py-0.5 text-[11px] text-muted/90">
+              {pick(PLATFORM_LABEL[p])}
+            </span>
+          ))}
+        </div>
+        <div className="mt-auto flex items-center gap-4 pt-4 text-[13px] text-muted">
           {repo.language && (
             <span className="flex items-center gap-1.5">
               <span aria-hidden className="size-2 rounded-full" style={{ background: LANG_COLOR[repo.language] ?? '#888' }} />
@@ -189,7 +210,7 @@ function Card({ repo, onOpen }: { repo: Repo; onOpen: () => void }) {
         </div>
       </div>
       {/* Keyboard focus ring for the whole card, driven by the stretched button. */}
-      <span aria-hidden className="pointer-events-none absolute inset-0 rounded-[24px] ring-2 ring-cyan opacity-0 transition-opacity group-has-[:focus-visible]:opacity-100" />
+      <span aria-hidden className="pointer-events-none absolute inset-0 rounded-[26px] ring-2 ring-cyan opacity-0 transition-opacity group-has-[:focus-visible]:opacity-100" />
     </article>
   )
 }

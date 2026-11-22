@@ -23,14 +23,14 @@ export function SignalMark({ className = 'size-5' }: { className?: string }) {
 
 const NAV_IDS = ['flagships', 'projects', 'stack'] as const
 
-export function Header() {
+export function Header({ onOpenCmd }: { onOpenCmd: () => void }) {
   const { t, lang, setLang } = useI18n()
   const [scrolled, setScrolled] = useState(false)
   const [active, setActive] = useState<(typeof NAV_IDS)[number] | null>(null)
   const { scrollYProgress } = useScroll()
   const progress = useSpring(scrollYProgress, { stiffness: 260, damping: 40, restDelta: 0.001 })
   useEffect(() => {
-    const on = () => setScrolled(window.scrollY > 24)
+    const on = () => setScrolled(window.scrollY > 28)
     on()
     window.addEventListener('scroll', on, { passive: true })
     return () => window.removeEventListener('scroll', on)
@@ -56,14 +56,20 @@ export function Header() {
     { id: 'projects' as const, label: t('navProjects') },
     { id: 'stack' as const, label: t('navStack') },
   ]
-  // Fixed, with a spacer holding its place, so shrinking it never shifts the page.
+  // Floating glass Dynamic Island header that tightens gracefully on scroll.
   return (
     <>
-    <div aria-hidden className="h-12" />
-    <header className={`fixed inset-x-0 top-0 z-40 border-b backdrop-blur-xl backdrop-saturate-150 transition-[background-color,border-color] duration-300 ${scrolled ? 'border-white/10 bg-[rgb(22_22_23/0.78)]' : 'border-transparent bg-black/40'}`}>
-      <a href="#main" className="sr-only rounded-md bg-ember px-3 py-2 font-semibold text-ink focus:not-sr-only focus:absolute focus:start-4 focus:top-3">{t('skip')}</a>
-      <div className={`mx-auto flex max-w-[1200px] items-center gap-2 px-5 transition-[height] duration-300 ease-out-quint sm:px-8 ${scrolled ? 'h-11' : 'h-12'}`}>
-        <a href="#top" className="group me-auto flex items-center gap-2 font-semibold tracking-tight" aria-label="dor2500">
+    <div aria-hidden className="h-16" />
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-40 px-4 pt-3 sm:px-6">
+      <a href="#main" className="pointer-events-auto sr-only rounded-md bg-ember px-3 py-2 font-semibold text-ink focus:not-sr-only focus:absolute focus:start-4 focus:top-3">{t('skip')}</a>
+      <div
+        className={`pointer-events-auto relative mx-auto flex items-center gap-2 overflow-hidden rounded-full border backdrop-blur-2xl backdrop-saturate-150 transition-[max-width,height,background-color,border-color,box-shadow] duration-500 ease-out-quint ${
+          scrolled
+            ? 'h-12 max-w-[820px] border-white/12 bg-[rgb(16_16_20/0.82)] px-4 shadow-[inset_0_1px_0_rgb(255_255_255/0.12),0_20px_50px_-20px_rgb(0_0_0/0.95)]'
+            : 'h-13 max-w-[1200px] border-white/[0.06] bg-[rgb(14_14_17/0.55)] px-5 shadow-[inset_0_1px_0_rgb(255_255_255/0.07)]'
+        }`}
+      >
+        <a href="#top" className="group me-auto flex items-center gap-2.5 font-semibold tracking-tight" aria-label="dor2500">
           <SignalMark />
           <span>dor2500</span>
         </a>
@@ -75,9 +81,9 @@ export function Header() {
                 key={item.id}
                 href={`#${item.id}`}
                 aria-current={on ? 'location' : undefined}
-                className={`relative rounded-full px-3 py-1.5 text-sm transition-colors duration-150 ${on ? 'text-fg' : 'text-muted hover:text-fg'}`}
+                className={`relative rounded-full px-3.5 py-1.5 text-sm transition-colors duration-150 ${on ? 'text-white' : 'text-muted hover:text-fg'}`}
               >
-                {on && <motion.span layoutId="nav-pill" className="absolute inset-0 -z-10 rounded-full bg-white/10" transition={{ type: 'spring', duration: 0.4, bounce: 0.15 }} />}
+                {on && <motion.span layoutId="nav-pill" className="absolute inset-0 -z-10 rounded-full border border-white/10 bg-white/[0.1]" transition={{ type: 'spring', duration: 0.4, bounce: 0.15 }} />}
                 {item.label}
               </a>
             )
@@ -85,19 +91,29 @@ export function Header() {
         </nav>
         <button
           type="button"
+          onClick={onOpenCmd}
+          aria-label={t('cmdLabel')}
+          className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-muted transition-[border-color,background-color,color] duration-150 hover:border-white/20 hover:bg-white/[0.08] hover:text-fg"
+        >
+          <svg aria-hidden viewBox="0 0 20 20" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="9" cy="9" r="6" /><path d="m14 14 4 4" strokeLinecap="round" /></svg>
+          <span className="hidden md:inline">{t('cmdLabel')}</span>
+          <kbd className="rounded bg-white/[0.07] px-1.5 py-0.5 font-mono text-[10px] text-fg/80" dir="ltr">⌘K</kbd>
+        </button>
+        <button
+          type="button"
           onClick={() => setLang(lang === 'en' ? 'he' : 'en')}
           aria-label={t('switchLangLabel')}
           lang={lang === 'en' ? 'he' : 'en'}
-          className="rounded-md border border-line px-2.5 py-1 text-sm font-medium transition-[border-color,background-color] duration-150 hover:border-line-2 hover:bg-s1 active:scale-[0.97]"
+          className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-sm font-medium transition-[border-color,background-color] duration-150 hover:border-white/20 hover:bg-white/[0.08] active:scale-[0.97]"
         >
           {t('switchLang')}
         </button>
-        <a href={profile.url} className="grid size-9 place-items-center rounded-md text-muted transition-colors hover:bg-s1 hover:text-fg" aria-label={t('ctaGithub')}>
-          <GithubIcon className="size-[18px]" />
+        <a href={profile.url} className="grid size-8 place-items-center rounded-full text-muted transition-colors hover:bg-white/[0.08] hover:text-fg" aria-label={t('ctaGithub')}>
+          <GithubIcon className="size-[17px]" />
         </a>
+        {/* Scroll progress hairline tucked neatly along the bottom edge of the island. */}
+        <motion.div aria-hidden className="absolute inset-x-4 bottom-0 h-[1.5px] origin-[var(--o)] rounded-full bg-gradient-to-r from-ember via-ember-2 to-tv [--o:left] rtl:[--o:right]" style={{ scaleX: progress }} />
       </div>
-      {/* How far down the page you are, as a thin line along the bottom edge. */}
-      <motion.div aria-hidden className="absolute inset-x-0 -bottom-px h-[2px] origin-[var(--o)] bg-ember [--o:left] rtl:[--o:right]" style={{ scaleX: progress }} />
     </header>
     </>
   )

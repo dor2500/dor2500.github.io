@@ -213,15 +213,21 @@ function Ctas({ repo, live, liveLabel }: { repo: Repo; live: string; liveLabel: 
   )
 }
 
-function Title({ repo, accent, id }: { repo: Repo; accent: string; id: string }) {
+function Title({ repo, accent, id, chapter }: { repo: Repo; accent: string; id: string; chapter: string }) {
   const { pick } = useI18n()
   const icon = repo.images.at(-1)!
   return (
-    <div className="flex items-center gap-4">
-      <img src={icon.src} alt="" width={56} height={56} className="size-14 rounded-2xl" style={{ boxShadow: `0 0 0 1px ${accent}33, 0 10px 30px -10px ${accent}66` }} />
-      <div>
-        <h3 id={id} className="text-3xl font-bold tracking-[-0.025em]">{repo.title}</h3>
-        <p className="mt-0.5 text-[15px] text-muted">{pick(repo.tagline)}</p>
+    <div>
+      <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 font-mono text-[11px] uppercase tracking-wider text-muted" dir="ltr">
+        <span className="size-1.5 rounded-full" style={{ background: accent, boxShadow: `0 0 8px ${accent}` }} />
+        {chapter}
+      </div>
+      <div className="flex items-center gap-4">
+        <img src={icon.src} alt="" width={56} height={56} className="size-14 rounded-2xl" style={{ boxShadow: `0 0 0 1px ${accent}40, 0 12px 32px -10px ${accent}77` }} />
+        <div>
+          <h3 id={id} className="text-3xl font-bold tracking-[-0.025em]">{repo.title}</h3>
+          <p className="mt-0.5 text-[15px] text-muted">{pick(repo.tagline)}</p>
+        </div>
       </div>
     </div>
   )
@@ -249,7 +255,7 @@ function TvPlus({ repo }: { repo: Repo }) {
   return (
     <article aria-labelledby="tvplus-title" className="mx-auto grid max-w-[1200px] grid-cols-1 gap-12 px-5 py-16 sm:px-8 md:py-24 lg:grid-cols-12 lg:gap-10">
       <div className="min-w-0 lg:col-span-5">
-        <Title id="tvplus-title" repo={repo} accent="var(--color-tv)" />
+        <Title id="tvplus-title" repo={repo} accent="var(--color-tv)" chapter="01 / FLAGSHIP" />
         <Facts repo={repo} copy={TV} accent="var(--color-tv)" />
         <Ctas repo={repo} live={repo.homepage!} liveLabel={t('watchLive')} />
       </div>
@@ -306,19 +312,22 @@ function TvPlus({ repo }: { repo: Repo }) {
           </motion.div>
         </div>
 
-        <div role="group" aria-label={pick({ en: 'TV screens', he: 'מסכי טלוויזיה' })} className="no-scrollbar -mx-5 mt-8 flex gap-2 overflow-x-auto px-5 sm:mx-0 sm:px-0 lg:mt-6">
+        <div role="group" aria-label={pick({ en: 'TV screens', he: 'מסכי טלוויזיה' })} className="no-scrollbar -mx-5 mt-8 flex gap-1.5 overflow-x-auto px-5 sm:mx-0 sm:px-0 lg:mt-6">
+          <div className="bento-tile inline-flex gap-1 rounded-full p-1">
           {[-1, ...tvShots.keys()].map((i) => {
             const label = i === -1 ? pick({ en: 'Demo video', he: 'סרטון הדגמה' }) : pick(TV_SCREENS[i])
-            const on = screen === i
+            const active = screen === i
             return (
               <button
-                key={i} type="button" onClick={() => setScreen(i)} aria-pressed={on}
-                className={`shrink-0 rounded-md border px-3 py-1.5 text-sm transition-colors duration-150 ${on ? 'border-tv/60 bg-tv/10 text-fg' : 'border-line text-muted hover:border-line-2 hover:text-fg'}`}
+                key={i} type="button" onClick={() => setScreen(i)} aria-pressed={active}
+                className={`relative shrink-0 rounded-full px-3.5 py-1.5 text-sm transition-colors duration-150 ${active ? 'text-white' : 'text-muted hover:text-fg'}`}
               >
+                {active && <motion.span layoutId="tv-screen-pill" className="absolute inset-0 -z-10 rounded-full border border-tv/50 bg-tv/20" transition={{ type: 'spring', duration: 0.35, bounce: 0.15 }} />}
                 {label}
               </button>
             )
           })}
+          </div>
         </div>
       </div>
     </article>
@@ -331,7 +340,7 @@ function Pulse({ repo }: { repo: Repo }) {
     <>
     <article aria-labelledby="pulse-title" className="mx-auto grid max-w-[1200px] grid-cols-1 gap-12 px-5 py-16 sm:px-8 md:py-24 lg:grid-cols-12 lg:gap-10">
       <div className="min-w-0 lg:order-2 lg:col-span-5 lg:col-start-8">
-        <Title id="pulse-title" repo={repo} accent="var(--color-pulse)" />
+        <Title id="pulse-title" repo={repo} accent="var(--color-pulse)" chapter="02 / FLAGSHIP" />
         <Facts repo={repo} copy={PULSE} accent="var(--color-pulse)" />
         <Ctas repo={repo} live="https://dor2500.github.io/pulse-speed/app/" liveLabel={t('tryWeb')} />
       </div>

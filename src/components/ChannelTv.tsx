@@ -111,10 +111,10 @@ export function ChannelTv({ onOpen }: { onOpen: (r: Repo) => void }) {
         style={{ background: `radial-gradient(closest-side, color-mix(in srgb, ${ambilight} 24%, transparent), transparent)` }}
       />
 
-      {/* Cabinet */}
-      <div className="relative rounded-[26px] bg-gradient-to-b from-[#1c2027] to-[#0b0d11] p-[3.2%] shadow-[0_50px_100px_-40px_rgb(0_0_0/0.95),0_0_0_1px_var(--color-line-2),inset_0_1px_0_rgb(255_255_255/0.06)]">
+      {/* Razor-thin OLED glass & titanium frame */}
+      <div className="relative rounded-[28px] bg-gradient-to-b from-[#232730] via-[#13151b] to-[#08090c] p-[2.2%] shadow-[0_50px_110px_-36px_rgb(0_0_0/0.98),0_0_0_1px_rgb(255_255_255/0.12),inset_0_1px_0_rgb(255_255_255/0.18)]">
         {/* Tiny power LED on the bottom-right bezel */}
-        <span aria-hidden className="absolute bottom-[1.3%] end-[5%] size-1.5 rounded-full bg-phosphor shadow-[0_0_8px_var(--color-phosphor)]" />
+        <span aria-hidden className="absolute bottom-[0.95%] end-[4.5%] size-1.5 rounded-full bg-phosphor shadow-[0_0_8px_var(--color-phosphor)]" />
         <motion.div
           className="crt relative aspect-video overflow-hidden rounded-[18px] bg-black"
           initial={{ clipPath: 'inset(49.6% 0 49.6% 0 round 18px)', filter: 'brightness(3)' }}
@@ -184,23 +184,26 @@ export function ChannelTv({ onOpen }: { onOpen: (r: Repo) => void }) {
       <div aria-hidden className="mx-auto h-4 w-[18%] bg-gradient-to-b from-[#161a20] to-[#0b0d11]" />
       <div aria-hidden className="mx-auto h-2 w-[42%] rounded-full bg-[#161a20]" />
 
-      {/* Remote */}
-      <div role="group" aria-label={t('tvLabel')} className="mt-5 flex flex-wrap items-center gap-3">
-        <button type="button" className={remote} aria-label={t('chDown')} onClick={() => tune(ch - 1)}>
-          <svg aria-hidden viewBox="0 0 16 16" className="size-4 rtl:-scale-x-100" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M10 3 5 8l5 5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-        </button>
-        <button type="button" className={remote} aria-label={t('chUp')} onClick={() => tune(ch + 1)}>
-          <svg aria-hidden viewBox="0 0 16 16" className="size-4 rtl:-scale-x-100" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="m6 3 5 5-5 5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-        </button>
-        <button type="button" className={remote} aria-label={paused ? t('resume') : t('pause')} aria-pressed={paused} onClick={() => setPaused((p) => !p)}>
-          {paused
-            ? <svg aria-hidden viewBox="0 0 16 16" className="size-4" fill="currentColor"><path d="M5 3.5v9l7-4.5z" /></svg>
-            : <svg aria-hidden viewBox="0 0 16 16" className="size-4" fill="currentColor"><rect x="4" y="3.5" width="3" height="9" rx="0.8" /><rect x="9" y="3.5" width="3" height="9" rx="0.8" /></svg>}
-        </button>
-        <div className="flex flex-wrap gap-1.5" dir="ltr">
+      {/* Sleek frosted glass remote dock */}
+      <div role="group" aria-label={t('tvLabel')} className="bento-tile mt-5 inline-flex max-w-full flex-wrap items-center gap-2.5 rounded-2xl p-2 backdrop-blur-xl">
+        <div className="flex items-center gap-1.5">
+          <button type="button" className={remote} aria-label={t('chDown')} onClick={() => tune(ch - 1)}>
+            <svg aria-hidden viewBox="0 0 16 16" className="size-4 rtl:-scale-x-100" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M10 3 5 8l5 5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          </button>
+          <button type="button" className={remote} aria-label={t('chUp')} onClick={() => tune(ch + 1)}>
+            <svg aria-hidden viewBox="0 0 16 16" className="size-4 rtl:-scale-x-100" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="m6 3 5 5-5 5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          </button>
+          <button type="button" className={remote} aria-label={paused ? t('resume') : t('pause')} aria-pressed={paused} onClick={() => setPaused((p) => !p)}>
+            {paused
+              ? <svg aria-hidden viewBox="0 0 16 16" className="size-4" fill="currentColor"><path d="M5 3.5v9l7-4.5z" /></svg>
+              : <svg aria-hidden viewBox="0 0 16 16" className="size-4" fill="currentColor"><rect x="4" y="3.5" width="3" height="9" rx="0.8" /><rect x="9" y="3.5" width="3" height="9" rx="0.8" /></svg>}
+          </button>
+        </div>
+        <span aria-hidden className="hidden h-5 w-px bg-white/10 sm:block" />
+        <div className="flex flex-wrap gap-1" dir="ltr">
           {CHANNELS.map((r, i) => (
             <button key={r.name} type="button" onClick={() => tune(i)} aria-pressed={i === ch} aria-label={t('chN', { n: i + 1, t: r.title })}
-              className={`h-7 min-w-8 rounded-md px-1.5 font-osd text-lg leading-none transition-colors duration-150 ${i === ch ? 'bg-ember text-ink' : 'bg-s1 text-muted hover:bg-s2 hover:text-fg'}`}>
+              className={`h-7 min-w-7 rounded-lg px-1.5 font-osd text-base leading-none transition-[background-color,color,box-shadow] duration-150 ${i === ch ? 'bg-ember text-ink shadow-[0_0_16px_color-mix(in_srgb,var(--color-ember)_55%,transparent)]' : 'bg-white/[0.04] text-muted hover:bg-white/[0.1] hover:text-fg'}`}>
               {pad(i + 1)}
             </button>
           ))}

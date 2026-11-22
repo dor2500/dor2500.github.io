@@ -22,8 +22,8 @@ export function Ticker() {
     </ul>
   )
   return (
-    <section aria-label={t('tickerLabel')} className="ticker relative flex items-stretch overflow-hidden border-y border-line bg-s1">
-      <div className="z-10 flex shrink-0 items-center gap-2 bg-ember px-4 font-osd text-xl leading-none text-ink">
+    <section aria-label={t('tickerLabel')} className="ticker relative flex items-stretch overflow-hidden border-y border-white/[0.08] bg-white/[0.025] backdrop-blur-xl">
+      <div className="z-10 flex shrink-0 items-center gap-2 bg-gradient-to-r from-ember to-ember-2 px-4 font-osd text-xl leading-none text-ink shadow-[8px_0_24px_-6px_color-mix(in_srgb,var(--color-ember)_55%,transparent)]">
         <span className="size-2 animate-pulse rounded-full bg-ink" />
         {t('tickerLabel')}
       </div>

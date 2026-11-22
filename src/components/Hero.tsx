@@ -1,10 +1,10 @@
 import { Fragment } from 'react'
 import { motion } from 'motion/react'
-import { useI18n, useFormat } from '../i18n'
+import { useI18n } from '../i18n'
 import { platformCounts, profile, stats, type Repo } from '../data'
 import { PLATFORM_LABEL, type Platform } from '../data/curated'
 import { GithubIcon } from './Header'
-import { EASE } from './Motion'
+import { CountUp, EASE } from './Motion'
 import { ChannelTv } from './ChannelTv'
 import { Ticker } from './Ticker'
 
@@ -39,24 +39,32 @@ export function SignalBars({ level, delay = 0, max = 5 }: { level: number; delay
 
 export function Hero({ onPlatform, onOpen }: { onPlatform: (p: Platform) => void; onOpen: (r: Repo) => void }) {
   const { t, pick } = useI18n()
-  const f = useFormat()
   const top = platformCounts.slice(0, 10)
   const max = top[0][1]
+  const titleWords = t('heroTitle').split(' ')
+  const accentStart = Math.max(0, titleWords.length - 3)
+
+  const onPointerMove = (e: React.PointerEvent<HTMLElement>) => {
+    const r = e.currentTarget.getBoundingClientRect()
+    e.currentTarget.style.setProperty('--gx', `${e.clientX - r.left}px`)
+    e.currentTarget.style.setProperty('--gy', `${e.clientY - r.top}px`)
+  }
 
   return (
-    <section id="top" aria-labelledby="hero-title" className="relative isolate">
-      {/* Living ambient backdrop: faint dot grid + two slowly breathing aurora orbs. */}
-      <div aria-hidden className="bg-grid pointer-events-none absolute inset-x-0 top-0 -z-20 h-[760px] [mask-image:radial-gradient(ellipse_75%_60%_at_50%_20%,#000,transparent)]" />
-      <div aria-hidden className="aurora-orb pointer-events-none absolute -top-24 start-[6%] -z-10 h-[420px] w-[420px] rounded-full bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--color-ember)_15%,transparent),transparent)] blur-3xl" />
-      <div aria-hidden className="aurora-orb-2 pointer-events-none absolute top-24 end-[4%] -z-10 h-[460px] w-[460px] rounded-full bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--color-tv)_14%,transparent),transparent)] blur-3xl" />
+    <section id="top" aria-labelledby="hero-title" onPointerMove={onPointerMove} className="relative isolate">
+      {/* Living ambient backdrop: faint dot grid + pointer aura + two slowly breathing aurora orbs. */}
+      <div aria-hidden className="bg-grid pointer-events-none absolute inset-x-0 top-0 -z-20 h-[820px] [mask-image:radial-gradient(ellipse_78%_64%_at_50%_22%,#000,transparent)]" />
+      <div aria-hidden className="cursor-aura pointer-events-none absolute inset-x-0 top-0 -z-15 h-[820px] transition-opacity duration-500" />
+      <div aria-hidden className="aurora-orb pointer-events-none absolute -top-24 start-[6%] -z-10 h-[440px] w-[440px] rounded-full bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--color-ember)_16%,transparent),transparent)] blur-3xl" />
+      <div aria-hidden className="aurora-orb-2 pointer-events-none absolute top-24 end-[4%] -z-10 h-[480px] w-[480px] rounded-full bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--color-tv)_14%,transparent),transparent)] blur-3xl" />
 
-    <div className="mx-auto grid max-w-[1280px] grid-cols-1 items-center gap-12 px-5 pb-16 pt-12 sm:px-8 md:pt-20 lg:grid-cols-12 lg:gap-10">
+    <div className="mx-auto grid max-w-[1280px] grid-cols-1 items-center gap-12 px-5 pb-16 pt-10 sm:px-8 md:pt-16 lg:grid-cols-12 lg:gap-10">
       <div className="min-w-0 lg:col-span-5">
         <motion.div
           initial={{ opacity: 0, y: -6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: EASE }}
-          className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-s1/80 px-3 py-1 text-xs font-medium text-muted backdrop-blur"
+          className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-3.5 py-1.5 text-xs font-medium text-fg/85 shadow-[inset_0_1px_0_rgb(255_255_255/0.1)] backdrop-blur-xl"
         >
           <span className="relative flex size-2">
             <span className="absolute inline-flex size-full animate-ping rounded-full bg-phosphor opacity-70" />
@@ -67,14 +75,14 @@ export function Hero({ onPlatform, onOpen }: { onPlatform: (p: Platform) => void
         <h1
           id="hero-title"
           key={t('heroTitle')}
-          className="max-w-[14ch] text-[clamp(2.5rem,5.6vw,4.4rem)] font-bold leading-[0.98] tracking-[-0.035em] text-balance"
+          className="max-w-[14ch] text-[clamp(2.6rem,5.6vw,4.5rem)] font-bold leading-[0.98] tracking-[-0.035em] text-balance"
         >
           {/* Words rise out of a mask one after another, so the line reads itself in. */}
-          {t('heroTitle').split(' ').map((w, i, all) => (
+          {titleWords.map((w, i, all) => (
             <Fragment key={i}>
-            <span className="-mb-[0.12em] inline-block overflow-hidden pb-[0.12em] align-top">
+            <span className="-mb-[0.14em] inline-block overflow-hidden pb-[0.14em] align-top">
               <motion.span
-                className="inline-block"
+                className={`inline-block ${i >= accentStart ? 'text-ember-glow' : 'text-metallic'}`}
                 initial={{ y: '105%' }}
                 animate={{ y: '0%' }}
                 transition={{ duration: 0.7, ease: EASE, delay: 0.05 + i * 0.055 }}
@@ -88,20 +96,33 @@ export function Hero({ onPlatform, onOpen }: { onPlatform: (p: Platform) => void
         </h1>
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: EASE, delay: 0.45 }}>
           <p className="mt-7 max-w-[60ch] text-lg leading-relaxed text-muted text-pretty">{t('heroBio')}</p>
-          <div className="mt-9 flex flex-wrap gap-3">
-            <a href="#flagships" className="sheen rounded-full bg-ember px-5 py-3 font-semibold text-ink shadow-[0_8px_30px_-8px_color-mix(in_srgb,var(--color-ember)_65%,transparent)] transition-[background-color,transform,box-shadow] duration-150 hover:bg-ember-2 hover:shadow-[0_12px_36px_-6px_color-mix(in_srgb,var(--color-ember)_80%,transparent)] active:scale-[0.97]">
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a href="#flagships" className="sheen rounded-full bg-ember px-5 py-3 font-semibold text-ink shadow-[0_8px_32px_-6px_color-mix(in_srgb,var(--color-ember)_75%,transparent)] transition-[background-color,transform,box-shadow] duration-150 hover:bg-ember-2 hover:shadow-[0_14px_40px_-4px_color-mix(in_srgb,var(--color-ember)_85%,transparent)] active:scale-[0.97]">
               {t('ctaFlagships')}
             </a>
-            <a href="#projects" className="rounded-full border border-line-2 px-5 py-3 font-medium transition-[background-color,border-color,transform] duration-150 hover:border-white/30 hover:bg-s1 active:scale-[0.97]">
+            <a href="#projects" className="bento-tile rounded-full px-5 py-3 font-medium transition-[background-color,border-color,transform] duration-150 hover:border-white/25 hover:bg-white/[0.08] active:scale-[0.97]">
               {t('ctaAll')}
             </a>
             <a href={profile.url} className="flex items-center gap-2 rounded-full px-4 py-3 font-medium text-muted transition-colors duration-150 hover:text-fg">
               <GithubIcon /> {t('ctaGithub')}
             </a>
           </div>
-          <p className="mt-10 max-w-[60ch] text-sm text-muted">
-            {t('statsLine', { repos: stats.repos, releases: stats.releases, ago: f.ago(stats.latestRelease) })}
-          </p>
+          {/* Glass bento telemetry strip */}
+          <dl className="mt-9 grid max-w-[460px] grid-cols-3 gap-2.5">
+            {[
+              { n: stats.repos, label: t('statProjects'), color: 'var(--color-ember-2)' },
+              { n: stats.releases, label: t('statReleases'), color: 'var(--color-tv)' },
+              { n: platformCounts.length, label: t('statPlatforms'), color: 'var(--color-pulse)' },
+            ].map((m) => (
+              <div key={m.label} className="bento-tile rounded-2xl px-3.5 py-3">
+                <dt className="sr-only">{m.label}</dt>
+                <dd>
+                  <CountUp value={m.n} className="num block text-2xl font-bold tracking-tight" style={{ color: m.color }} />
+                  <span className="mt-0.5 block text-[11px] leading-snug text-muted">{m.label}</span>
+                </dd>
+              </div>
+            ))}
+          </dl>
         </motion.div>
       </div>
 
@@ -124,17 +145,17 @@ export function Hero({ onPlatform, onOpen }: { onPlatform: (p: Platform) => void
           <h2 id="reception-title" className="text-base font-semibold">{t('receptionTitle')}</h2>
           <p className="text-sm text-muted">{t('receptionHint')}</p>
         </div>
-        <ul className="mt-5 grid grid-cols-2 gap-x-6 sm:grid-cols-3 lg:grid-cols-5">
+        <ul className="mt-5 grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5">
           {top.map(([p, n], i) => (
-            <li key={p} className="border-b border-line">
+            <li key={p}>
               <button
                 type="button"
                 onClick={() => onPlatform(p)}
-                className="group flex w-full items-center gap-3 py-3 text-start transition-colors duration-150 hover:text-ember-2"
+                className="bento-tile group flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-start transition-[transform,border-color,background-color,color] duration-200 hover:-translate-y-0.5 hover:border-ember/40 hover:bg-white/[0.06] hover:text-ember-2"
               >
-                <span className="flex-1 text-[15px]">{pick(PLATFORM_LABEL[p])}</span>
-                <SignalBars level={Math.ceil(Math.sqrt(n / max) * 5)} delay={0.45 + i * 0.06} />
-                <span className="num w-6 text-end text-sm text-muted group-hover:text-ember-2">{n}</span>
+                <span className="flex-1 truncate text-[14px] font-medium">{pick(PLATFORM_LABEL[p])}</span>
+                <SignalBars level={Math.ceil(Math.sqrt(n / max) * 5)} delay={0.35 + i * 0.05} />
+                <span className="num w-5 text-end text-sm text-muted group-hover:text-ember-2">{n}</span>
               </button>
             </li>
           ))}

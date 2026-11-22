@@ -28,6 +28,8 @@ function Dialog({ repo, morph, onClose }: { repo: Repo; morph: boolean; onClose:
     panel.current?.querySelector<HTMLElement>('[data-autofocus]')?.focus()
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
+      else if (shots.length > 1 && e.key === 'ArrowRight') { setD(1); setI((x) => (x + 1) % shots.length) }
+      else if (shots.length > 1 && e.key === 'ArrowLeft') { setD(-1); setI((x) => (x - 1 + shots.length) % shots.length) }
     }
     window.addEventListener('keydown', onKey)
     return () => {
@@ -42,12 +44,12 @@ function Dialog({ repo, morph, onClose }: { repo: Repo; morph: boolean; onClose:
 
   return (
     <Portal>
-      <motion.div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm" onClick={onClose}
+      <motion.div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md" onClick={onClose}
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} />
       <div className="pointer-events-none fixed inset-0 z-50 flex items-end justify-center sm:items-center sm:p-6">
         <motion.div
           ref={panel} role="dialog" aria-modal="true" aria-labelledby="modal-title"
-          className="pointer-events-auto flex max-h-[92dvh] w-full max-w-[980px] flex-col overflow-hidden rounded-t-2xl border border-line-2 bg-s1 shadow-2xl sm:rounded-2xl"
+          className="glass-panel pointer-events-auto flex max-h-[92dvh] w-full max-w-[980px] flex-col overflow-hidden rounded-t-3xl sm:rounded-3xl"
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8, transition: { duration: 0.2 } }}
           transition={{ duration: 0.3, ease: EASE }}
         >
