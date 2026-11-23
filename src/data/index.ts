@@ -22,6 +22,7 @@ const TITLES: Record<string, string> = {
   'update-pulse': 'UpdatePulse', tafnit: 'Tafnit', botwave: 'BotWave', 'cs-remastered': 'CS Remastered',
   'webos-tv-games': 'webOS TV Arcade', AdBlockVPN: 'AdBlock VPN', NovaBrowser: 'Nova Browser',
   'antigravity-remote': 'Antigravity Remote', 'tiktok-webos-tv': 'TikTok for LG webOS',
+  klidim: 'Klidim',
 }
 
 export const repos: Repo[] = raw.repos

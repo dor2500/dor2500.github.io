@@ -128,6 +128,11 @@ export const CURATED: Record<string, Curated> = {
     tagline: { en: 'Translates compiled Windows programs into right-to-left Hebrew', he: 'מתרגם תוכנות Windows מקומפלות לעברית מימין לשמאל' },
     platforms: ['windows'], stack: ['Python', 'PE resources', 'LLM'],
   },
+  klidim: {
+    category: 'desktop', wide: true, coverIndex: 1,
+    tagline: { en: 'A Hebrew desktop piano: play from the keyboard, falling notes, recording and MIDI', he: 'פסנתר למחשב בעברית: נגינה מהמקלדת, תווים נופלים, הקלטה ומקלדת MIDI' },
+    platforms: ['windows'], stack: ['TypeScript', 'Electron', 'React', 'Tone.js', 'Web MIDI'],
+  },
   'usb-ai-technician': {
     category: 'windows',
     tagline: { en: 'A PC technician on a USB stick, guided by an offline local AI', he: 'טכנאי מחשבים על דיסק-און-קי, בהדרכת AI מקומי שעובד בלי אינטרנט' },
