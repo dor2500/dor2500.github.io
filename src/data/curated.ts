@@ -130,7 +130,7 @@ export const CURATED: Record<string, Curated> = {
   },
   klidim: {
     category: 'desktop', wide: true, coverIndex: 1,
-    tagline: { en: 'A Hebrew desktop piano: play from the keyboard, falling notes, recording and MIDI', he: 'פסנתר למחשב בעברית: נגינה מהמקלדת, תווים נופלים, הקלטה ומקלדת MIDI' },
+    tagline: { en: 'A Hebrew desktop piano with a built-in teacher, 7 instruments, falling notes and MIDI', he: 'פסנתר למחשב בעברית עם מורה מובנה, 7 כלי נגינה, תווים נופלים ומקלדת MIDI' },
     platforms: ['windows'], stack: ['TypeScript', 'Electron', 'React', 'Tone.js', 'Web MIDI'],
   },
   'usb-ai-technician': {
