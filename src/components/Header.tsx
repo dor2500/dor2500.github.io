@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { motion, useScroll, useSpring } from 'motion/react'
 import { useI18n } from '../i18n'
 import { useTheme } from '../theme'
+import { useSound } from '../sound'
+import { useToast } from './DynamicIsland'
 import { profile } from '../data'
 
 export function GithubIcon({ className = 'size-4' }: { className?: string }) {
@@ -24,9 +26,11 @@ export function SignalMark({ className = 'size-5' }: { className?: string }) {
 
 const NAV_IDS = ['flagships', 'projects', 'stack'] as const
 
-export function Header({ onOpenCmd }: { onOpenCmd: () => void }) {
+export function Header({ onOpenCmd, onOpenTerm }: { onOpenCmd: () => void; onOpenTerm: () => void }) {
   const { t, lang, setLang } = useI18n()
   const { theme, toggleTheme } = useTheme()
+  const sound = useSound()
+  const toast = useToast()
   const [scrolled, setScrolled] = useState(false)
   const [active, setActive] = useState<(typeof NAV_IDS)[number] | null>(null)
   const { scrollYProgress } = useScroll()
@@ -107,7 +111,49 @@ export function Header({ onOpenCmd }: { onOpenCmd: () => void }) {
         </button>
         <button
           type="button"
-          onClick={toggleTheme}
+          onClick={() => { sound.play('pop'); onOpenTerm() }}
+          aria-label={t('terminalLabel')}
+          title={t('terminalLabel')}
+          className="grid size-8 place-items-center rounded-full border border-[var(--hairline)] bg-[var(--chip-bg)] font-mono text-[11px] font-bold text-muted transition-[border-color,background-color,color,transform] duration-200 hover:border-ember/50 hover:bg-ember/15 hover:text-ember active:scale-90"
+          dir="ltr"
+        >
+          &gt;_
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            const on = sound.toggle()
+            toast.show(on ? '🔊' : '🔇', on ? t('soundOn') : t('soundOff'))
+          }}
+          aria-label={sound.enabled ? t('soundOff') : t('soundOn')}
+          title={sound.enabled ? t('soundOff') : t('soundOn')}
+          aria-pressed={sound.enabled}
+          className={`grid size-8 place-items-center rounded-full border transition-[border-color,background-color,color,transform] duration-200 active:scale-90 ${
+            sound.enabled
+              ? 'border-pulse/50 bg-pulse/15 text-pulse'
+              : 'border-[var(--hairline)] bg-[var(--chip-bg)] text-muted hover:border-[var(--hairline-strong)] hover:bg-[var(--chip-hover)] hover:text-fg'
+          }`}
+        >
+          {sound.enabled ? (
+            <svg aria-hidden viewBox="0 0 20 20" className="size-4" fill="none" stroke="currentColor" strokeWidth="1.7">
+              <path d="M4 8v4h3l4 3.5V4.5L7 8H4Z" strokeLinejoin="round" />
+              <path d="M14.2 7.2a4 4 0 0 1 0 5.6M16.5 5a7 7 0 0 1 0 10" strokeLinecap="round" />
+            </svg>
+          ) : (
+            <svg aria-hidden viewBox="0 0 20 20" className="size-4" fill="none" stroke="currentColor" strokeWidth="1.7">
+              <path d="M4 8v4h3l4 3.5V4.5L7 8H4Z" strokeLinejoin="round" />
+              <path d="m14 8 4 4m0-4-4 4" strokeLinecap="round" />
+            </svg>
+          )}
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            sound.play('click')
+            const next = theme === 'dark' ? 'light' : 'dark'
+            toggleTheme()
+            toast.show(next === 'light' ? '☀️' : '🌙', next === 'light' ? t('themeLight') : t('themeDark'))
+          }}
           aria-label={theme === 'dark' ? t('switchToLight') : t('switchToDark')}
           title={theme === 'dark' ? t('switchToLight') : t('switchToDark')}
           className="grid size-8 place-items-center rounded-full border border-[var(--hairline)] bg-[var(--chip-bg)] text-muted transition-[border-color,background-color,color,transform] duration-200 hover:border-[var(--hairline-strong)] hover:bg-[var(--chip-hover)] hover:text-fg active:scale-90"

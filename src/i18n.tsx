@@ -15,6 +15,9 @@ const strings = {
   switchToDark: { en: 'Switch to dark mode', he: 'מעבר למצב כהה' },
   themeLight: { en: 'Light', he: 'בהיר' },
   themeDark: { en: 'Dark', he: 'כהה' },
+  terminalLabel: { en: 'Interactive terminal', he: 'טרמינל אינטראקטיבי' },
+  soundOn: { en: 'Tactile sound ON', he: 'צלילי מגע פעילים' },
+  soundOff: { en: 'Tactile sound OFF', he: 'צלילי מגע כבויים' },
 
   heroStatus: { en: 'Open source · Built in Hebrew & English', he: 'קוד פתוח · בעברית ובאנגלית' },
   heroTitle: { en: 'I build apps that end up on every screen in the house.', he: 'אני בונה אפליקציות שמגיעות לכל מסך בבית.' },
